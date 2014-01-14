@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d30bd7d_d9515750",
+        "filename": "src/com/android/dialer/DialtactsActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-14T00:30:11Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "ce6eee8af832bb9268033b4c96555fafe0b8fd4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d30bd7d_797a83d3",
+        "filename": "src/com/android/dialer/SpecialCharSequenceMgr.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-14T00:30:11Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "ce6eee8af832bb9268033b4c96555fafe0b8fd4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d30bd7d_1977cfea",
+        "filename": "src/com/android/dialer/dialpad/DialpadFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-14T00:30:11Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "ce6eee8af832bb9268033b4c96555fafe0b8fd4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
