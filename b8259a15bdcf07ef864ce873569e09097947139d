@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a21c030_aec3eb3c",
+        "filename": "res/menu/dialpad_options.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1016069
+      },
+      "writtenOn": "2014-05-12T20:37:25Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "b8259a15bdcf07ef864ce873569e09097947139d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa7bb835_74b4ded7",
+        "filename": "src/com/android/dialer/dialpad/DialpadFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1016069
+      },
+      "writtenOn": "2014-05-12T20:37:25Z",
+      "side": 1,
+      "message": "Could you create this intent using the pattern you used in PS1? \n\ni.e. \n\nfinal ComponentName smsComponent \u003d PhoneCapabilityTester.getSmsComponent(mContext);\n\n\nIt would be nice to hide the SMS option entirely if there was no way of sending a text message.",
+      "revId": "b8259a15bdcf07ef864ce873569e09097947139d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
