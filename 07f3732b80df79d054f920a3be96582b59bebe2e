@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69cf0d8_ead0f581",
+        "filename": "src/com/android/dialer/SpecialCharSequenceMgr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-03-23T21:15:41Z",
+      "side": 1,
+      "message": "this is the problem (or at least, this is the problem i see, on my AOSP GSM devices with no SIM): getDeviceId returns null...",
+      "revId": "07f3732b80df79d054f920a3be96582b59bebe2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86c44cd3_6a17f3fa",
+        "filename": "src/com/android/dialer/SpecialCharSequenceMgr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-03-23T21:15:41Z",
+      "side": 1,
+      "message": "...so setItems has a String[] containing a single null.\n\nwhich goes boom later when the ListAdapter is trying to render a view.\n\nso up on L313 i\u0027d do something like\n\n  String deviceId \u003d telephonyManager.getDeviceId(slot);\n  if (deviceId \u003d\u003d null) deviceId \u003d \"(None)\"; // or whatever\n  deviceIds.add(deviceId);",
+      "revId": "07f3732b80df79d054f920a3be96582b59bebe2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
