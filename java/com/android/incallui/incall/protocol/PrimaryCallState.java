@@ -87,6 +87,8 @@ public abstract class PrimaryCallState {
 
   public abstract boolean isHdAudioCall();
 
+  public abstract boolean isHdAudioPlusCall();
+
   public abstract boolean isForwardedNumber();
 
   public abstract boolean shouldShowContactPhoto();
@@ -122,6 +124,7 @@ public abstract class PrimaryCallState {
         .setIsWorkCall(false)
         .setIsHdAttempting(false)
         .setIsHdAudioCall(false)
+        .setIsHdAudioPlusCall(false)
         .setIsForwardedNumber(false)
         .setShouldShowContactPhoto(false)
         .setConnectTimeMillis(0)
@@ -169,6 +172,8 @@ public abstract class PrimaryCallState {
     public abstract Builder setIsHdAttempting(boolean isHdAttempting);
 
     public abstract Builder setIsHdAudioCall(boolean isHdAudioCall);
+
+    public abstract Builder setIsHdAudioPlusCall(boolean isHdAudioPlusCall);
 
     public abstract Builder setIsForwardedNumber(boolean isForwardedNumber);
 
