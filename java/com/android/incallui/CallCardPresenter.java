@@ -449,8 +449,10 @@ public class CallCardPresenter
                   && primaryContactInfo.userType == ContactsUtils.USER_TYPE_WORK);
       boolean isHdAudioCall =
           isPrimaryCallActive() && primary.hasProperty(Details.PROPERTY_HIGH_DEF_AUDIO);
+      boolean isHdAudioPlusCall =
+          isPrimaryCallActive() && primary.hasProperty(Details.PROPERTY_HIGH_DEF_AUDIO_PLUS);
       boolean isAttemptingHdAudioCall =
-          !isHdAudioCall
+          !(isHdAudioCall || isHdAudioPlusCall)
               && !primary.hasProperty(DialerCall.PROPERTY_CODEC_KNOWN)
               && MotorolaUtils.shouldBlinkHdIconWhenConnectingCall(context);
 
@@ -485,6 +487,7 @@ public class CallCardPresenter
                   .setIsWorkCall(isWorkCall)
                   .setIsHdAttempting(isAttemptingHdAudioCall)
                   .setIsHdAudioCall(isHdAudioCall)
+                  .setIsHdAudioPlusCall(isHdAudioPlusCall)
                   .setIsForwardedNumber(
                       !TextUtils.isEmpty(primary.getLastForwardedNumber())
                           || primary.isCallForwarded())
