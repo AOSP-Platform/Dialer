@@ -17,6 +17,7 @@
 package com.android.incallui.contactgrid;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.android.incallui.call.state.DialerCallState;
@@ -43,6 +44,7 @@ public class BottomRow {
     public final boolean isWorkIconVisible;
     public final boolean isHdAttemptingIconVisible;
     public final boolean isHdIconVisible;
+    @DrawableRes public final int hdIconResource;
     public final boolean isForwardIconVisible;
     public final boolean isSpamIconVisible;
     public final boolean shouldPopulateAccessibilityEvent;
@@ -53,6 +55,7 @@ public class BottomRow {
         boolean isWorkIconVisible,
         boolean isHdAttemptingIconVisible,
         boolean isHdIconVisible,
+        @DrawableRes int hdIconResource,
         boolean isForwardIconVisible,
         boolean isSpamIconVisible,
         boolean shouldPopulateAccessibilityEvent) {
@@ -61,6 +64,7 @@ public class BottomRow {
       this.isWorkIconVisible = isWorkIconVisible;
       this.isHdAttemptingIconVisible = isHdAttemptingIconVisible;
       this.isHdIconVisible = isHdIconVisible;
+      this.hdIconResource = hdIconResource;
       this.isForwardIconVisible = isForwardIconVisible;
       this.isSpamIconVisible = isSpamIconVisible;
       this.shouldPopulateAccessibilityEvent = shouldPopulateAccessibilityEvent;
@@ -74,10 +78,12 @@ public class BottomRow {
     boolean isTimerVisible = state.state() == DialerCallState.ACTIVE;
     boolean isForwardIconVisible = state.isForwardedNumber();
     boolean isWorkIconVisible = state.isWorkCall();
-    boolean isHdIconVisible = state.isHdAudioCall() && !isForwardIconVisible;
+    boolean isHdIconVisible = (state.isHdAudioCall() || state.isHdAudioPlusCall())
+        && !isForwardIconVisible;
     boolean isHdAttemptingIconVisible = state.isHdAttempting();
     boolean isSpamIconVisible = false;
     boolean shouldPopulateAccessibilityEvent = true;
+    int hdIconResource = getHdIconResource(state);
 
     if (isIncoming(state) && primaryInfo.isSpam()) {
       label = context.getString(R.string.contact_grid_incoming_suspected_spam);
@@ -105,6 +111,7 @@ public class BottomRow {
         isWorkIconVisible,
         isHdAttemptingIconVisible,
         isHdIconVisible,
+        hdIconResource,
         isForwardIconVisible,
         isSpamIconVisible,
         shouldPopulateAccessibilityEvent);
@@ -122,6 +129,13 @@ public class BottomRow {
       }
     }
     return null;
+  }
+
+  private static int getHdIconResource(PrimaryCallState state) {
+    if (state.isHdAudioPlusCall()) {
+      return R.drawable.quantum_ic_hd_plus_white_24;
+    }
+    return R.drawable.asd_hd_icon;
   }
 
   private static boolean isIncoming(PrimaryCallState state) {
