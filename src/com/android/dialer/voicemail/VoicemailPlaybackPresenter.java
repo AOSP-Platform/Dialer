@@ -346,7 +346,6 @@ public class VoicemailPlaybackPresenter
      * a request to fetch the content asynchronously via {@link #requestContent()}.
      */
     private void checkForContent() {
-        mView.setIsFetchingContent();
         mAsyncTaskExecutor.submit(Tasks.CHECK_FOR_CONTENT, new AsyncTask<Void, Void, Boolean>() {
             @Override
             public Boolean doInBackground(Void... params) {
@@ -400,7 +399,7 @@ public class VoicemailPlaybackPresenter
         if (mFetchResultHandler != null) {
             mFetchResultHandler.destroy();
         }
-
+        mView.setIsFetchingContent();
         mFetchResultHandler = new FetchResultHandler(new Handler(), mVoicemailUri);
 
         // Send voicemail fetch request.

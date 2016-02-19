@@ -324,7 +324,8 @@ public class VoicemailPlaybackLayout extends LinearLayout
 
     @Override
     public void setIsFetchingContent() {
-        disableUiElements();
+        enableUiElements();
+        mStartStopButton.setImageResource(R.drawable.ic_play_arrow);
         mStateText.setText(getString(R.string.voicemail_fetching_content));
     }
 
