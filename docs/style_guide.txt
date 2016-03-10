@@ -1,0 +1,45 @@
+This is a very early draft of the dialer team style guide.
+
+JAVA STYLE
+TODO(sail): Remove this and switch to an autoformatter for all new code.
+
+1. Imports should be sorted.
+
+2. Member variables should be sorted in the following order:
+    - static finals
+    - static
+    - final
+    - everything else
+
+CODING BEST PRACTICES
+
+1. Singletons
+   - Don't use singletons. Have objects be passed in. Rare exceptions could be
+     made for things like Services.
+
+2. Finals
+   - Don't use finals for local variables.
+
+3. Member variables
+    - Don't cache anything in member variables that can be derived when needed.
+
+4. Comments
+    - Avoid comments when possible. Possibly alternatives to comments:
+        - expressive variable names
+        - expressive function names
+    - Comments that repeat function names or class names or variable names are
+      banned.
+
+5. Unit tests
+    - All new classes must have unit tests.
+    - When adding code to an existing class check if that class has tests. If so
+      then unit tests are required for the newly added code.
+
+6. Threading
+    - Avoid multi-threaded code. Data should be passed to a background task
+      instead.
+    - Use of "synchronized" and locks are banned. Rare exceptions are permitted
+      specially when dealing with legacy code.
+
+7. Crash when possible
+    - Silently working around errors should be avoided. Crashes are preferred.
