@@ -115,9 +115,11 @@ public class VoicemailPlaybackLayout extends LinearLayout
         }
 
         private void cancelPendingRunnables() {
-            if (mScheduledFuture != null) {
-                mScheduledFuture.cancel(true);
-                mScheduledFuture = null;
+            synchronized (mLock) {
+                if (mScheduledFuture != null) {
+                    mScheduledFuture.cancel(true);
+                    mScheduledFuture = null;
+                }
             }
             removeCallbacks(mUpdateClipPositionRunnable);
         }
