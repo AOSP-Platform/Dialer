@@ -1091,9 +1091,12 @@ public class CallCardFragment extends BaseFragment<CallCardPresenter, CallCardPr
                 callStateLabel = context.getString(R.string.card_title_hanging_up);
                 break;
             case Call.State.DISCONNECTED:
-                callStateLabel = disconnectCause.getLabel();
+                callStateLabel = disconnectCause.getPreciseLabel();
                 if (TextUtils.isEmpty(callStateLabel)) {
-                    callStateLabel = context.getString(R.string.card_title_call_ended);
+                    callStateLabel = disconnectCause.getLabel();
+                    if (TextUtils.isEmpty(callStateLabel)) {
+                        callStateLabel = context.getString(R.string.card_title_call_ended);
+                    }
                 }
                 break;
             case Call.State.CONFERENCED:
