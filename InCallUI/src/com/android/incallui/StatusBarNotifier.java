@@ -41,6 +41,7 @@ import android.support.annotation.Nullable;
 import android.telecom.Call.Details;
 import android.telecom.PhoneAccount;
 import android.telecom.TelecomManager;
+import android.telecom.VideoProfile;
 import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
@@ -85,6 +86,7 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
     private final DialerRingtoneManager mDialerRingtoneManager;
     private int mCurrentNotification = NOTIFICATION_NONE;
     private int mCallState = Call.State.INVALID;
+    private int mVideoState = VideoProfile.STATE_AUDIO_ONLY;
     private int mSavedIcon = 0;
     private String mSavedContent = null;
     private Bitmap mSavedLargeIcon;
@@ -258,7 +260,7 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
         }
 
         if (!checkForChangeAndSaveData(iconResId, content, largeIcon, contentTitle, callState,
-                notificationType, contactInfo.contactRingtoneUri)) {
+                call.getVideoState(), notificationType, contactInfo.contactRingtoneUri)) {
             return;
         }
 
@@ -384,7 +386,7 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
      * we do not issue a new notification for the exact same data.
      */
     private boolean checkForChangeAndSaveData(int icon, String content, Bitmap largeIcon,
-            String contentTitle, int state, int notificationType, Uri ringtone) {
+            String contentTitle, int state, int videoState, int notificationType, Uri ringtone) {
 
         // The two are different:
         // if new title is not null, it should be different from saved version OR
@@ -395,8 +397,9 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
 
         // any change means we are definitely updating
         boolean retval = (mSavedIcon != icon) || !Objects.equals(mSavedContent, content)
-                || (mCallState != state) || (mSavedLargeIcon != largeIcon)
-                || contentTitleChanged || !Objects.equals(mRingtone, ringtone);
+                || (mCallState != state) || (mVideoState != videoState)
+                || (mSavedLargeIcon != largeIcon) || contentTitleChanged
+                || !Objects.equals(mRingtone, ringtone);
 
         // If we aren't showing a notification right now or the notification type is changing,
         // definitely do an update.
@@ -410,6 +413,7 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
         mSavedIcon = icon;
         mSavedContent = content;
         mCallState = state;
+        mVideoState = videoState;
         mSavedLargeIcon = largeIcon;
         mSavedContentTitle = contentTitle;
         mRingtone = ringtone;
