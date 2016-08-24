@@ -374,7 +374,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         if (resId == R.id.context_menu_block_number) {
             FilteredNumberCompat
                     .showBlockNumberDialogFlow(mContext.getContentResolver(), blockId, number,
-                            countryIso, displayNumber, R.id.floating_action_button_container,
+                            countryIso, displayNumber, R.id.calllog_frame,
                             ((Activity) mContext).getFragmentManager(),
                             mFilteredNumberDialogCallback);
             return true;
