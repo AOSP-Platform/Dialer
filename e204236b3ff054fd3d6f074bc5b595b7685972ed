@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfa814f6_5b8c8f35",
+        "filename": "src/com/android/dialer/DialtactsActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1124151
+      },
+      "writtenOn": "2016-10-10T19:58:55Z",
+      "side": 1,
+      "message": "It would be better to combine this if with the outer if to reduce code duplication (the block inside the \u0027if\u0027 is exactly the same as the block in the outer \u0027else\u0027)",
+      "range": {
+        "startLine": 1347,
+        "startChar": 12,
+        "endLine": 1347,
+        "endChar": 14
+      },
+      "revId": "e204236b3ff054fd3d6f074bc5b595b7685972ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
