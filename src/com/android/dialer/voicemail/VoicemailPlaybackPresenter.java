@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.android.dialer.voicemail;
@@ -266,6 +267,9 @@ public class VoicemailPlaybackPresenter implements MediaPlayer.OnPreparedListene
             // media player.
             mPosition = mMediaPlayer.getCurrentPosition();
             onPrepared(mMediaPlayer);
+            // set saved value.
+            setSpeakerphoneOn(mIsSpeakerphoneOn);
+            mVoicemailAudioManager.setSpeakerphoneOn(mIsSpeakerphoneOn);
         } else {
             if (!voicemailUri.equals(mVoicemailUri)) {
                 mVoicemailUri = voicemailUri;
