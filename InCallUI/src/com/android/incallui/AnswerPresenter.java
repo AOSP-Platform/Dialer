@@ -54,11 +54,17 @@ public class AnswerPresenter extends Presenter<AnswerPresenter.AnswerUi>
             if (call != null) {
                 processIncomingCall(call);
             }
-            call = calls.getVideoUpgradeRequestCall();
-            Log.d(this, "getVideoUpgradeRequestCall call =" + call);
-            if (call != null) {
+
+            Call videoCall;
+            videoCall = calls.getVideoUpgradeRequestCall();
+            Log.d(this, "getVideoUpgradeRequestCall videoCall =" + videoCall);
+            if (videoCall != null) {
                 showAnswerUi(true);
-                processVideoUpgradeRequestCall(call);
+                processVideoUpgradeRequestCall(videoCall);
+            }
+
+            if (call == null && videoCall == null) {
+                showAnswerUi(false);
             }
         } else {
             CallList.getInstance().removeListener(this);
