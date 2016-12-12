@@ -1322,6 +1322,10 @@ public class DialtactsActivity extends TransactionSafeActivity
     onPageSelected(mListsFragment.getCurrentTabIndex());
 
     mActionBarController.onSearchUiExited();
+
+    if (!canIntentBeHandled(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))) {
+      mVoiceSearchButton.setVisibility(View.GONE);
+    }
   }
 
   @Override
