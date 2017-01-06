@@ -1272,6 +1272,7 @@ public class DialpadFragment extends Fragment
 
             mFloatingActionButtonController.setVisible(true);
             mDialpadChooser.setVisibility(View.GONE);
+            mFloatingActionButtonController.scaleIn(mAnimate ? mDialpadSlideInDuration : 0);
         }
     }
 
