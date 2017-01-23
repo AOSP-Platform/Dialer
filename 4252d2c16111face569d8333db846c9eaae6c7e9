@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c865c6f6_82161e72",
+        "filename": "InCallUI/src/com/android/incallui/AnswerPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1124151
+      },
+      "writtenOn": "2017-01-23T22:07:17Z",
+      "side": 1,
+      "message": "Declaration and instantiation can be on the same line",
+      "revId": "4252d2c16111face569d8333db846c9eaae6c7e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
