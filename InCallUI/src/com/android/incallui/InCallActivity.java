@@ -845,9 +845,9 @@ public class InCallActivity extends TransactionSafeActivity implements FragmentD
 
     public void showAnswerFragment(boolean show) {
         // CallCardFragment is the parent fragment of AnswerFragment.
-        // Must create the CallCardFragment first before creating
-        // AnswerFragment if CallCardFragment is null.
-        if (show && getCallCardFragment() == null) {
+        // Must create the CallCardFragment and make sure it is visible first
+        // before creating AnswerFragment if CallCardFragment is null or invisible.
+        if (show && (getCallCardFragment() == null || !getCallCardFragment().isVisible())) {
             showCallCardFragment(true);
         }
         showFragment(TAG_ANSWER_FRAGMENT, show, true);

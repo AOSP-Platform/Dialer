@@ -1385,6 +1385,12 @@ public class InCallPresenter implements CallList.Listener,
 
         if (showCallUi || showAccountPicker) {
             Log.i(this, "Start in call UI");
+
+            // We're about the bring up the in-call UI for an outgoing call. If we still have
+            // dialogs up, we need to clear them out before showing outgoing screen.
+            if (isActivityStarted()) {
+                mInCallActivity.dismissPendingDialogs();
+            }
             showInCall(false /* showDialpad */, !showAccountPicker /* newOutgoingCall */);
         } else if (startIncomingCallSequence) {
             Log.i(this, "Start Full Screen in call UI");
