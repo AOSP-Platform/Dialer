@@ -22,6 +22,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.telecom.DisconnectCause;
 import android.text.TextUtils;
+import android.telephony.SubscriptionManager;
 import com.android.dialer.assisteddialing.TransformationInfo;
 import com.android.dialer.common.Assert;
 import com.android.dialer.preferredsim.suggestion.SuggestionProvider;
@@ -49,6 +50,8 @@ public abstract class PrimaryCallState {
   }
 
   public abstract int state();
+
+  public abstract int subId();
 
   public abstract boolean isVideoCall();
 
@@ -114,6 +117,7 @@ public abstract class PrimaryCallState {
   public static Builder builder() {
     return new AutoValue_PrimaryCallState.Builder()
         .setState(DialerCallState.IDLE)
+        .setSubId(SubscriptionManager.INVALID_SUBSCRIPTION_ID)
         .setIsVideoCall(false)
         .setSessionModificationState(SessionModificationState.NO_REQUEST)
         .setDisconnectCause(new DisconnectCause(DisconnectCause.UNKNOWN))
@@ -138,6 +142,8 @@ public abstract class PrimaryCallState {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setState(int state);
+
+    public abstract Builder setSubId(int subId);
 
     public abstract Builder setIsVideoCall(boolean isVideoCall);
 

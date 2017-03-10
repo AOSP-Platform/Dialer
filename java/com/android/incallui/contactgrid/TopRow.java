@@ -17,9 +17,13 @@
 package com.android.incallui.contactgrid;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.BidiFormatter;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -70,7 +74,8 @@ public class TopRow {
     boolean labelIsSingleLine = true;
 
     if (state.isWifi() && icon == null) {
-      icon = context.getDrawable(R.drawable.quantum_ic_network_wifi_vd_theme_24);
+      icon = getResourcesForSubId(context, state.subId())
+          .getDrawable(R.drawable.quantum_ic_network_wifi_vd_theme_24);
     }
 
     if (state.state() == DialerCallState.INCOMING
@@ -275,5 +280,31 @@ public class TopRow {
 
   private static boolean isAccount(PrimaryCallState state) {
     return !TextUtils.isEmpty(state.connectionLabel()) && TextUtils.isEmpty(state.gatewayNumber());
+  }
+
+  /**
+   * Gets the resources associated with Subscription.
+   *
+   * @param context Context object
+   * @param subId Subscription Id of Subscription who's resources are required
+   *
+   * @return Resources associated with Subscription.
+   */
+  private static Resources getResourcesForSubId(Context context, int subId) {
+    SubscriptionManager subscriptionManager = context.getSystemService(SubscriptionManager.class);
+    SubscriptionInfo subInfo = subscriptionManager.getActiveSubscriptionInfo(subId);
+    if (subInfo == null) {
+      return context.getResources();
+    }
+
+    Configuration config = context.getResources().getConfiguration();
+    Configuration newConfig = new Configuration();
+    newConfig.setTo(config);
+
+    newConfig.mcc = subInfo.getMcc();
+    newConfig.mnc = subInfo.getMnc();
+    if (newConfig.mnc == 0) newConfig.mnc = Configuration.MNC_ZERO;
+
+    return context.createConfigurationContext(newConfig).getResources();
   }
 }
