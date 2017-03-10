@@ -55,6 +55,14 @@
       over Wi-Fi. The format argument is @string/notification_call_wifi_brand [CHAR LIMIT=20] -->
   <string name="notification_incoming_call_wifi_template">Incoming <xliff:g id="brand_name">%1$s</xliff:g></string>
 
+  <!-- The "label" of the in-call Notification for an ongoing call, which is being made over
+       LTE. [CHAR LIMIT=60] -->
+  <string name="notification_ongoing_call_volte">Ongoing VoLTE call</string>
+
+  <!-- The "label" of the in-call Notification for an incoming ringing call,
+       which is being made over LTE. [CHAR LIMIT=60] -->
+  <string name="notification_incoming_call_volte">Incoming VoLTE call</string>
+
   <!-- "Brand name" for WiFi calls. Will be overridden for specific mcc-mnc combinations [CHAR LIMIT=40]-->
   <string name="notification_call_wifi_brand">Wi\u2011Fi call</string>
 

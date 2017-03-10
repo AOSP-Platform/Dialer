@@ -479,6 +479,8 @@ public class CallCardPresenter
                   PhoneNumberHelper.formatNumber(
                       primary.getCallbackNumber(), primary.getSimCountryIso()),
                   primary.hasProperty(Details.PROPERTY_WIFI),
+                  primary.hasProperty(Details.PROPERTY_LTE),
+                  primary.isDisplayVolteStatusHints(),
                   primary.isConferenceCall()
                       && !primary.hasProperty(Details.PROPERTY_GENERIC_CONFERENCE),
                   isWorkCall,
@@ -982,14 +984,7 @@ public class CallCardPresenter
   private Drawable getCallStateIcon() {
     // Return connection icon if one exists.
     StatusHints statusHints = primary.getStatusHints();
-    if (statusHints != null && statusHints.getIcon() != null) {
-      Drawable icon = statusHints.getIcon().loadDrawable(context);
-      if (icon != null) {
-        return icon;
-      }
-    }
-
-    return null;
+    return statusHints == null ? null : statusHints.getIconForSubId(context);
   }
 
   private boolean hasOutgoingGatewayCall() {

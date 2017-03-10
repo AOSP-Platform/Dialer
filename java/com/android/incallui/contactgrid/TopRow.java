@@ -135,7 +135,8 @@ public class TopRow {
   private static CharSequence getLabelForIncoming(Context context, PrimaryCallState state) {
     if (state.isVideoCall) {
       return getLabelForIncomingVideo(context, state.sessionModificationState, state.isWifi);
-    } else if (state.isWifi && !TextUtils.isEmpty(state.connectionLabel)) {
+    } else if ((state.isWifi || (state.isEnhanced4gLteCall && state.isDisplayVolteStatusHints))
+        && !TextUtils.isEmpty(state.connectionLabel)) {
       return state.connectionLabel;
     } else if (isAccount(state)) {
       return context.getString(R.string.contact_grid_incoming_via_template, state.connectionLabel);
@@ -164,7 +165,8 @@ public class TopRow {
   }
 
   private static CharSequence getLabelForDialing(Context context, PrimaryCallState state) {
-    if (!TextUtils.isEmpty(state.connectionLabel) && !state.isWifi) {
+    if (!TextUtils.isEmpty(state.connectionLabel) && !state.isWifi
+        && !(state.isEnhanced4gLteCall && state.isDisplayVolteStatusHints)) {
       return context.getString(R.string.incall_calling_via_template, state.connectionLabel);
     } else {
       if (state.isVideoCall) {
@@ -190,7 +192,9 @@ public class TopRow {
 
   private static CharSequence getConnectionLabel(PrimaryCallState state) {
     if (!TextUtils.isEmpty(state.connectionLabel)
-        && (isAccount(state) || state.isWifi || state.isConference)) {
+        && (isAccount(state) || state.isWifi
+            || (state.isEnhanced4gLteCall && state.isDisplayVolteStatusHints)
+                || state.isConference)) {
       // We normally don't show a "call state label" at all when active
       // (but we can use the call state label to display the provider name).
       return state.connectionLabel;

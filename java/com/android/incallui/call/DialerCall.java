@@ -965,6 +965,18 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     return extras.getBoolean(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL);
   }
 
+  /**
+   * Determines whether display status hints for volte call.
+   *
+   * @return {@code true} if display status hints for volte call, {@code false} otherwise.
+   */
+  public boolean isDisplayVolteStatusHints() {
+    Bundle extras = getExtras();
+    return extras == null
+        ? false
+        : extras.getBoolean(Connection.EXTRA_DISPLAY_VOLTE_STATUS_HINTS, false);
+  }
+
   private void parseCallSpecificAppData() {
     if (isExternalCall()) {
       return;
