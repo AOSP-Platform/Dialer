@@ -55,6 +55,7 @@ public class PrimaryCallState {
   public final String callSubject;
   public final String callbackNumber;
   public final boolean isWifi;
+  public final boolean isVolte;
   public final boolean isConference;
   public final boolean isWorkCall;
   public final boolean isHdAttempting;
@@ -89,6 +90,7 @@ public class PrimaryCallState {
         null, /* callSubject */
         null, /* callbackNumber */
         false /* isWifi */,
+        false /* isVolte */,
         false /* isConference */,
         false /* isWorkCall */,
         false /* isHdAttempting */,
@@ -117,6 +119,7 @@ public class PrimaryCallState {
       String callSubject,
       String callbackNumber,
       boolean isWifi,
+      boolean isVolte,
       boolean isConference,
       boolean isWorkCall,
       boolean isHdAttempting,
@@ -142,6 +145,7 @@ public class PrimaryCallState {
     this.callSubject = callSubject;
     this.callbackNumber = callbackNumber;
     this.isWifi = isWifi;
+    this.isVolte = isVolte;
     this.isConference = isConference;
     this.isWorkCall = isWorkCall;
     this.isHdAttempting = isHdAttempting;

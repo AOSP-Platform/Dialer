@@ -472,6 +472,7 @@ public class CallCardPresenter
                   PhoneNumberHelper.formatNumber(
                       mPrimary.getCallbackNumber(), mPrimary.getSimCountryIso()),
                   mPrimary.hasProperty(Details.PROPERTY_WIFI),
+                  mPrimary.hasProperty(Details.PROPERTY_LTE),
                   mPrimary.isConferenceCall()
                       && !mPrimary.hasProperty(Details.PROPERTY_GENERIC_CONFERENCE),
                   isWorkCall,
