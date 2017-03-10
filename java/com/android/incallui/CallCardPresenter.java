@@ -475,6 +475,7 @@ public class CallCardPresenter
           .setCallState(
               PrimaryCallState.builder()
                   .setState(primary.getState())
+                  .setSubId(primary.getSubId())
                   .setIsVideoCall(primary.isVideoCall())
                   .setSessionModificationState(primary.getVideoTech().getSessionModificationState())
                   .setDisconnectCause(primary.getDisconnectCause())
@@ -959,14 +960,7 @@ public class CallCardPresenter
   private Drawable getCallStateIcon() {
     // Return connection icon if one exists.
     StatusHints statusHints = primary.getStatusHints();
-    if (statusHints != null && statusHints.getIcon() != null) {
-      Drawable icon = statusHints.getIcon().loadDrawable(context);
-      if (icon != null) {
-        return icon;
-      }
-    }
-
-    return null;
+    return statusHints == null ? null : statusHints.getIconForSubId(context, primary.getSubId());
   }
 
   private boolean hasOutgoingGatewayCall() {
