@@ -465,6 +465,7 @@ public class CallCardPresenter
           .setCallState(
               PrimaryCallState.builder()
                   .setState(primary.getState())
+                  .setSubId(primary.getSubId())
                   .setIsVideoCall(primary.isVideoCall())
                   .setSessionModificationState(primary.getVideoTech().getSessionModificationState())
                   .setDisconnectCause(primary.getDisconnectCause())
@@ -955,7 +956,7 @@ public class CallCardPresenter
     // Return connection icon if one exists.
     StatusHints statusHints = primary.getStatusHints();
     if (statusHints != null && statusHints.getIcon() != null) {
-      Drawable icon = statusHints.getIcon().loadDrawable(context);
+      Drawable icon = statusHints.getIconDrawable(context);
       if (icon != null) {
         return icon;
       }
