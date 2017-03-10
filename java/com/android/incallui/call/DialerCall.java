@@ -47,6 +47,8 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.StatusHints;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.android.contacts.common.compat.CallCompat;
@@ -1210,6 +1212,25 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
       return false;
     }
     return extras.getBoolean(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL);
+  }
+
+  /**
+   * Gets the subscription id of SIM for current call being made with.
+   *
+   * @return the subscription id of SIM for current call being made with.
+   */
+  public int getSubId() {
+    int subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    PhoneAccountHandle phoneAccountHandle = getAccountHandle();
+    if (phoneAccountHandle != null) {
+      Optional<SubscriptionInfo> subscriptionInfo =
+          TelecomUtil.getSubscriptionInfo(context, phoneAccountHandle);
+      if (subscriptionInfo.isPresent()) {
+        subId = subscriptionInfo.get().getSubscriptionId();
+      }
+    }
+    LogUtil.v("DialerCall.getSubId", "subId: " + subId);
+    return subId;
   }
 
   private void parseCallSpecificAppData() {
