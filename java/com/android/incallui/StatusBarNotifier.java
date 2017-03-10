@@ -686,6 +686,9 @@ public class StatusBarNotifier
     String wifiBrand = mContext.getString(R.string.notification_call_wifi_brand);
     if (call.hasProperty(Details.PROPERTY_WIFI)) {
       resId = R.string.notification_ongoing_call_wifi_template;
+    } else if (call.hasProperty(Details.PROPERTY_LTE)
+        && call.isDisplayVolteStatusHints()) {
+      resId = R.string.notification_ongoing_call_volte;
     }
 
     if (isIncomingOrWaiting) {
@@ -695,6 +698,9 @@ public class StatusBarNotifier
         resId = getECIncomingCallText(call.getEnrichedCallSession());
       } else if (call.hasProperty(Details.PROPERTY_WIFI)) {
         resId = R.string.notification_incoming_call_wifi_template;
+      } else if (call.hasProperty(Details.PROPERTY_LTE)
+          && call.isDisplayVolteStatusHints()) {
+        resId = R.string.notification_incoming_call_volte;
       } else if (call.getAccountHandle() != null && hasMultiplePhoneAccounts(call)) {
         return getMultiSimIncomingText(call);
       } else if (call.isVideoCall()) {
