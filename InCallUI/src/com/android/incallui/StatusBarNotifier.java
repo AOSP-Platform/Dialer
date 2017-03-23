@@ -489,14 +489,27 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
         // Also, we don't have room to display caller-id info from two
         // different calls.  So if both lines are in use, display info
         // from the foreground call.  And if there's a ringing call,
+	int resId;
+	boolean supportsVoicePrivacy = call.hasProperty(Details.PROPERTY_HAS_CDMA_VOICE_PRIVACY);
+	android.util.Log.i("TAG","Dialer ==== > supportsVoicePrivacy : "+supportsVoicePrivacy);
         // display that regardless of the state of the other calls.
         if (call.getState() == Call.State.ONHOLD) {
-            return R.drawable.ic_phone_paused_white_24dp;
+            if (supportsVoicePrivacy) {
+                resId = R.drawable.stat_sys_vp_phone_call_on_hold;
+            } else {
+                resId = R.drawable.ic_phone_paused_white_24dp;
+            }
         } else if (call.getSessionModificationState()
                 == Call.SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
-            return R.drawable.ic_videocam;
+            resId = R.drawable.ic_videocam;
+        } else {
+            if (supportsVoicePrivacy) {
+                resId = R.drawable.stat_sys_vp_phone_call;
+            } else {
+                resId = R.drawable.ic_call_white_24dp;
+            }
         }
-        return R.drawable.ic_call_white_24dp;
+        return resId;
     }
 
     /**
