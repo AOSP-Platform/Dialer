@@ -156,6 +156,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
   private boolean didShowCameraPermission;
   private String callProviderLabel;
   private String callbackNumber;
+  private String previousNumber;
   private int cameraDirection = CameraDirection.CAMERA_DIRECTION_UNKNOWN;
   private EnrichedCallCapabilities enrichedCallCapabilities;
   private Session enrichedCallSession;
@@ -343,6 +344,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     parseCallSpecificAppData();
 
     updateEnrichedCallSession();
+    previousNumber = getNumber();
   }
 
   /** Test only constructor to avoid initializing dependencies. */
@@ -403,6 +405,16 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
     // otherwise compare call Numbers
     return TextUtils.equals(call1.getNumber(), call2.getNumber());
+  }
+
+  /**
+   * Compares the latest number with the previous number to check whether a call number has been
+   * updated.
+   *
+   * @return True if a call number has been updated. False otherwise.
+   */
+  public boolean isNumberUpdated() {
+    return !TextUtils.equals(getNumber(), previousNumber);
   }
 
   public void addListener(DialerCallListener listener) {
@@ -517,6 +529,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         listener.onDialerCallUpdate();
       }
     }
+    previousNumber = getNumber();
     Trace.endSection();
   }
 

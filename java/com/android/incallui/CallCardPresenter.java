@@ -286,11 +286,11 @@ public class CallCardPresenter
     LogUtil.v("CallCardPresenter.onStateChange", "secondary call: " + secondary);
 
     final boolean primaryChanged =
-        !(DialerCall.areSame(this.primary, primary)
-            && DialerCall.areSameNumber(this.primary, primary));
+        !DialerCall.areSame(this.primary, primary)
+            || (primary != null && primary.isNumberUpdated());
     final boolean secondaryChanged =
-        !(DialerCall.areSame(this.secondary, secondary)
-            && DialerCall.areSameNumber(this.secondary, secondary));
+        !DialerCall.areSame(this.secondary, secondary)
+            || (secondary != null && secondary.isNumberUpdated());
 
     this.secondary = secondary;
     DialerCall previousPrimary = this.primary;
