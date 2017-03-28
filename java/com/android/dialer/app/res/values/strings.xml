@@ -675,4 +675,8 @@
   <!-- If a user deletes a call that has attachments (photo, message, ect) bundled with it, they need
         to be told that they need to go to the SMS app to delete the attachments. [CHAR LIMIT=NONE] -->
   <string name="multiple_ec_data_deleted">Calls deleted. View and delete attachments shared during calls in Messages.</string>
+
+  <!-- Menu option to open Contacts app which the user can use full functionality of Contacts. She/he can use simplified contacts in the dialer as well.-->
+  <string name="menu_open_contacts_txt">Advanced contacts</string>
+
 </resources>
