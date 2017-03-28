@@ -778,6 +778,12 @@ public class DialtactsActivity extends TransactionSafeActivity
     } else if (resId == R.id.menu_new_ui_launcher_shortcut) {
       MainComponent.get(this).getMain().createNewUiLauncherShortcut(this);
       return true;
+    } else if (resId == R.id.menu_start_contacts) {
+      Intent intent = getContactsAppIntent();
+      if (intent != null) {
+        startActivity(intent);
+        return true;
+      }
     }
     return false;
   }
@@ -1722,6 +1728,11 @@ public class DialtactsActivity extends TransactionSafeActivity
       menu.findItem(R.id.menu_new_ui_launcher_shortcut)
           .setVisible(dialtacts.isNewUiEnabled(context));
 
+      MenuItem startContactsMenuItem = menu.findItem(R.id.menu_start_contacts);
+      startContactsMenuItem.setTitle(
+            getResources().getString(R.string.menu_open_contacts_txt));
+      startContactsMenuItem.setVisible(getContactsAppIntent() != null);
+
       super.show();
     }
   }
@@ -1744,5 +1755,20 @@ public class DialtactsActivity extends TransactionSafeActivity
   @VisibleForTesting
   static void setVoiceSearchEnabledForTest(Optional<Boolean> enabled) {
     sVoiceSearchEnabledForTest = enabled;
+  }
+
+  private Intent getContactsAppIntent() {
+    if (getPackageManager() == null) {
+      return null;
+    }
+    Intent intent = new Intent();
+    intent.setClassName("com.android.contacts", "com.android.contacts.activities.PeopleActivity");
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent,
+            PackageManager.MATCH_DEFAULT_ONLY);
+    if (list != null && !list.isEmpty()) {
+      return intent;
+    }
+    return null;
   }
 }
