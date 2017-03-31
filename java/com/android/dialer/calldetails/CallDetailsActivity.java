@@ -63,6 +63,7 @@ public class CallDetailsActivity extends AppCompatActivity
     implements OnMenuItemClickListener,
         CallDetailsHeaderViewHolder.CallbackActionListener,
         CallDetailsFooterViewHolder.ReportCallIdListener,
+        CallDetailsFooterViewHolder.CallDetailDeletionListener,
         HistoricalDataChangedListener {
 
   public static final String EXTRA_PHONE_NUMBER = "phone_number";
@@ -162,7 +163,8 @@ public class CallDetailsActivity extends AppCompatActivity
             contact,
             entries.getEntriesList(),
             this /* callbackListener */,
-            this /* reportCallIdListener */);
+            this /* reportCallIdListener */,
+            this /* callDetailDeletionListener */);
 
     RecyclerView recyclerView = findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -250,6 +252,11 @@ public class CallDetailsActivity extends AppCompatActivity
     }
 
     DialerUtils.startActivityWithErrorToast(this, callIntentBuilder.build());
+  }
+
+  @Override
+  public void callDetailDelete() {
+    AsyncTaskExecutors.createAsyncTaskExecutor().submit(TASK_DELETE, new DeleteCallsTask());
   }
 
   @NonNull

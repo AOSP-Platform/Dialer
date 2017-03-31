@@ -23,6 +23,7 @@
   <item name="context_menu_block" type="id"/>
   <item name="context_menu_unblock" type="id"/>
   <item name="context_menu_report_not_spam" type="id"/>
+  <item name="context_menu_delete" type="id"/>
   <item name="settings_header_sounds_and_vibration" type="id"/>
   <item name="block_id" type="id"/>
 </resources>

@@ -42,6 +42,7 @@ final class CallDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
   private final DialerContact contact;
   private final CallbackActionListener callbackActionListener;
   private final CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener;
+  private final CallDetailsFooterViewHolder.CallDetailDeletionListener callDetailDeletionListener;
   private final CallTypeHelper callTypeHelper;
   private List<CallDetailsEntry> callDetailsEntries;
 
@@ -50,11 +51,13 @@ final class CallDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
       @NonNull DialerContact contact,
       @NonNull List<CallDetailsEntry> callDetailsEntries,
       CallbackActionListener callbackActionListener,
-      CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener) {
+      CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+      CallDetailsFooterViewHolder.CallDetailDeletionListener callDetailDeletionListener) {
     this.contact = Assert.isNotNull(contact);
     this.callDetailsEntries = callDetailsEntries;
     this.callbackActionListener = callbackActionListener;
     this.reportCallIdListener = reportCallIdListener;
+    this.callDetailDeletionListener = callDetailDeletionListener;
     callTypeHelper = new CallTypeHelper(context.getResources(), DuoComponent.get(context).getDuo());
   }
 
@@ -70,7 +73,8 @@ final class CallDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             inflater.inflate(R.layout.call_details_entry, parent, false));
       case FOOTER_VIEW_TYPE:
         return new CallDetailsFooterViewHolder(
-            inflater.inflate(R.layout.call_details_footer, parent, false), reportCallIdListener);
+            inflater.inflate(R.layout.call_details_footer, parent, false), reportCallIdListener,
+                callDetailDeletionListener);
       default:
         throw Assert.createIllegalStateFailException(
             "No ViewHolder available for viewType: " + viewType);
