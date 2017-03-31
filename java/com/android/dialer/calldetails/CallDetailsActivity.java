@@ -330,4 +330,8 @@ public class CallDetailsActivity extends AppCompatActivity
       finish();
     }
   }
+
+  public void callDeleteCallTask() {
+    AsyncTaskExecutors.createAsyncTaskExecutor().submit(TASK_DELETE, new DeleteCallsTask());
+  }
 }

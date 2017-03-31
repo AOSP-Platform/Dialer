@@ -675,4 +675,7 @@
   <!-- If a user deletes a call that has attachments (photo, message, ect) bundled with it, they need
         to be told that they need to go to the SMS app to delete the attachments. [CHAR LIMIT=NONE] -->
   <string name="multiple_ec_data_deleted">Calls deleted. View and delete attachments shared during calls in Messages.</string>
+
+  <!-- Menu item in the Call_details screen which deleting all data of the screen and that mean deleting one card of call history. -->
+  <string name="delete_call_log_txt">Delete call details</string>
 </resources>

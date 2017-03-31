@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import com.android.dialer.calldetails.CallDetailsActivity;
 import com.android.dialer.clipboard.ClipboardUtils;
 import com.android.dialer.common.Assert;
 import com.android.dialer.logging.DialerImpression;
@@ -39,6 +40,7 @@ final class CallDetailsFooterViewHolder extends RecyclerView.ViewHolder implemen
   private final View copy;
   private final View edit;
   private final View reportCallerId;
+  private final View delete;
 
   private String number;
 
@@ -49,10 +51,11 @@ final class CallDetailsFooterViewHolder extends RecyclerView.ViewHolder implemen
     copy = view.findViewById(R.id.call_detail_action_copy);
     edit = view.findViewById(R.id.call_detail_action_edit_before_call);
     reportCallerId = view.findViewById(R.id.call_detail_action_report_caller_id);
-
+    delete = view.findViewById(R.id.call_detail_action_delete);
     copy.setOnClickListener(this);
     edit.setOnClickListener(this);
     reportCallerId.setOnClickListener(this);
+    delete.setOnClickListener(this);
   }
 
   public void setPhoneNumber(String number) {
@@ -82,6 +85,10 @@ final class CallDetailsFooterViewHolder extends RecyclerView.ViewHolder implemen
       DialerUtils.startActivityWithErrorToast(context, dialIntent);
     } else if (view == reportCallerId) {
       listener.reportCallId(number);
+    } else if (view == delete) {
+      if (context instanceof CallDetailsActivity) {
+        ((CallDetailsActivity)context).callDeleteCallTask();
+      }
     } else {
       Assert.fail("View on click not implemented: " + view);
     }
