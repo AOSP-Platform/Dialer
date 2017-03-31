@@ -49,4 +49,7 @@
 
   <!-- Toast message which appears when a contact's caller id is reported as incorrect. [CHAR LIMIT=NONE] -->
   <string name="report_caller_id_toast">Number reported</string>
+
+  <!-- Menu item in the Call_details screen which deleting all data of the screen and that mean deleting one card of call history. -->
+  <string name="delete_call_log_txt">Delete call details</string>
 </resources>
