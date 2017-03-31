@@ -67,6 +67,7 @@ import com.android.dialer.callintent.CallIntentBuilder;
 import com.android.dialer.calllogutils.CallbackActionHelper.CallbackAction;
 import com.android.dialer.clipboard.ClipboardUtils;
 import com.android.dialer.common.Assert;
+import com.android.dialer.common.concurrent.AsyncTaskExecutors;
 import com.android.dialer.common.LogUtil;
 import com.android.dialer.compat.CompatUtils;
 import com.android.dialer.configprovider.ConfigProviderBindings;
@@ -107,6 +108,9 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     implements View.OnClickListener,
         MenuItem.OnMenuItemClickListener,
         View.OnCreateContextMenuListener {
+
+  private static final String TASK_DELETE = "task_delete";
+
   /** The root view of the call log list item */
   public final View rootView;
   /** The quick contact badge for the contact. */
@@ -431,6 +435,8 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
           .logImpression(DialerImpression.Type.CALL_LOG_CONTEXT_MENU_REPORT_AS_NOT_SPAM);
       mBlockReportListener.onReportNotSpam(
           displayNumber, number, countryIso, callType, info.sourceType);
+    } else if (resId == R.id.context_menu_delete) {
+      AsyncTaskExecutors.createAsyncTaskExecutor().submit(TASK_DELETE, new DeleteCallTask(callIds));
     }
     return false;
   }
@@ -1217,6 +1223,15 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
       }
     }
 
+    if (callType != CallLog.Calls.VOICEMAIL_TYPE) {
+      menu.add(
+              ContextMenu.NONE,
+              R.id.context_menu_delete,
+              ContextMenu.NONE,
+              R.string.delete)
+          .setOnMenuItemClickListener(this);
+    }
+
     Logger.get(mContext).logScreenView(ScreenEvent.Type.CALL_LOG_CONTEXT_MENU, (Activity) mContext);
   }
 
@@ -1260,5 +1275,37 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         String countryIso,
         int callType,
         ContactSource.Type contactSourceType);
+  }
+
+  private class DeleteCallTask extends AsyncTask<Void, Void, Void> {
+    private final String callIdsStr;
+
+    DeleteCallTask(long[] callIdsArray) {
+      if (callIdsArray != null && callIdsArray.length > 0) {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < callIdsArray.length; i++) {
+          if (str.length() != 0) {
+            str.append(",");
+          }
+          str.append(callIdsArray[i]);
+        }
+        callIdsStr = str.toString();
+      } else {
+        callIdsStr = null;
+      }
+    }
+
+    @Override
+    protected Void doInBackground(Void... params) {
+      if (callIdsStr != null) {
+        mContext.getContentResolver()
+                .delete(Calls.CONTENT_URI, CallLog.Calls._ID + " IN (" + callIdsStr + ")", null);
+      }
+      return null;
+    }
+
+    @Override
+    public void onPostExecute(Void result) {
+    }
   }
 }
