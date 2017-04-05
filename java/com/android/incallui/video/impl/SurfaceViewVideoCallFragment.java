@@ -137,6 +137,28 @@ public class SurfaceViewVideoCallFragment extends Fragment
         }
       };
 
+  private final Runnable videoChargesAlertDialogRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          VideoChargesAlertDialogFragment existingVideoChargesAlertFragment =
+              (VideoChargesAlertDialogFragment)
+                  getChildFragmentManager().findFragmentByTag(Tags.VIDEO_CHARGES_ALERT);
+          if (existingVideoChargesAlertFragment != null) {
+            existingVideoChargesAlertFragment.setCallback(videoChargesAlertCallback);
+            LogUtil.i("SurfaceViewVideoCallFragment.videoChargesAlertDialogRunnable",
+                "already shown for this call");
+            return;
+          }
+
+          if (videoCallScreenDelegate.shouldShowVideoChargesAlertDialog()) {
+            LogUtil.i("SurfaceViewVideoCallFragment.videoChargesAlertDialogRunnable",
+                "showing dialog");
+            showDialogForVideoChargesAlert();
+          }
+        }
+      };
+
   public static SurfaceViewVideoCallFragment newInstance(String callId) {
     Bundle bundle = new Bundle();
     bundle.putString(ARG_CALL_ID, Assert.isNotNull(callId));
@@ -314,6 +336,7 @@ public class SurfaceViewVideoCallFragment extends Fragment
     inCallButtonUiDelegate.refreshMuteState();
     videoCallScreenDelegate.onVideoCallScreenUiReady();
     getView().postDelayed(cameraPermissionDialogRunnable, CAMERA_PERMISSION_DIALOG_DELAY_IN_MILLIS);
+    getView().post(videoChargesAlertDialogRunnable);
   }
 
   @Override
@@ -339,6 +362,7 @@ public class SurfaceViewVideoCallFragment extends Fragment
 
   @Override
   public void onVideoScreenStop() {
+    getView().removeCallbacks(videoChargesAlertDialogRunnable);
     getView().removeCallbacks(cameraPermissionDialogRunnable);
     videoCallScreenDelegate.onVideoCallScreenUiUnready();
   }
@@ -725,6 +749,11 @@ public class SurfaceViewVideoCallFragment extends Fragment
   }
 
   @Override
+  public void onHandoverFromWiFiToLte() {
+    getView().post(videoChargesAlertDialogRunnable);
+  }
+
+  @Override
   public void showButton(@InCallButtonIds int buttonId, boolean show) {
     LogUtil.v(
         "SurfaceViewVideoCallFragment.showButton",
@@ -1061,5 +1090,23 @@ public class SurfaceViewVideoCallFragment extends Fragment
         videoCallScreenDelegate.onCameraPermissionGranted();
       }
     }
+  }
+
+  private void showDialogForVideoChargesAlert() {
+    VideoChargesAlertDialogFragment.newInstance(getCallId(), videoChargesAlertCallback)
+        .show(getChildFragmentManager(), Tags.VIDEO_CHARGES_ALERT);
+  }
+
+  private final VideoChargesAlertDialogFragment.Callback videoChargesAlertCallback =
+      new VideoChargesAlertDialogFragment.Callback() {
+        @Override
+        public void onDismiss(@NonNull String callId) {
+          LogUtil.i("SurfaceViewVideoCallFragment.onDismiss", "");
+          videoCallScreenDelegate.onVideoChargesAlertDialogDismissed();
+        }
+      };
+
+  private static final class Tags {
+    static final String VIDEO_CHARGES_ALERT = "tag_video_charges_alert";
   }
 }

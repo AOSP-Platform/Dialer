@@ -20,7 +20,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.telecom.Call.Details;
 import android.telecom.InCallService.VideoCall;
 import android.telecom.VideoProfile;
 import android.telecom.VideoProfile.CameraCapabilities;
@@ -42,6 +44,7 @@ import com.android.incallui.call.DialerCall.State;
 import com.android.incallui.call.InCallVideoCallCallbackNotifier;
 import com.android.incallui.call.InCallVideoCallCallbackNotifier.SurfaceChangeListener;
 import com.android.incallui.util.AccessibilityUtil;
+import com.android.incallui.video.impl.VideoChargesAlertDialogFragment;
 import com.android.incallui.video.protocol.VideoCallScreen;
 import com.android.incallui.video.protocol.VideoCallScreenDelegate;
 import com.android.incallui.videosurface.protocol.VideoSurfaceDelegate;
@@ -80,7 +83,8 @@ public class VideoCallPresenter
         InCallDetailsListener,
         SurfaceChangeListener,
         InCallPresenter.InCallEventListener,
-        VideoCallScreenDelegate {
+        VideoCallScreenDelegate,
+        CallList.Listener {
 
   private static boolean isVideoMode = false;
 
@@ -325,6 +329,8 @@ public class VideoCallPresenter
     InCallPresenter.getInstance().getLocalVideoSurfaceTexture().setDelegate(new LocalDelegate());
     InCallPresenter.getInstance().getRemoteVideoSurfaceTexture().setDelegate(new RemoteDelegate());
 
+    CallList.getInstance().addListener(this);
+
     // Register for surface and video events from {@link InCallVideoCallListener}s.
     InCallVideoCallCallbackNotifier.getInstance().addSurfaceChangeListener(this);
     currentVideoState = VideoProfile.STATE_AUDIO_ONLY;
@@ -355,6 +361,8 @@ public class VideoCallPresenter
     InCallPresenter.getInstance().getLocalVideoSurfaceTexture().setDelegate(null);
 
     InCallVideoCallCallbackNotifier.getInstance().removeSurfaceChangeListener(this);
+
+    CallList.getInstance().removeListener(this);
 
     // Ensure that the call's camera direction is updated (most likely to UNKNOWN). Normally this
     // happens after any call state changes but we're unregistering from InCallPresenter above so
@@ -1107,6 +1115,41 @@ public class VideoCallPresenter
     }
   }
 
+  @Override
+  public boolean shouldShowVideoChargesAlertDialog() {
+    if (primaryCall == null) {
+      LogUtil.i("VideoCallPresenter.shouldShowVideoChargesAlertDialog", "null call");
+      return false;
+    }
+
+    if (primaryCall.hasProperty(Details.PROPERTY_WIFI)) {
+      return false;
+    }
+
+    if (primaryCall.didDismissVideoChargesAlertDialog()) {
+      LogUtil.i(
+          "VideoCallPresenter.shouldShowVideoChargesAlertDialog",
+          "The dialog has been dismissed by user");
+      return false;
+    }
+
+    if (!VideoChargesAlertDialogFragment.shouldShow(context, primaryCall)) {
+      LogUtil.i(
+          "VideoCallPresenter.shouldShowVideoChargesAlertDialog",
+          "VideoChargesAlertDialogFragment.shouldShow returned false");
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public void onVideoChargesAlertDialogDismissed() {
+    if (primaryCall != null) {
+      primaryCall.setDidDismissVideoChargesAlertDialog(true);
+    }
+  }
+
   private void updateRemoteVideoSurfaceDimensions() {
     Activity activity = videoCallScreen.getVideoCallScreenFragment().getActivity();
     if (activity != null) {
@@ -1281,4 +1324,32 @@ public class VideoCallPresenter
         && (VideoProfile.isTransmissionEnabled(videoState)
             || VideoProfile.isReceptionEnabled(videoState));
   }
+
+  @Override
+  public void onIncomingCall(DialerCall call) {}
+
+  @Override
+  public void onUpgradeToVideo(DialerCall call) {}
+
+  @Override
+  public void onSessionModificationStateChange(DialerCall call) {}
+
+  @Override
+  public void onCallListChange(CallList callList) {}
+
+  @Override
+  public void onDisconnect(DialerCall call) {}
+
+  @Override
+  public void onWiFiToLteHandover(DialerCall call) {
+    if (call.isVideoCall() || call.hasSentVideoUpgradeRequest()) {
+      videoCallScreen.onHandoverFromWiFiToLte();
+    }
+  }
+
+  @Override
+  public void onHandoverToWifiFailed(DialerCall call) {}
+
+  @Override
+  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
 }

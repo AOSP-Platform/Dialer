@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Trace;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.StatusHints;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
+import android.telephony.CarrierConfigManager;
 import android.text.TextUtils;
 import com.android.contacts.common.compat.CallCompat;
 import com.android.contacts.common.compat.telecom.TelecomManagerCompat;
@@ -156,6 +158,8 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
   @Nullable private Boolean isInGlobalSpamList;
   private boolean didShowCameraPermission;
+  private boolean didDismissVideoChargesAlertDialog;
+  private boolean showVideoChargesAlertDialog;
   private String callProviderLabel;
   private String callbackNumber;
   private int cameraDirection = CameraDirection.CAMERA_DIRECTION_UNKNOWN;
@@ -585,6 +589,9 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         if (phoneAccount != null) {
           isCallSubjectSupported =
               phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+          if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
+            cacheCarrierConfiguration(phoneAccountHandle);
+          }
         }
       }
     }
@@ -710,6 +717,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
   public void setDoNotShowDialogForHandoffToWifiFailure(boolean bool) {
     doNotShowDialogForHandoffToWifiFailure = bool;
+  }
+
+  public boolean showVideoChargesAlertDialog() {
+    return showVideoChargesAlertDialog;
   }
 
   public long getTimeAddedMs() {
@@ -1071,6 +1082,14 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     didShowCameraPermission = didShow;
   }
 
+  public boolean didDismissVideoChargesAlertDialog() {
+    return didDismissVideoChargesAlertDialog;
+  }
+
+  public void setDidDismissVideoChargesAlertDialog(boolean didDismiss) {
+    didDismissVideoChargesAlertDialog = didDismiss;
+  }
+
   @Nullable
   public Boolean isInGlobalSpamList() {
     return isInGlobalSpamList;
@@ -1351,6 +1370,25 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
       simCountryIso = simCountryIso.toUpperCase(Locale.US);
     }
     return simCountryIso;
+  }
+
+  /**
+   * Caches frequently used carrier configuration items locally.
+   *
+   * @param accountHandle The PhoneAccount handle.
+   */
+  private void cacheCarrierConfiguration(PhoneAccountHandle accountHandle) {
+    PersistableBundle carrierConfig =
+        TelephonyManagerCompat.getTelephonyManagerForPhoneAccountHandle(context, accountHandle)
+            .getCarrierConfig();
+
+    if (carrierConfig == null) {
+      LogUtil.e("DialerCall.cacheCarrierConfiguration", "Empty carrier config.");
+      return;
+    }
+
+    showVideoChargesAlertDialog = carrierConfig.getBoolean(
+        CarrierConfigManager.KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL);
   }
 
   @Override

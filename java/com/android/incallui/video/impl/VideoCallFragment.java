@@ -162,6 +162,27 @@ public class VideoCallFragment extends Fragment
         }
       };
 
+  private final Runnable videoChargesAlertDialogRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          VideoChargesAlertDialogFragment existingVideoChargesAlertFragment =
+              (VideoChargesAlertDialogFragment)
+                  getChildFragmentManager().findFragmentByTag(Tags.VIDEO_CHARGES_ALERT);
+          if (existingVideoChargesAlertFragment != null) {
+            existingVideoChargesAlertFragment.setCallback(videoChargesAlertCallback);
+            LogUtil.i("VideoCallFragment.videoChargesAlertDialogRunnable",
+                "already shown for this call");
+            return;
+          }
+
+          if (videoCallScreenDelegate.shouldShowVideoChargesAlertDialog()) {
+            LogUtil.i("VideoCallFragment.videoChargesAlertDialogRunnable", "showing dialog");
+            showDialogForVideoChargesAlert();
+          }
+        }
+      };
+
   public static VideoCallFragment newInstance(String callId) {
     Bundle bundle = new Bundle();
     bundle.putString(ARG_CALL_ID, Assert.isNotNull(callId));
@@ -352,6 +373,7 @@ public class VideoCallFragment extends Fragment
     inCallButtonUiDelegate.refreshMuteState();
     videoCallScreenDelegate.onVideoCallScreenUiReady();
     getView().postDelayed(cameraPermissionDialogRunnable, CAMERA_PERMISSION_DIALOG_DELAY_IN_MILLIS);
+    getView().post(videoChargesAlertDialogRunnable);
   }
 
   @Override
@@ -377,6 +399,7 @@ public class VideoCallFragment extends Fragment
 
   @Override
   public void onVideoScreenStop() {
+    getView().removeCallbacks(videoChargesAlertDialogRunnable);
     getView().removeCallbacks(cameraPermissionDialogRunnable);
     videoCallScreenDelegate.onVideoCallScreenUiUnready();
   }
@@ -1270,6 +1293,29 @@ public class VideoCallFragment extends Fragment
         videoCallScreenDelegate.onCameraPermissionGranted();
       }
     }
+  }
+
+  @Override
+  public void onHandoverFromWiFiToLte() {
+    getView().post(videoChargesAlertDialogRunnable);
+  }
+
+  private void showDialogForVideoChargesAlert() {
+    VideoChargesAlertDialogFragment.newInstance(getCallId(), videoChargesAlertCallback)
+        .show(getChildFragmentManager(), Tags.VIDEO_CHARGES_ALERT);
+  }
+
+  private final VideoChargesAlertDialogFragment.Callback videoChargesAlertCallback =
+      new VideoChargesAlertDialogFragment.Callback() {
+        @Override
+        public void onDismiss(@NonNull String callId) {
+          LogUtil.i("VideoCallFragment.onDismiss", "");
+          videoCallScreenDelegate.onVideoChargesAlertDialogDismissed();
+        }
+      };
+
+  private static final class Tags {
+    static final String VIDEO_CHARGES_ALERT = "tag_video_charges_alert";
   }
 }
 
