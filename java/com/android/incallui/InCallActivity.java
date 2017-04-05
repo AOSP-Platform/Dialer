@@ -775,6 +775,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
             call.getId(), call.getVideoTech().shouldUseSurfaceView());
     transaction.add(R.id.main, videoCallScreen.getVideoCallScreenFragment(), TAG_VIDEO_CALL_SCREEN);
 
+    common.showVideoChargesAlertDialog(call);
+
     Logger.get(this).logScreenView(ScreenEvent.Type.INCALL, this);
     didShowVideoCallScreen = true;
     return true;
