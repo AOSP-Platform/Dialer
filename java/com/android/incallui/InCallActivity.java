@@ -515,6 +515,9 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
   public void onWiFiToLteHandover(DialerCall call) {
     common.showWifiToLteHandoverToast(call);
+    if (call.isVideoCall() || call.hasSentVideoUpgradeRequest()) {
+      common.showVideoChargesAlertDialog(call);
+    }
   }
 
   public void onHandoverToWifiFailed(DialerCall call) {
@@ -792,6 +795,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         VideoBindings.createVideoCallScreen(
             call.getId(), call.getVideoTech().shouldUseSurfaceView());
     transaction.add(R.id.main, videoCallScreen.getVideoCallScreenFragment(), TAG_VIDEO_CALL_SCREEN);
+
+    common.showVideoChargesAlertDialog(call);
 
     Logger.get(this).logScreenView(ScreenEvent.Type.INCALL, this);
     didShowVideoCallScreen = true;

@@ -37,6 +37,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
+import android.telecom.Call.Details;
 import android.telecom.PhoneAccountHandle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -56,6 +57,8 @@ import com.android.dialer.compat.CompatUtils;
 import com.android.dialer.logging.Logger;
 import com.android.dialer.logging.ScreenEvent;
 import com.android.dialer.util.ViewUtil;
+import com.android.incallui.VideoChargesAlertDialogFragment;
+import com.android.incallui.VideoChargesAlertDialogFragment.VideoChargesAlertCallback;
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
@@ -79,10 +82,13 @@ public class InCallActivityCommon {
       "InCallActivity.for_full_screen_intent";
 
   private static final String DIALPAD_TEXT_KEY = "InCallActivity.dialpad_text";
+  private static final String DID_SHOW_VIDEO_CHARGES_ALERT_DIALOG_KEY =
+      "did_show_video_charges_alert_dialog";
 
   private static final String TAG_SELECT_ACCOUNT_FRAGMENT = "tag_select_account_fragment";
   private static final String TAG_DIALPAD_FRAGMENT = "tag_dialpad_fragment";
   private static final String TAG_INTERNATIONAL_CALL_ON_WIFI = "tag_international_call_on_wifi";
+  private static final String TAG_VIDEO_CHARGES_ALERT = "tag_video_charges_alert";
 
   @Retention(RetentionPolicy.SOURCE)
   @IntDef({
@@ -111,6 +117,7 @@ public class InCallActivityCommon {
   @DialpadRequestType private int showDialpadRequest = DIALPAD_REQUEST_NONE;
   // If activity is going to be recreated. This is usually happening in {@link onNewIntent}.
   private boolean isRecreating;
+  private boolean didShowVideoChargesAlertDialog;
 
   private final SelectPhoneAccountListener selectAccountListener =
       new SelectPhoneAccountListener() {
@@ -154,6 +161,14 @@ public class InCallActivityCommon {
           }
           LogUtil.i("InCallActivityCommon.cancelCall", "disconnecting international call on wifi");
           call.disconnect();
+        }
+      };
+
+  private VideoChargesAlertCallback videoChargesAlertCallback =
+      new VideoChargesAlertCallback() {
+        @Override
+        public void onDismiss(@NonNull String callId) {
+          LogUtil.d("InCallActivityCommon.VideoChargesAlertCallback.onDismiss", "");
         }
       };
 
@@ -235,6 +250,10 @@ public class InCallActivityCommon {
       }
     }
 
+    if (icicle != null) {
+      didShowVideoChargesAlertDialog = icicle.getBoolean(DID_SHOW_VIDEO_CHARGES_ALERT_DIALOG_KEY);
+    }
+
     InternationalCallOnWifiDialogFragment existingInternationalFragment =
         (InternationalCallOnWifiDialogFragment)
             inCallActivity
@@ -244,6 +263,18 @@ public class InCallActivityCommon {
       LogUtil.i(
           "InCallActivityCommon.onCreate", "international fragment exists attaching callback");
       existingInternationalFragment.setCallback(internationalCallOnWifiCallback);
+    }
+
+    VideoChargesAlertDialogFragment existingVideoChargesAlertFragment =
+        (VideoChargesAlertDialogFragment)
+            inCallActivity
+                .getSupportFragmentManager()
+                .findFragmentByTag(TAG_VIDEO_CHARGES_ALERT);
+    if (existingVideoChargesAlertFragment != null) {
+      LogUtil.i(
+          "InCallActivityCommon.onCreate", "video charges alert fragment exists " +
+          "attaching callback");
+      existingVideoChargesAlertFragment.setCallback(videoChargesAlertCallback);
     }
 
     inCallOrientationEventListener = new InCallOrientationEventListener(inCallActivity);
@@ -256,6 +287,7 @@ public class InCallActivityCommon {
     if (dialpadFragment != null) {
       out.putString(DIALPAD_TEXT_KEY, dialpadFragment.getDtmfText());
     }
+    out.putBoolean(DID_SHOW_VIDEO_CHARGES_ALERT_DIALOG_KEY, didShowVideoChargesAlertDialog);
   }
 
   public void onStart() {
@@ -908,5 +940,39 @@ public class InCallActivityCommon {
     selectPhoneAccountDialogFragment.show(
         inCallActivity.getFragmentManager(), TAG_SELECT_ACCOUNT_FRAGMENT);
     return true;
+  }
+
+  /**
+   * Show a video charges alert dialog.
+   *
+   * @param call The call.
+   */
+  public void showVideoChargesAlertDialog(@NonNull DialerCall call) {
+    if (call.hasProperty(Details.PROPERTY_WIFI)) {
+      return;
+    }
+
+    if (didShowVideoChargesAlertDialog) {
+      LogUtil.i(
+          "InCallActivityCommon.showVideoChargesAlertDialog",
+          "Video charges alert dialog had been displayed.");
+      return;
+    }
+
+    LogUtil.enterBlock("InCallActivityCommon.showVideoChargesAlertDialog");
+    if (!VideoChargesAlertDialogFragment.shouldShow(inCallActivity, call)) {
+      LogUtil.i(
+          "InCallActivityCommon.showVideoChargesAlertDialog",
+          "VideoChargesAlertDialogFragment.shouldShow returned false");
+      didShowVideoChargesAlertDialog = false;
+      return;
+    }
+
+    VideoChargesAlertDialogFragment fragment =
+        VideoChargesAlertDialogFragment.newInstance(
+            call.getId(), videoChargesAlertCallback);
+    fragment.show(inCallActivity.getSupportFragmentManager(), TAG_VIDEO_CHARGES_ALERT);
+
+    didShowVideoChargesAlertDialog = true;
   }
 }
