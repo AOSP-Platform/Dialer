@@ -684,6 +684,9 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   public void onWiFiToLteHandover(DialerCall call) {
     if (mInCallActivity != null) {
       mInCallActivity.showToastForWiFiToLteHandover(call);
+      if (call.isVideoCall() || call.hasSentVideoUpgradeRequest()) {
+        mInCallActivity.showDialogForVideoChargesAlert(call);
+      }
     }
   }
 
