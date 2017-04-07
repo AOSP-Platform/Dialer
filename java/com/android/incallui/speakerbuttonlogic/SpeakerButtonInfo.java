@@ -46,7 +46,7 @@ public class SpeakerButtonInfo {
     if ((audioState.getSupportedRouteMask() & CallAudioState.ROUTE_BLUETOOTH)
         == CallAudioState.ROUTE_BLUETOOTH) {
       checkable = false;
-      isChecked = false;
+      isChecked = (audioState.getRoute() & CallAudioState.ROUTE_WIRED_OR_EARPIECE) == 0;
       label = R.string.incall_label_audio;
 
       if ((audioState.getRoute() & CallAudioState.ROUTE_BLUETOOTH)
