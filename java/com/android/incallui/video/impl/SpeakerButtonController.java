@@ -73,7 +73,7 @@ public class SpeakerButtonController implements OnCheckedChangeListener, OnClick
     if ((audioState.getSupportedRouteMask() & CallAudioState.ROUTE_BLUETOOTH)
         == CallAudioState.ROUTE_BLUETOOTH) {
       checkable = false;
-      isChecked = false;
+      isChecked = (audioState.getRoute() & CallAudioState.ROUTE_WIRED_OR_EARPIECE) == 0;
 
       if ((audioState.getRoute() & CallAudioState.ROUTE_BLUETOOTH)
           == CallAudioState.ROUTE_BLUETOOTH) {
