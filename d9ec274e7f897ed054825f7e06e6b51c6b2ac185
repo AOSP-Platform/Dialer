@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c978005_ca1e342e",
+        "filename": "src/com/android/dialer/calllog/CallLogFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1094098
+      },
+      "writtenOn": "2017-04-16T14:34:18Z",
+      "side": 1,
+      "message": "Why not just remove this portion? All cases are still covered.",
+      "range": {
+        "startLine": 424,
+        "startChar": 8,
+        "endLine": 426,
+        "endChar": 15
+      },
+      "revId": "d9ec274e7f897ed054825f7e06e6b51c6b2ac185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
