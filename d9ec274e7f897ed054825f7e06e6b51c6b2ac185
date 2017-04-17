@@ -22,6 +22,30 @@
       "revId": "d9ec274e7f897ed054825f7e06e6b51c6b2ac185",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f5285fc_bc81621d",
+        "filename": "src/com/android/dialer/calllog/CallLogFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1138684
+      },
+      "writtenOn": "2017-04-17T01:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c978005_ca1e342e",
+      "range": {
+        "startLine": 424,
+        "startChar": 8,
+        "endLine": 426,
+        "endChar": 15
+      },
+      "revId": "d9ec274e7f897ed054825f7e06e6b51c6b2ac185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
