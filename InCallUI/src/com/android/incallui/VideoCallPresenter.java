@@ -995,7 +995,7 @@ public class VideoCallPresenter extends Presenter<VideoCallPresenter.VideoCallUi
                 + previewDimensions);
         changePreviewDimensions(previewDimensions.x, previewDimensions.y);
 
-        ui.setPreviewRotation(mDeviceOrientation);
+        ui.setPreviewRotation(360 - mDeviceOrientation);
     }
 
     /**
