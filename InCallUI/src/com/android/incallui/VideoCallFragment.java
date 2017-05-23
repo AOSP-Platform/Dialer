@@ -16,7 +16,6 @@
 
 package com.android.incallui;
 
-import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
@@ -698,13 +697,6 @@ public class VideoCallFragment extends BaseFragment<VideoCallPresenter,
                 containerParams.height = height;
                 mPreviewVideoContainer.setLayoutParams(containerParams);
             }
-
-            // The width and height are interchanged outside of this method based on the current
-            // orientation, so we can transform using "width", which will be either the width or
-            // the height.
-            Matrix transform = new Matrix();
-            transform.setScale(-1, 1, width/2, 0);
-            preview.setTransform(transform);
         }
     }
 
