@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 import com.android.contacts.common.compat.PhoneNumberUtilsCompat;
@@ -232,6 +233,16 @@ public class ContactGridManager {
     } else {
       connectionIconImageView.setVisibility(View.VISIBLE);
       connectionIconImageView.setImageDrawable(info.icon);
+
+      LinearLayout.LayoutParams params =
+          (LinearLayout.LayoutParams) connectionIconImageView.getLayoutParams();
+      if (statusTextView.getVisibility() == View.VISIBLE) {
+        params.setMarginEnd((int) context.getResources().getDimension(
+            R.dimen.contactgrid_connection_icon_margin_end));
+      } else {
+        params.setMarginEnd(0);
+      }
+      connectionIconImageView.setLayoutParams(params);
     }
   }
 
