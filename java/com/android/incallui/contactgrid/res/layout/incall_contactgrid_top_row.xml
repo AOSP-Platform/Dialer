@@ -11,7 +11,7 @@
     android:id="@id/contactgrid_connection_icon"
     android:layout_width="24dp"
     android:layout_height="24dp"
-    android:layout_marginEnd="10dp"
+    android:layout_marginEnd="@dimen/contactgrid_connection_icon_margin_end"
     android:scaleType="fitCenter"
     tools:src="@android:drawable/sym_def_app_icon"
     tools:visibility="visible"
