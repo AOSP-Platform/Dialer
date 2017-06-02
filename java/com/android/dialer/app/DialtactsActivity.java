@@ -660,6 +660,7 @@ public class DialtactsActivity extends TransactionSafeActivity
     } else if (fragment instanceof SmartDialSearchFragment) {
       mSmartDialSearchFragment = (SmartDialSearchFragment) fragment;
       mSmartDialSearchFragment.setOnPhoneNumberPickerActionListener(this);
+      mSmartDialSearchFragment.setShowEmptyListForNullQuery(true);
       if (!TextUtils.isEmpty(mDialpadQuery)) {
         mSmartDialSearchFragment.setAddToContactNumber(mDialpadQuery);
       }
