@@ -110,6 +110,8 @@ public class VoicemailPlaybackPresenter
       VoicemailPlaybackPresenter.class.getName() + ".CLIP_POSITION_KEY";
   private static final String IS_SPEAKERPHONE_ON_KEY =
       VoicemailPlaybackPresenter.class.getName() + ".IS_SPEAKER_PHONE_ON";
+  private static final String REFERENCE_COUNT_KEY =
+      VoicemailPlaybackPresenter.class.getName() + ".REFERENCE_COUNT";
   private static final String VOICEMAIL_SHARE_FILE_NAME_DATE_FORMAT = "MM-dd-yy_hhmmaa";
   private static final String CONFIG_SHARE_VOICEMAIL_ALLOWED = "share_voicemail_allowed";
 
@@ -136,6 +138,7 @@ public class VoicemailPlaybackPresenter
   // exposes its prepared state. Store this locally, so we can check and prevent crashes.
   private boolean mIsPrepared;
   private boolean mIsSpeakerphoneOn;
+  private int mReferenceCount = 0;
 
   private boolean mShouldResumePlaybackAfterSeeking;
   /**
@@ -198,6 +201,8 @@ public class VoicemailPlaybackPresenter
     Assert.isMainThread();
     mActivity = activity;
     mContext = activity;
+    // getInstance Count references.
+    mReferenceCount++;
 
     if (savedInstanceState != null) {
       // Restores playback state when activity is recreated, such as after rotation.
@@ -206,6 +211,7 @@ public class VoicemailPlaybackPresenter
       mPosition = savedInstanceState.getInt(CLIP_POSITION_KEY, 0);
       mIsPlaying = savedInstanceState.getBoolean(IS_PLAYING_STATE_KEY, false);
       mIsSpeakerphoneOn = savedInstanceState.getBoolean(IS_SPEAKERPHONE_ON_KEY, false);
+      mReferenceCount = savedInstanceState.getInt(REFERENCE_COUNT_KEY, 0);
     }
 
     if (mMediaPlayer == null) {
@@ -250,6 +256,7 @@ public class VoicemailPlaybackPresenter
       outState.putBoolean(IS_PLAYING_STATE_KEY, mIsPlaying);
       outState.putBoolean(IS_SPEAKERPHONE_ON_KEY, mIsSpeakerphoneOn);
     }
+    outState.putInt(REFERENCE_COUNT_KEY, mReferenceCount);
   }
 
   /** Specify the view which this presenter controls and the voicemail to prepare to play. */
@@ -373,6 +380,10 @@ public class VoicemailPlaybackPresenter
 
   /** Must be invoked when the parent activity is destroyed. */
   public void onDestroy() {
+    if (--mReferenceCount > 0) {
+      // Processing is performed when the reference count matches the call count of onDestory.
+      return;
+    }
     // Clear references to avoid leaks from the singleton instance.
     mActivity = null;
     mContext = null;
