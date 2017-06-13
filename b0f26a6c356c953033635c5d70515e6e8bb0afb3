@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce38bc3_0d0fd783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-06-13T10:12:25Z",
+      "side": 1,
+      "message": "This is definitely true, but the classes still need to be in the classpath at compile time (as LOCAL_JAVA_LIBRARIES) to make sure compilation succeeds. Are they being included elsewhere ? (Note that this target sets LOCAL_SDK_VERSION:\u003dcurrent, not 23)",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "b0f26a6c356c953033635c5d70515e6e8bb0afb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
