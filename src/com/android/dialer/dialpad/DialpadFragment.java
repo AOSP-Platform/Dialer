@@ -1253,6 +1253,10 @@ public class DialpadFragment extends Fragment
                 mDialpadView.setVisibility(View.GONE);
             }
 
+            if (mPopupMenu != null) {
+                mPopupMenu.dismiss();
+            }
+
             mFloatingActionButtonController.setVisible(false);
             mDialpadChooser.setVisibility(View.VISIBLE);
 
