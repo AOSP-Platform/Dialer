@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24d6613_c5061824",
+        "filename": "src/com/android/dialer/dialpad/DialpadFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1197203
+      },
+      "writtenOn": "2017-06-19T18:20:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be mOverflowPopupMenu?",
+      "range": {
+        "startLine": 1256,
+        "startChar": 16,
+        "endLine": 1256,
+        "endChar": 26
+      },
+      "revId": "0ff37306caa5fd7ffb8988e81eda7e504e4ad6ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
