@@ -101,25 +101,43 @@ public class ImsVideoCallCallback extends VideoCall.Callback {
         responseProfile,
         videoTech.getSessionModificationState());
 
-    if (videoTech.getSessionModificationState()
-        == SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE) {
+    boolean showErrorMessage = false; // This will update the video UI to display the error message.
+    switch (videoTech.getSessionModificationState()) {
+      case SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE:
+        if (status == VideoProvider.SESSION_MODIFY_REQUEST_SUCCESS) {
+          // Telecom manages audio route for us
+          listener.onUpgradedToVideo(false /* switchToSpeaker */);
+          // If the other person accepted the upgrade request then this will keep the video UI up
+          // until the call's video state change. Without this we would switch to the voice call
+          // and then switch back to video UI.
+        } else {
+          showErrorMessage = true;
+        }
+        break;
+      case  SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST:
+        requestedVideoState = VideoProfile.STATE_AUDIO_ONLY;
+        videoTech.setSessionModificationState(SessionModificationState.NO_REQUEST);
+        break;
+      case SessionModificationState.WAITING_FOR_RESPONSE:
+        if (status == VideoProvider.SESSION_MODIFY_REQUEST_SUCCESS) {
+          videoTech.setSessionModificationState(
+              getSessionModificationStateFromTelecomStatus(status));
+        } else {
+          showErrorMessage = true;
+        }
+        break;
+      default:
+        LogUtil.i(
+            "ImsVideoCallCallback.onSessionModifyResponseReceived",
+            "call is not waiting for response, doing nothing");
+        break;
+    }
+    if (showErrorMessage) {
       handler.removeCallbacksAndMessages(null); // Clear everything
-
       final int newSessionModificationState = getSessionModificationStateFromTelecomStatus(status);
-      if (status == VideoProvider.SESSION_MODIFY_REQUEST_SUCCESS) {
-        // Telecom manages audio route for us
-        listener.onUpgradedToVideo(false /* switchToSpeaker */);
-      } else {
-        // This will update the video UI to display the error message.
-        videoTech.setSessionModificationState(newSessionModificationState);
-      }
-
+      videoTech.setSessionModificationState(newSessionModificationState);
       // Wait for 4 seconds and then clean the session modification state. This allows the video UI
       // to stay up so that the user can read the error message.
-      //
-      // If the other person accepted the upgrade request then this will keep the video UI up until
-      // the call's video state change. Without this we would switch to the voice call and then
-      // switch back to video UI.
       handler.postDelayed(
           () -> {
             if (videoTech.getSessionModificationState() == newSessionModificationState) {
@@ -132,17 +150,6 @@ public class ImsVideoCallCallback extends VideoCall.Callback {
             }
           },
           CLEAR_FAILED_REQUEST_TIMEOUT_MILLIS);
-    } else if (videoTech.getSessionModificationState()
-        == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
-      requestedVideoState = VideoProfile.STATE_AUDIO_ONLY;
-      videoTech.setSessionModificationState(SessionModificationState.NO_REQUEST);
-    } else if (videoTech.getSessionModificationState()
-        == SessionModificationState.WAITING_FOR_RESPONSE) {
-      videoTech.setSessionModificationState(getSessionModificationStateFromTelecomStatus(status));
-    } else {
-      LogUtil.i(
-          "ImsVideoCallCallback.onSessionModifyResponseReceived",
-          "call is not waiting for response, doing nothing");
     }
   }
 
