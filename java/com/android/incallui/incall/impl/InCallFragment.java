@@ -48,6 +48,8 @@ import com.android.dialer.strictmode.StrictModeUtils;
 import com.android.dialer.widget.LockableViewPager;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
+import com.android.incallui.call.CallList;
+import com.android.incallui.call.DialerCall;
 import com.android.incallui.contactgrid.ContactGridManager;
 import com.android.incallui.hold.OnHoldFragment;
 import com.android.incallui.incall.impl.ButtonController.SpeakerButtonController;
@@ -64,6 +66,8 @@ import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryCallState.ButtonState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 import com.android.incallui.incall.protocol.SecondaryInfo;
+import com.android.voicemail.impl.SubscriptionInfoHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +91,7 @@ public class InCallFragment extends Fragment
   @Nullable private ButtonChooser buttonChooser;
   private SecondaryInfo savedSecondaryInfo;
   private int voiceNetworkType;
-  private int phoneType;
+  private int phoneType = TelephonyManager.PHONE_TYPE_NONE;
   private boolean stateRestored;
 
   // Add animation to educate users. If a call has enriched calling attachments then we'll
@@ -172,7 +176,6 @@ public class InCallFragment extends Fragment
               ? getContext().getSystemService(TelephonyManager.class).getVoiceNetworkType()
               : TelephonyManager.NETWORK_TYPE_UNKNOWN;
     }
-    phoneType = getContext().getSystemService(TelephonyManager.class).getPhoneType();
     return view;
   }
 
@@ -318,6 +321,7 @@ public class InCallFragment extends Fragment
   @Override
   public void setCallState(@NonNull PrimaryCallState primaryCallState) {
     LogUtil.i("InCallFragment.setCallState", primaryCallState.toString());
+    setPhoneType();
     contactGridManager.setCallState(primaryCallState);
     getButtonController(InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY)
         .setAllowed(primaryCallState.swapToSecondaryButtonState != ButtonState.NOT_SUPPORT);
@@ -326,6 +330,24 @@ public class InCallFragment extends Fragment
     buttonChooser =
         ButtonChooserFactory.newButtonChooser(voiceNetworkType, primaryCallState.isWifi, phoneType);
     updateButtonStates();
+  }
+
+  private void setPhoneType() {
+    if (phoneType == TelephonyManager.PHONE_TYPE_NONE) {
+      DialerCall activeCall = CallList.getInstance().getFirstCall();
+      if (activeCall != null) {
+        TelephonyManager telephonyManager = (TelephonyManager)
+            getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        SubscriptionInfoHelper subInfoHelper = new SubscriptionInfoHelper(getContext(),
+            activeCall.getAccountHandle());
+        if (subInfoHelper != null) {
+          int subId = subInfoHelper.getSubId();
+          phoneType = (subId == SubscriptionInfoHelper.NO_SUB_ID) ?
+              TelephonyManager.PHONE_TYPE_SIP :
+              telephonyManager.getCurrentPhoneType(subId);
+        }
+      }
+    }
   }
 
   @Override
@@ -449,6 +471,7 @@ public class InCallFragment extends Fragment
     if (inCallButtonGridFragment == null) {
       return;
     }
+    setPhoneType();
     int numVisibleButtons =
         inCallButtonGridFragment.updateButtonStates(
             buttonControllers, buttonChooser, voiceNetworkType, phoneType);
