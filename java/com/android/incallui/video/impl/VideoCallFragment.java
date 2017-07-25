@@ -301,6 +301,11 @@ public class VideoCallFragment extends Fragment
               int oldRight,
               int oldBottom) {
             LogUtil.i("VideoCallFragment.onLayoutChange", "previewTextureView layout changed");
+            if (getActivity() != null && getView() != null) {
+              if (isInFullscreenMode) {
+                enterFullscreenMode();
+              }
+            }
             updatePreviewVideoScaling();
             updatePreviewOffView();
           }
@@ -333,6 +338,12 @@ public class VideoCallFragment extends Fragment
     inCallButtonUiDelegate.onInCallButtonUiReady(this);
 
     view.setOnSystemUiVisibilityChangeListener(this);
+
+    if (videoCallScreenDelegate.isFullscreen()) {
+        controls.setVisibility(View.INVISIBLE);
+        contactGridManager.getContainerView().setVisibility(View.INVISIBLE);
+        endCallButton.setVisibility(View.INVISIBLE);
+    }
   }
 
   @Override
@@ -420,6 +431,13 @@ public class VideoCallFragment extends Fragment
         .translationY(0)
         .setInterpolator(linearOutSlowInInterpolator)
         .alpha(1)
+        .withStartAction(
+            new Runnable() {
+              @Override
+              public void run() {
+                controls.setVisibility(View.VISIBLE);
+              }
+            })
         .start();
 
     // Animate onHold to the shown state.
