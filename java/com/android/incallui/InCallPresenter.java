@@ -199,6 +199,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   private boolean mIsFullScreen = false;
 
   private boolean mScreenTimeoutEnabled = true;
+  private boolean mIsShowErrorDialogOnActivityStart = true;
 
   private PhoneStateListener mPhoneStateListener =
       new PhoneStateListener() {
@@ -448,6 +449,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       return;
     }
     updateActivity(null);
+    // Reset this flag to true for next InCallActivity launch
+    mIsShowErrorDialogOnActivityStart = true;
   }
 
   /**
@@ -475,7 +478,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
       // By the time the UI finally comes up, the call may already be disconnected.
       // If that's the case, we may need to show an error dialog.
-      if (mCallList != null && mCallList.getDisconnectedCall() != null) {
+      if (mCallList != null && mCallList.getDisconnectedCall() != null
+          && mIsShowErrorDialogOnActivityStart) {
         maybeShowErrorDialogOnDisconnect(mCallList.getDisconnectedCall());
       }
 
@@ -841,7 +845,10 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
    */
   @Override
   public void onDisconnect(DialerCall call) {
-    maybeShowErrorDialogOnDisconnect(call);
+    if (isActivityStarted()) {
+      mIsShowErrorDialogOnActivityStart = false;
+      maybeShowErrorDialogOnDisconnect(call);
+    }
 
     // We need to do the run the same code as onCallListChange.
     onCallListChange(mCallList);
