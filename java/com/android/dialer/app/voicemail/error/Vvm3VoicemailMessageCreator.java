@@ -366,7 +366,7 @@ public class Vvm3VoicemailMessageCreator {
       LogUtil.i(
           "Vvm3VoicemailMessageCreator.showDeclineTosDialog",
           "PIN_NOT_SET, showing set PIN dialog");
-      showSetPinBeforeDeclineDialog(context);
+      showSetPinBeforeDeclineDialog(context, handle);
       return;
     }
     LogUtil.i(
@@ -403,7 +403,8 @@ public class Vvm3VoicemailMessageCreator {
     builder.show();
   }
 
-  private static void showSetPinBeforeDeclineDialog(final Context context) {
+  private static void showSetPinBeforeDeclineDialog(
+      final Context context, final PhoneAccountHandle handle) {
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setMessage(R.string.verizon_terms_and_conditions_decline_set_pin_dialog_message);
     builder.setPositiveButton(
@@ -414,6 +415,7 @@ public class Vvm3VoicemailMessageCreator {
             Logger.get(context)
                 .logImpression(DialerImpression.Type.VOICEMAIL_VVM3_TOS_DECLINE_CHANGE_PIN_SHOWN);
             Intent intent = new Intent(TelephonyManager.ACTION_CONFIGURE_VOICEMAIL);
+            intent.putExtra(TelephonyManager.EXTRA_PHONE_ACCOUNT_HANDLE, handle);
             context.startActivity(intent);
           }
         });
