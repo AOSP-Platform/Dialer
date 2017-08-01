@@ -825,7 +825,7 @@ public class VideoCallPresenter
       return false;
     }
 
-    if (isVideoCall(call)) {
+    if (VideoProfile.isVideo(call.getVideoState())) {
       return true;
     }
 
