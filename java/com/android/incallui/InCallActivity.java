@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.ColorUtils;
+import android.telecom.VideoProfile;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -627,8 +628,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
       return new ShouldShowUiResult(false, null);
     }
 
-    if (call.isVideoCall()) {
-      LogUtil.i("InCallActivity.getShouldShowVideoUi", "found video call");
+    if (VideoProfile.isVideo(call.getVideoState())) {
+      LogUtil.i("InCallActivity.getShouldShowVideoUi", "video call state");
       return new ShouldShowUiResult(true, call);
     }
 
