@@ -24,6 +24,7 @@ import android.content.DialogInterface.OnShowListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.telephony.SmsMessage;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -31,6 +32,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import com.android.dialer.common.FragmentUtils;
+import com.android.dialer.common.LogUtil;
 import com.android.incallui.incalluilock.InCallUiLock;
 
 /**
@@ -115,6 +117,23 @@ public class CreateCustomSmsDialogFragment extends AppCompatDialogFragment {
           public void afterTextChanged(Editable editable) {
             Button sendButton = customMessagePopup.getButton(DialogInterface.BUTTON_POSITIVE);
             sendButton.setEnabled(editable != null && editable.toString().trim().length() != 0);
+
+            int[] ret = SmsMessage.calculateLength(editable, false);
+            /* SmsMessage.calculateLength returns an int[4] with:
+             *   int[0] being the number of SMS's required,
+             *   int[1] the number of code points used,
+             *   int[2] is the number of code points remaining until the next message.
+             *   int[3] is the encoding type that should be used for the message.
+             */
+            int msgCount = ret[0];
+            if (msgCount > 1) {
+              int msgLength = ret[1];
+              int limitIndex = SmsMessage.findSizeLimitIndex(editable.toString());
+              String replaceMsg = editable.toString().substring(0, limitIndex);
+              editable.replace(0, msgLength, replaceMsg);
+              LogUtil.i("Exceeded SMS message size limit", "message length=%d, replaced length=%d",
+                  msgLength, limitIndex);
+            }
           }
         });
     customMessagePopup.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
