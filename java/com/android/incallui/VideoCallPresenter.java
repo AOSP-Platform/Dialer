@@ -329,10 +329,10 @@ public class VideoCallPresenter
     InCallVideoCallCallbackNotifier.getInstance().addSurfaceChangeListener(this);
     mCurrentVideoState = VideoProfile.STATE_AUDIO_ONLY;
     mCurrentCallState = DialerCall.State.INVALID;
+    isVideoCallScreenUiReady = true;
 
     InCallPresenter.InCallState inCallState = InCallPresenter.getInstance().getInCallState();
     onStateChange(inCallState, inCallState, CallList.getInstance());
-    isVideoCallScreenUiReady = true;
   }
 
   /** Called when the user interface is no longer ready to be used. */
@@ -886,6 +886,10 @@ public class VideoCallPresenter
       boolean isRemotelyHeld) {
     if (mVideoCallScreen == null) {
       LogUtil.e("VideoCallPresenter.showVideoUi", "videoCallScreen is null returning");
+      return;
+    }
+    if (!isVideoCallScreenUiReady) {
+      LogUtil.i("VideoCallPresenter.showVideoUi", "UI is not ready");
       return;
     }
     boolean showIncomingVideo = showIncomingVideo(videoState, callState);
