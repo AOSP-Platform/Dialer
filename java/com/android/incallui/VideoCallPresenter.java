@@ -455,6 +455,10 @@ public class VideoCallPresenter
   @Override
   public void onIncomingCall(
       InCallPresenter.InCallState oldState, InCallPresenter.InCallState newState, DialerCall call) {
+    if (!isVideoCallScreenUiReady) {
+      LogUtil.i("VideoCallPresenter.onIncomingCall", "UI is not ready");
+      return;
+    }
     // same logic should happen as with onStateChange()
     onStateChange(oldState, newState, CallList.getInstance());
   }
