@@ -98,7 +98,7 @@ public class CallLogActivity extends TransactionSafeActivity
     mViewPagerTabs = (ViewPagerTabs) findViewById(R.id.viewpager_header);
 
     mViewPagerTabs.setViewPager(mViewPager);
-    mViewPager.setCurrentItem(startingTab);
+    mViewPager.setCurrentItem(getRtlPosition(startingTab));
   }
 
   @Override
