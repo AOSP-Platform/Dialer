@@ -93,7 +93,7 @@ public class CallLogActivity extends TransactionSafeActivity
     mViewPagerTabs = (ViewPagerTabs) findViewById(R.id.viewpager_header);
 
     mViewPagerTabs.setViewPager(mViewPager);
-    mViewPager.setCurrentItem(startingTab);
+    mViewPager.setCurrentItem(getRtlPosition(startingTab));
   }
 
   @Override
@@ -216,7 +216,7 @@ public class CallLogActivity extends TransactionSafeActivity
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
       final CallLogFragment fragment = (CallLogFragment) super.instantiateItem(container, position);
-      if (position == TAB_INDEX_ALL) {
+      if (getRtlPosition(position) == TAB_INDEX_ALL) {
           mAllCallsFragment = fragment;
       }
       return fragment;
