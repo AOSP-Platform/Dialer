@@ -63,6 +63,8 @@ import com.android.dialer.common.LogUtil;
 import com.android.dialer.util.PermissionsUtil;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
+import com.android.incallui.call.CallList;
+import com.android.incallui.call.DialerCall;
 import com.android.incallui.contactgrid.ContactGridManager;
 import com.android.incallui.hold.OnHoldFragment;
 import com.android.incallui.incall.protocol.InCallButtonIds;
@@ -1224,8 +1226,18 @@ public class VideoCallFragment extends Fragment
   private void updateMutePreviewOverlayVisibility() {
     // Normally the mute overlay shows on the bottom right of the preview bubble. In green screen
     // mode the preview is fullscreen so there's no where to anchor it.
-    mutePreviewOverlay.setVisibility(
-        muteButton.isChecked() && !isInGreenScreenMode ? View.VISIBLE : View.GONE);
+    // However, it should be hidden if carrier config of mute overlay is disabled.
+    int mutePreviewOverlayVisibility = showMuteOverlayOnVideoCall() && muteButton.isChecked()
+        && !isInGreenScreenMode ? View.VISIBLE : View.GONE;
+    mutePreviewOverlay.setVisibility(mutePreviewOverlayVisibility);
+  }
+
+  private boolean showMuteOverlayOnVideoCall() {
+    DialerCall dialerCall = CallList.getInstance().getCallById(getCallId());
+    if (dialerCall == null) {
+      return true;
+    }
+    return dialerCall.showMuteOverlayOnVideoCallByCarrierConfig();
   }
 
   private static void animateSetVisibility(final View view, final int visibility) {
