@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.telecom.Call.Details;
 import android.telecom.DisconnectCause;
@@ -542,7 +543,7 @@ public class CallCardPresenter extends Presenter<CallCardPresenter.CallCardUi>
         } else {
             final long callStart = mPrimary.getConnectTimeMillis();
             if (callStart > 0) {
-                final long duration = System.currentTimeMillis() - callStart;
+                final long duration = SystemClock.elapsedRealtime() - callStart;
                 ui.setPrimaryCallElapsedTime(true, duration);
             }
         }
