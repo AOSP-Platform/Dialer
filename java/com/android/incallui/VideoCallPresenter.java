@@ -1299,4 +1299,12 @@ public class VideoCallPresenter
     return VideoProfile.isTransmissionEnabled(videoState)
         || VideoProfile.isReceptionEnabled(videoState);
   }
+
+  public boolean getMuteOverlayConfig(String callId) {
+    DialerCall dialerCall = CallList.getInstance().getCallById(callId);
+    if (dialerCall == null) {
+      return false;
+    }
+    return dialerCall.showMuteOverlayOnVideoCall();
+  }
 }
