@@ -47,6 +47,7 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.StatusHints;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
+import android.telephony.CarrierConfigManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.android.contacts.common.compat.CallCompat;
@@ -789,6 +790,13 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     }
     return carrierConfig.getBoolean(
         TelephonyManagerCompat.CARRIER_CONFIG_KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL);
+  }
+
+  public boolean showMuteOverlayOnVideoCall() {
+    if (carrierConfig == null) {
+      return false;
+    }
+    return carrierConfig.getBoolean(CarrierConfigManager.KEY_VIDEO_CALL_MUTE_OVERLAY_VISIBLE_BOOL);
   }
 
   public long getTimeAddedMs() {

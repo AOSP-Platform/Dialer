@@ -1222,10 +1222,13 @@ public class VideoCallFragment extends Fragment
   }
 
   private void updateMutePreviewOverlayVisibility() {
+    boolean showMuteOverlay = videoCallScreenDelegate.getMuteOverlayConfig(getCallId());
     // Normally the mute overlay shows on the bottom right of the preview bubble. In green screen
     // mode the preview is fullscreen so there's no where to anchor it.
+    // However, it should be hidden if carrier config of mute overlay is disabled.
     mutePreviewOverlay.setVisibility(
-        muteButton.isChecked() && !isInGreenScreenMode ? View.VISIBLE : View.GONE);
+        showMuteOverlay && muteButton.isChecked() && !isInGreenScreenMode
+            ? View.VISIBLE : View.GONE);
   }
 
   private static void animateSetVisibility(final View view, final int visibility) {
