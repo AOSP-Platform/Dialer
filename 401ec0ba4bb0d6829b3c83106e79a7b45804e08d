@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf381ffa_4c28ea36",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-08-24T14:41:32Z",
+      "side": 1,
+      "message": "All of this should be replaced with:\n\nLOCAL_ANNOTATION_PROCESSORS :\u003d \\\n\tdialer-dagger2-compiler \\\n\tdialer-dagger2 \\\n\tdialer-dagger2-producers \\\n\tdialer-guava \\\n\tdialer-javax-annotation-api \\\n\tdialer-javax-inject \\\n\tdialer-auto-value \\\nLOCAL_ANNOTATION_PROCESSOR_CLASSES :\u003d com.google.auto.value.processor.AutoValueProcessor dagger.internal.codegen.ComponentProcessor",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
