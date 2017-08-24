@@ -262,6 +262,9 @@ PROCESSOR_LIBRARIES_TARGET := \
 	dialer-javax-inject \
 	dialer-auto-value \
 
+PROCESSOR_CLASSES := \
+  com.google.auto.value.processor.AutoValueProcessor:dagger.internal.codegen.ComponentProcessor
+
 # Resolve the jar paths.
 PROCESSOR_JARS := $(call java-lib-deps, $(PROCESSOR_LIBRARIES_TARGET))
 # Necessary for annotation processors to work correctly.
@@ -269,6 +272,10 @@ LOCAL_ADDITIONAL_DEPENDENCIES += $(PROCESSOR_JARS)
 
 LOCAL_JACK_FLAGS += --processorpath $(call normalize-path-list,$(PROCESSOR_JARS))
 LOCAL_JAVACFLAGS += -processorpath $(call normalize-path-list,$(PROCESSOR_JARS))
+
+# b/25860419: annotation processors must be explicitly specified for grok
+LOCAL_JACK_FLAGS += --processor $(PROCESSOR_CLASSES)
+LOCAL_JAVACFLAGS += -processor $(PROCESSOR_CLASSES)
 
 # Proguard includes
 LOCAL_PROGUARD_FLAG_FILES := \
@@ -303,6 +310,7 @@ EXCLUDE_FILES :=
 RES_DIRS :=
 DIALER_MANIFEST_FILES :=
 PROCESSOR_LIBRARIES_TARGET :=
+PROCESSOR_CLASSES :=
 PROCESSOR_JARS :=
 
 # Create references to prebuilt libraries.
