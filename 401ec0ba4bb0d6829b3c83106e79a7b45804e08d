@@ -46,6 +46,30 @@
       "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eefb06_8541978a",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-08-24T16:07:06Z",
+      "side": 1,
+      "message": "They _should_ be host modules, they run inside javac, not on the device.  Converting BUILD_MULTI_PREBUILT to BUILD_HOST_PREBUILT might be enough to fix it.",
+      "parentUuid": "0b8115d4_9ed5dba9",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
