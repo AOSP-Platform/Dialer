@@ -94,6 +94,30 @@
       "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20eea3ca_758cb887",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-08-24T17:38:08Z",
+      "side": 1,
+      "message": "javac and jack don\u0027t need to pass --processor at all, they can autodetect them, it\u0027s just grok that needs them explicitly.",
+      "parentUuid": "e1f70796_e541f7b3",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
