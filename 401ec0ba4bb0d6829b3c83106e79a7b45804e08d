@@ -70,6 +70,30 @@
       "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f70796_e541f7b3",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2017-08-24T17:17:46Z",
+      "side": 1,
+      "message": "Right, thanks Colin.\n\nI also had to adjust LOCAL_ANNOTATION_PROCESSOR_CLASSES to use `:` as a separator, as Javac8Wrapper considers the argument to `--processor` as a path:\n\n    // Retrieve the list of processors provided by the -processor argument.\n    List\u003cString\u003e processors \u003d splitPaths(options.get(Option.PROCESSOR));\n\nmeaning that to pass two annotation processors, one must use\n\n  --processor A:B\n\nas\n\n  --processor A --processor B\n\nwould only honor run processor B.\n\nThis is odd, as both javac and jack seem to use the latter syntax.",
+      "parentUuid": "94eefb06_8541978a",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
