@@ -22,6 +22,30 @@
       "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8115d4_9ed5dba9",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2017-08-24T15:38:51Z",
+      "side": 1,
+      "message": "This seems to break dependencies:\n\n  16:29:32 prebuilts/build-tools/linux-x86/bin/ninja [prebuilts/build-tools/linux-x86/bin/ninja -d keepdepfile grok-index -j 20 -f /usr/local/google/gitc/grok/out/combined-aosp_arm-dist.ninja -v -w dupbuild\u003derr]\n  ninja: error: \u0027/usr/local/google/gitc/grok/out/host/common/obj/JAVA_LIBRARIES/dialer-dagger2-compiler_intermediates/classes.jar\u0027, needed by \u0027/usr/local/google/gitc/grok/out/target/common/obj/APPS/Dialer_intermediates/classes-full-debug.jar\u0027, missing and no known rule to make it\n  16:29:48 ninja failed with: exit status 1\n\nI think that\u0027s because `LOCAL_ANNOTATION_PROCESSORS` passes `true` as second argument to `java-lib-deps` (\"Non-empty if IS_HOST_MODULE\"), when (some of?) these libraries are to be built for target IIUC.\n\n* build/make/core/java_common.mk:\n\n  ifdef LOCAL_ANNOTATION_PROCESSORS\n    annotation_processor_jars :\u003d $(call java-lib-deps,$(LOCAL_ANNOTATION_PROCESSORS),true)\n    annotation_processor_flags +\u003d -processorpath $(call normalize-path-list,$(annotation_processor_jars))\n    annotation_processor_deps +\u003d $(annotation_processor_jars)\n  \n    # b/25860419: annotation processors must be explicitly specified for grok\n    annotation_processor_flags +\u003d $(foreach class,$(LOCAL_ANNOTATION_PROCESSOR_CLASSES),-processor $(class))\n  \n    annotation_processor_jars :\u003d\n  endif\n\n* build/make/core/definitions.mk:\n\n  # Get the dependency files (you can put on the right side of \"|\" of a build rule)\n  # of the Java libraries.\n  # $(1): library name list\n  # $(2): Non-empty if IS_HOST_MODULE\n  # Historically for target Java libraries we used a different file (javalib.jar)\n  # as the dependency.\n  # Now we can use classes.jar as dependency, so java-lib-deps is the same\n  # as java-lib-files.\n  define java-lib-deps\n  $(call java-lib-files,$(1),$(2))\n  endef",
+      "parentUuid": "cf381ffa_4c28ea36",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "401ec0ba4bb0d6829b3c83106e79a7b45804e08d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
