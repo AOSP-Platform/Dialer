@@ -250,10 +250,9 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
 
 LOCAL_JAVA_LIBRARIES := \
 	org.apache.http.legacy \
-	dialer-auto-value \
+	dialer-auto-value-target \
 
-# Libraries needed by the compiler (JACK) to generate code.
-PROCESSOR_LIBRARIES_TARGET := \
+LOCAL_ANNOTATION_PROCESSORS := \
 	dialer-dagger2-compiler \
 	dialer-dagger2 \
 	dialer-dagger2-producers \
@@ -262,13 +261,8 @@ PROCESSOR_LIBRARIES_TARGET := \
 	dialer-javax-inject \
 	dialer-auto-value \
 
-# Resolve the jar paths.
-PROCESSOR_JARS := $(call java-lib-deps, $(PROCESSOR_LIBRARIES_TARGET))
-# Necessary for annotation processors to work correctly.
-LOCAL_ADDITIONAL_DEPENDENCIES += $(PROCESSOR_JARS)
-
-LOCAL_JACK_FLAGS += --processorpath $(call normalize-path-list,$(PROCESSOR_JARS))
-LOCAL_JAVACFLAGS += -processorpath $(call normalize-path-list,$(PROCESSOR_JARS))
+LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
+  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor
 
 # Proguard includes
 LOCAL_PROGUARD_FLAG_FILES := \
@@ -302,8 +296,6 @@ SRC_DIRS :=
 EXCLUDE_FILES :=
 RES_DIRS :=
 DIALER_MANIFEST_FILES :=
-PROCESSOR_LIBRARIES_TARGET :=
-PROCESSOR_JARS :=
 
 # Create references to prebuilt libraries.
 include $(CLEAR_VARS)
@@ -317,7 +309,7 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-javax-annotation-api:../../../prebuilts/tools/common/m2/repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2$(COMMON_JAVA_PACKAGE_SUFFIX) \
     dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1$(COMMON_JAVA_PACKAGE_SUFFIX)
 
-include $(BUILD_MULTI_PREBUILT)
+include $(BUILD_HOST_PREBUILT)
 
 # Enumerate target prebuilts to avoid linker warnings like
 # Dialer (java:sdk) should not link to dialer-guava (java:platform)
@@ -427,6 +419,16 @@ LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-mime4j-dom-target
 LOCAL_SDK_VERSION := current
 LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/org/apache/james/apache-mime4j-dom/0.7.2/apache-mime4j-dom-0.7.2$(COMMON_JAVA_PACKAGE_SUFFIX)
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-auto-value-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.3/auto-value-1.3$(COMMON_JAVA_PACKAGE_SUFFIX)
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
