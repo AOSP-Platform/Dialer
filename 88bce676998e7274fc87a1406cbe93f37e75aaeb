@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7769065b_3369f313",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-08-25T13:50:27Z",
+      "side": 1,
+      "message": "AFAICT, Treehugger doesn\u0027t have a mirror-aosp-master/grok builder",
+      "revId": "88bce676998e7274fc87a1406cbe93f37e75aaeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
