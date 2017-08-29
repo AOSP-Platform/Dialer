@@ -44,6 +44,7 @@ public class VideoSurfaceTextureImpl implements VideoSurfaceTexture {
   private Point surfaceDimensions;
   private Point sourceVideoDimensions;
   private boolean isDoneWithSurface;
+  private boolean isBufferSizeUpdatedWithCameraSize;
 
   public VideoSurfaceTextureImpl(boolean isPixel2017, @SurfaceType int surfaceType) {
     this.isPixel2017 = isPixel2017;
@@ -124,6 +125,7 @@ public class VideoSurfaceTextureImpl implements VideoSurfaceTexture {
       }
     }
     isDoneWithSurface = false;
+    isBufferSizeUpdatedWithCameraSize = false;
   }
 
   @Override
@@ -244,7 +246,17 @@ public class VideoSurfaceTextureImpl implements VideoSurfaceTexture {
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
 
     @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+      if (isBufferSizeUpdatedWithCameraSize != true) {
+        if (surfaceType == SURFACE_TYPE_LOCAL) {
+          if (savedSurfaceTexture != null && surfaceDimensions != null
+              && (surfaceDimensions.x != -1 && surfaceDimensions.y != -1)) {
+            savedSurfaceTexture.setDefaultBufferSize(surfaceDimensions.x, surfaceDimensions.y);
+            isBufferSizeUpdatedWithCameraSize = true;
+          }
+        }
+      }
+    }
   }
 
   private class OnClickListener implements View.OnClickListener {
