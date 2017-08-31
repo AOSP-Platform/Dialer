@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d02497e6_d30dd46f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060046
+      },
+      "writtenOn": "2017-08-31T16:10:25Z",
+      "side": 1,
+      "message": "mention why we\u0027re doing this? for example:\n\nUpdate Dialer source to latest internal Google revision\n\nPreviously, Android\u0027s Dialer app was developed in an internal Google source control system and only exported to public during AOSP drops. The Dialer team is now switching to a public development model similar to the telephony team.\n\nThis CL represents all internal Google changes that were committed to Dialer between the public O release and today\u0027s tip of tree on internal master.\n\nThis CL squashes those changes into a single commit. In subsequent changes, changes will be exported on a per-commit basis.",
+      "revId": "87d155e87e6cb660d37a6e335f32eed598d68a9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
