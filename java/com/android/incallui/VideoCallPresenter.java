@@ -631,7 +631,9 @@ public class VideoCallPresenter
       updateCameraSelection(newPrimaryCall);
       adjustVideoMode(newPrimaryCall);
     }
-    checkForOrientationAllowedChange(newPrimaryCall);
+    if (newPrimaryCall != null) {
+      checkForOrientationAllowedChange(newPrimaryCall);
+    }
   }
 
   private boolean isVideoMode() {
