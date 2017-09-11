@@ -32,8 +32,9 @@ import java.lang.annotation.RetentionPolicy;
   SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
   SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT,
   SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED,
-  SessionModificationState.REQUEST_REJECTED,
-  SessionModificationState.WAITING_FOR_RESPONSE
+  SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_REJECTED,
+  SessionModificationState.WAITING_FOR_RESPONSE,
+  SessionModificationState.DOWNGRADE_TO_AUDIO_REQUEST_REJECTED
 })
 public @interface SessionModificationState {
   int NO_REQUEST = 0;
@@ -42,6 +43,7 @@ public @interface SessionModificationState {
   int RECEIVED_UPGRADE_TO_VIDEO_REQUEST = 3;
   int UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT = 4;
   int UPGRADE_TO_VIDEO_REQUEST_FAILED = 5;
-  int REQUEST_REJECTED = 6;
+  int UPGRADE_TO_VIDEO_REQUEST_REJECTED = 6;
   int WAITING_FOR_RESPONSE = 7;
+  int DOWNGRADE_TO_AUDIO_REQUEST_REJECTED = 8;
 }

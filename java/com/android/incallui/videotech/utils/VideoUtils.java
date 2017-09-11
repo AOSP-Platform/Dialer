@@ -27,7 +27,7 @@ public class VideoUtils {
   public static boolean hasSentVideoUpgradeRequest(@SessionModificationState int state) {
     return state == SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE
         || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED
-        || state == SessionModificationState.REQUEST_REJECTED
+        || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_REJECTED
         || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT;
   }
 
