@@ -162,7 +162,11 @@ public class ImsVideoCallCallback extends VideoCall.Callback {
       case VideoProvider.SESSION_MODIFY_REQUEST_TIMED_OUT:
         return SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT;
       case VideoProvider.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE:
-        return SessionModificationState.REQUEST_REJECTED;
+        if (VideoProfile.isVideo(call.getDetails().getVideoState())) {
+          return SessionModificationState.DOWNGRADE_TO_AUDIO_REQUEST_REJECTED;
+        } else {
+          return SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_REJECTED;
+        }
       default:
         LogUtil.e(
             "ImsVideoCallCallback.getSessionModificationStateFromTelecomStatus",

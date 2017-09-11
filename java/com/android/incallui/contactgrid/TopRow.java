@@ -260,7 +260,8 @@ public class TopRow {
       case SessionModificationState.REQUEST_FAILED:
       case SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED:
         return context.getString(R.string.incall_video_call_request_failed);
-      case SessionModificationState.REQUEST_REJECTED:
+      case SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_REJECTED:
+      case SessionModificationState.DOWNGRADE_TO_AUDIO_REQUEST_REJECTED:
         return context.getString(R.string.incall_video_call_request_rejected);
       case SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT:
         return context.getString(R.string.incall_video_call_request_timed_out);
