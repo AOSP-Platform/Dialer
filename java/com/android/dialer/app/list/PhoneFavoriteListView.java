@@ -153,7 +153,9 @@ public class PhoneFavoriteListView extends GridView
             (Math.abs(mLastDragY - mTouchDownForDragStartY) >= 4 * mTouchSlop)) {
           mIsDragScrollerRunning = true;
           ensureScrollHandler();
-          mScrollHandler.postDelayed(mDragScroller, SCROLL_HANDLER_DELAY_MILLIS);
+          if (mScrollHandler != null) {
+              mScrollHandler.postDelayed(mDragScroller, SCROLL_HANDLER_DELAY_MILLIS);
+          }
         }
         break;
       case DragEvent.ACTION_DRAG_ENTERED:
@@ -165,7 +167,9 @@ public class PhoneFavoriteListView extends GridView
       case DragEvent.ACTION_DRAG_ENDED:
       case DragEvent.ACTION_DROP:
         ensureScrollHandler();
-        mScrollHandler.removeCallbacks(mDragScroller);
+        if (mScrollHandler != null) {
+            mScrollHandler.removeCallbacks(mDragScroller);
+        }
         mIsDragScrollerRunning = false;
         // Either a successful drop or it's ended with out drop.
         if (action == DragEvent.ACTION_DROP || action == DragEvent.ACTION_DRAG_ENDED) {
