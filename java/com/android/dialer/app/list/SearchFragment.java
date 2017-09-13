@@ -261,7 +261,8 @@ public class SearchFragment extends PhoneNumberPickerFragment {
             getActivity(), intent, R.string.add_contact_not_available);
         break;
       case DialerPhoneNumberListAdapter.SHORTCUT_SEND_SMS_MESSAGE:
-        number = adapter.getFormattedQueryString();
+        number = TextUtils.isEmpty(mAddToContactNumber) ?
+            adapter.getFormattedQueryString() : mAddToContactNumber;
         intent = IntentUtil.getSendSmsIntent(number);
         DialerUtils.startActivityWithErrorToast(getActivity(), intent);
         break;
