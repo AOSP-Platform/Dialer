@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aff37c9_f958cc99",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-09-14T18:47:08Z",
+      "side": 1,
+      "message": "Why only this update is ignored when mVideoCallScreen is null? How could it fix the crash?",
+      "range": {
+        "startLine": 1114,
+        "startChar": 4,
+        "endLine": 1118,
+        "endChar": 5
+      },
+      "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
