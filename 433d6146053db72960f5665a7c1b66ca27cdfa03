@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9093eaff_5850ada0",
+        "filename": "java/com/android/dialer/app/list/PhoneFavoriteListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-09-14T16:24:35Z",
+      "side": 1,
+      "message": "I think ensureScrollHandler is supposed to make sure the handler is not null. We need to understand why it\u0027s null in those cases.",
+      "revId": "433d6146053db72960f5665a7c1b66ca27cdfa03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
