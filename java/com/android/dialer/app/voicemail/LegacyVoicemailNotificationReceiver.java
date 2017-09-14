@@ -44,6 +44,12 @@ import com.android.voicemail.VoicemailComponent;
 public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
 
   private static final String LEGACY_VOICEMAIL_COUNT = "legacy_voicemail_count";
+
+  // TS 23.040 9.2.3.24.2
+  // "The value 255 shall be taken to mean 255 or greater"
+  // If voice mail present indication is received CPHS only: count is unknown VoiceMailCount = 255
+  private static final int MAX_VOICEMAILS_COUNT = 0xff;
+
   @VisibleForTesting static final String LEGACY_VOICEMAIL_DISMISSED = "legacy_voicemail_dismissed";
 
   /**
@@ -92,7 +98,8 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
       setDismissed(context, phoneAccountHandle, false);
     }
 
-    if (!hasVoicemailCountChanged(preferences, count)) {
+    if ((count != MAX_VOICEMAILS_COUNT)
+        && !hasVoicemailCountChanged(preferences, count)) {
       LogUtil.i(
           "LegacyVoicemailNotificationReceiver.onReceive",
           "voicemail count hasn't changed, ignoring");
@@ -108,7 +115,7 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
 
     if (count == 0) {
       LogUtil.i("LegacyVoicemailNotificationReceiver.onReceive", "clearing notification");
-      LegacyVoicemailNotifier.cancelNotification(context);
+      LegacyVoicemailNotifier.cancelNotification(context, phoneAccountHandle);
       return;
     }
 
