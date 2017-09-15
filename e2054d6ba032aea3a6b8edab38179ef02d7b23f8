@@ -22,6 +22,30 @@
       "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64878da4_a6e9376c",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1124113
+      },
+      "writtenOn": "2017-09-15T04:49:30Z",
+      "side": 1,
+      "message": "This null check is not related to the crash issue this time.\n\nActually, the null check of mVideoCallScreen in VideoCallPresenter#showVideoUi fixes the crash issue.\n\n\nThis method is called only by VideoCallPresenter#showVideoUi now. But it refers mVideoCallScreen and this method may be called by other methods in the future. So, we think it is better to add NULL check here like onCameraDimensionsChange, changePreviewDimensions, onDeviceOrientationChanged, etc. in this class.",
+      "parentUuid": "8aff37c9_f958cc99",
+      "range": {
+        "startLine": 1114,
+        "startChar": 4,
+        "endLine": 1118,
+        "endChar": 5
+      },
+      "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
