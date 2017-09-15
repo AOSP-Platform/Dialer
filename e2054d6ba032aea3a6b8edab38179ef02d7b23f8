@@ -46,6 +46,30 @@
       "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f01f6099_1fbb6aa9",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-09-15T17:32:49Z",
+      "side": 1,
+      "message": "We should probably use isVideoCallScreenUiReady to determine if the UI is ready and whether we could do UI work in this case.\nVideoCallPresenter and VideoCallScreen should be 1 on 1 and it doesn\u0027t make sense to set VideoCallScreen in onVideoCallScreenUiReady().\nWDYT?",
+      "parentUuid": "64878da4_a6e9376c",
+      "range": {
+        "startLine": 1114,
+        "startChar": 4,
+        "endLine": 1118,
+        "endChar": 5
+      },
+      "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
