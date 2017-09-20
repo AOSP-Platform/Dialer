@@ -18,9 +18,12 @@
   <!-- Label for a list of local search results [CHAR LIMIT=30]-->
   <string name="nearby_places">Nearby places</string>
 
-  <!-- Shown as a prompt to turn on location permissions and/or enable location to allow nearby places search and location display during emergency calls [CHAR LIMIT=NONE]-->
-  <string name="permission_no_location_for_search">Allow Phone to access your location to display nearby places and your location during emergency calls.</string>
+  <!-- Shown as a prompt to turn on location permissions and/or enable location to allow nearby places search [CHAR LIMIT=NONE]-->
+  <string name="search_location_permission">To get contact information for places near you, allow access to your location.</string>
 
   <!-- Text on a button asking the user to grant the location permission -->
   <string name="nearby_places_allow">Allow</string>
+
+  <!-- Text on a button which dismisses a prompt asking to grand the location permission -->
+  <string name="nearby_places_dismiss">Dismiss</string>
 </resources>
