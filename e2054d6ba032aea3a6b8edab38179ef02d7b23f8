@@ -70,6 +70,30 @@
       "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6fcfc2c_b2f1e08d",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1124113
+      },
+      "writtenOn": "2017-09-20T05:27:55Z",
+      "side": 1,
+      "message": "Thank you for the comment. We can use isVideoCallScreenUiReady. Could you please review patchset 3? \n\nWe still keep this null check to avoid null access at line 1119.",
+      "parentUuid": "f01f6099_1fbb6aa9",
+      "range": {
+        "startLine": 1114,
+        "startChar": 4,
+        "endLine": 1118,
+        "endChar": 5
+      },
+      "revId": "e2054d6ba032aea3a6b8edab38179ef02d7b23f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
