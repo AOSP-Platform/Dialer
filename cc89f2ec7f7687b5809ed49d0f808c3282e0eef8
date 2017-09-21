@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bd50cf2_c5bd0f0b",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1124113
+      },
+      "writtenOn": "2017-09-21T11:45:07Z",
+      "side": 1,
+      "message": "Yes, we fixed in patch set 4.",
+      "parentUuid": "2c43b627_d9316ac3",
+      "revId": "cc89f2ec7f7687b5809ed49d0f808c3282e0eef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dfc950c_ea58e174",
         "filename": "java/com/android/incallui/VideoCallPresenter.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-20T17:24:53Z",
       "side": 1,
       "message": "Remove this check?\nIt will throw NullPointerException if it\u0027s null, which should never happen.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 34,
+        "endLine": 1117,
+        "endChar": 35
+      },
+      "revId": "cc89f2ec7f7687b5809ed49d0f808c3282e0eef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "708d088a_6c38ac9f",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1124113
+      },
+      "writtenOn": "2017-09-21T11:45:07Z",
+      "side": 1,
+      "message": "I agree with you. I fixed in patch set 4.",
+      "parentUuid": "0dfc950c_ea58e174",
       "range": {
         "startLine": 1117,
         "startChar": 34,
