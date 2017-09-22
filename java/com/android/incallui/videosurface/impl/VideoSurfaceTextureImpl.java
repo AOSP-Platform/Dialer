@@ -241,7 +241,15 @@ public class VideoSurfaceTextureImpl implements VideoSurfaceTexture {
     }
 
     @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+      LogUtil.i("SurfaceTextureListener.onSurfaceTextureSizeChanged",
+          "mSurfaceId=" + surfaceType + ", w:" + width + "h:" + height);
+      if (surfaceType == SURFACE_TYPE_LOCAL
+          && surfaceDimensions != null
+          && (width != surfaceDimensions.x || height != surfaceDimensions.y)) {
+        setSurfaceDimensions(surfaceDimensions);
+      }
+    }
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
