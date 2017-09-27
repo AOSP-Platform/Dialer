@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea7cfb65_8491dd6e",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-09-27T20:10:41Z",
+      "side": 1,
+      "message": "Revert this change?",
+      "revId": "bb825d1ba18e73b1468b6a7a6e10f221465a07bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f60a980_27075875",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-09-27T20:10:41Z",
+      "side": 1,
+      "message": "Move it into onIncomingCall()?",
+      "revId": "bb825d1ba18e73b1468b6a7a6e10f221465a07bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
