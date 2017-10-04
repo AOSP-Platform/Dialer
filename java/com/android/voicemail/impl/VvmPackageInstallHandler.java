@@ -60,13 +60,6 @@ public final class VvmPackageInstallHandler {
       }
 
       VvmLog.i("VvmPackageInstallHandler.handlePackageInstalled", "Carrier app installed");
-      if (VisualVoicemailSettingsUtil.isEnabledUserSet(context, phoneAccount)) {
-        // Skip the check if this voicemail source's setting is overridden by the user.
-        VvmLog.i(
-            "VvmPackageInstallHandler.handlePackageInstalled",
-            "VVM enabled by user, not disabling");
-        continue;
-      }
 
       // Force deactivate the client. The user can re-enable it in the settings.
       // There is no need to update the settings for deactivation. At this point, if the
