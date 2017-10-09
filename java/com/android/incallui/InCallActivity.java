@@ -483,9 +483,29 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     }
   }
 
+  /**
+   * Changes the visibility of the dialpad fragment.
+   *
+   * @param show {@code true} whether the dialpad fragment is show or hide in-call.
+   * @param animate {@code true} whether or not to animate the transition.
+   * @return Whether the dialpad fragment visibility was changed
+   */
   public boolean showDialpadFragment(boolean show, boolean animate) {
+    return showDialpadFragment(show, animate, false);
+  }
+
+  /**
+   * Changes the visibility of the dialpad fragment.
+   *
+   * @param show {@code true} whether the dialpad fragment is show or hide.
+   * @param animate {@code true} whether or not to animate the dialpad.
+   * @param forceNotify {@code true} whether or not to notify forcibly
+   *     the current dialpad visibility.
+   * @return Whether the dialpad fragment visibility was changed
+   */
+  public boolean showDialpadFragment(boolean show, boolean animate, boolean forceNotify) {
     boolean didChange = common.showDialpadFragment(show, animate);
-    if (didChange) {
+    if (didChange || forceNotify) {
       // Note:  onInCallScreenDialpadVisibilityChange is called here to ensure that the dialpad FAB
       // repositions itself.
       getInCallScreen().onInCallScreenDialpadVisibilityChange(show);

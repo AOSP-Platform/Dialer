@@ -244,7 +244,8 @@ public class InCallActivityCommon {
         // can hide the dialpad.  Important when showing the dialpad from within dialer.
         InCallPresenter.getInstance().setFullScreen(false, true /* force */);
 
-        inCallActivity.showDialpadFragment(true /* show */, animateDialpadOnShow /* animate */);
+        inCallActivity.showDialpadFragment(true /* show */, animateDialpadOnShow /* animate */,
+            true /* forceNotify */);
         animateDialpadOnShow = false;
 
         DialpadFragment dialpadFragment = inCallActivity.getDialpadFragment();
