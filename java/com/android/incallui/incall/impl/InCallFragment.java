@@ -375,6 +375,18 @@ public class InCallFragment extends Fragment
     // Take note that the dialpad button isShowing
     getButtonController(InCallButtonIds.BUTTON_DIALPAD).setChecked(isShowing);
 
+    Fragment holdBanner = getChildFragmentManager().findFragmentById(R.id.incall_on_hold_banner);
+    if (holdBanner != null) {
+      FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+      if (isShowing) {
+        transaction.hide(holdBanner);
+      } else {
+        transaction.show(holdBanner);
+      }
+      transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
+      transaction.commitAllowingStateLoss();
+    }
+
     // This check is needed because there is a race condition where we attempt to update
     // ButtonGridFragment before it is ready, so we check whether it is ready first and once it is
     // ready, #onButtonGridCreated will mark the dialpad button as isShowing.
