@@ -432,7 +432,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         // This is important when showing the dialpad from within dialer.
         InCallPresenter.getInstance().setFullScreen(false /* isFullScreen */, true /* force */);
 
-        showDialpadFragment(true /* show */, animateDialpadOnShow /* animate */);
+        showDialpadFragment(true /* show */, animateDialpadOnShow /* animate */,
+            true /* forceNotify */);
         animateDialpadOnShow = false;
 
         DialpadFragment dialpadFragment = getDialpadFragment();
@@ -737,8 +738,29 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     }
   }
 
+  /**
+   * Changes the visibility of the dialpad fragment.
+   *
+   * @param show {@code true} whether the dialpad fragment is show or hide in-call.
+   * @param animate {@code true} whether or not to animate the transition.
+   */
   public void showDialpadFragment(boolean show, boolean animate) {
+    showDialpadFragment(show, animate, false);
+  }
+
+  /**
+   * Changes the visibility of the dialpad fragment.
+   *
+   * @param show {@code true} whether the dialpad fragment is show or hide.
+   * @param animate {@code true} whether or not to animate the dialpad.
+   * @param forceNotify {@code true} whether or not to notify forcibly
+   *     the current dialpad visibility.
+   */
+  public void showDialpadFragment(boolean show, boolean animate, boolean forceNotify) {
     if (show == isDialpadVisible()) {
+      if (forceNotify) {
+        getInCallScreen().onInCallScreenDialpadVisibilityChange(show);
+      }
       return;
     }
 
