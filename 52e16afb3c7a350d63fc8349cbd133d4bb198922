@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397e6d1f_7346ed98",
+        "filename": "java/com/android/incallui/incall/impl/InCallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-10-09T16:33:03Z",
+      "side": 1,
+      "message": "Can we use TelephonyManagerCompat.getTelephonyManagerForPhoneAccountHandle().getPhoneType()?",
+      "revId": "52e16afb3c7a350d63fc8349cbd133d4bb198922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
