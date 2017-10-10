@@ -16,6 +16,24 @@
       "revId": "52e16afb3c7a350d63fc8349cbd133d4bb198922",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d08c718f_97230afd",
+        "filename": "java/com/android/incallui/incall/impl/InCallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1073996
+      },
+      "writtenOn": "2017-10-10T05:54:54Z",
+      "side": 1,
+      "message": "in current solution, phone type is set as PHONE_TYPE_SIP if subId is NO_SUB_ID. If we use getTelephonyManagerForPhoneAccountHandle(), since this method returns default telephonymanager even if there is no valid subId corresponding to phoneaccounthandle passed, there is no way we can determine if its PHONE_TYPE_SIP",
+      "parentUuid": "397e6d1f_7346ed98",
+      "revId": "52e16afb3c7a350d63fc8349cbd133d4bb198922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
