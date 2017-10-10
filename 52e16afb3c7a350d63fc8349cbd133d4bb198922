@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "812d9cc9_5c7b6325",
+        "filename": "java/com/android/incallui/incall/impl/ButtonChooserFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-10-10T16:22:26Z",
+      "side": 1,
+      "message": "Could you please try adding HOLD here? As Tyler said hold should be determined purely by CAPABILITY_SUPPORT_HOLD and CAPABILITY_HOLD\n\n\nmapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());",
+      "revId": "52e16afb3c7a350d63fc8349cbd133d4bb198922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397e6d1f_7346ed98",
         "filename": "java/com/android/incallui/incall/impl/InCallFragment.java",
         "patchSetId": 2
