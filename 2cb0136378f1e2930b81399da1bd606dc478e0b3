@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6348ce31_239cb7e6",
+        "filename": "java/com/android/incallui/videotech/ims/ImsVideoTech.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1168623
+      },
+      "writtenOn": "2017-10-11T21:36:21Z",
+      "side": 0,
+      "message": "Could you explain why you want to remove these lines? I do not see it mentioned in the bug and I think this would cause issues by leaving the sessionMotificationState with the wrong value (still set to requesting an upgrade, even after the upgrade accepted as an example).",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 69
+      },
+      "revId": "2cb0136378f1e2930b81399da1bd606dc478e0b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
