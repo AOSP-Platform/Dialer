@@ -69,6 +69,17 @@
       <intent-filter>
         <action android:name="com.android.dialer.action.BLOCKED_NUMBERS_SETTINGS"/>
         <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="header"/>
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:exported="false"
+      android:name="com.android.dialer.app.settings.DialerSettingsActivity"
+      android:theme="@style/SettingsStyle">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
 
