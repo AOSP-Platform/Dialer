@@ -84,12 +84,17 @@ public class PhoneCallDetailsHelper {
         isVoicemail = details.callTypes[index] == Calls.VOICEMAIL_TYPE;
       }
     }
+    boolean shouldShowHdIcon =
+        (details.features & Calls.FEATURES_HD_CALL) == Calls.FEATURES_HD_CALL;
+    if (mContext.getPackageManager().hasSystemFeature(MotorolaUtils.HD_CALL_FEATRURE)) {
+      // The motorola specific feature is available.
+      shouldShowHdIcon = MotorolaUtils.shouldShowHdIconInCallLog(mContext, details.features);
+    }
 
     // Show the video icon if the call had video enabled.
     views.callTypeIcons.setShowVideo(
         (details.features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO);
-    views.callTypeIcons.setShowHd(
-        MotorolaUtils.shouldShowHdIconInCallLog(mContext, details.features));
+    views.callTypeIcons.setShowHd(shouldShowHdIcon);
     views.callTypeIcons.setShowWifi(
         MotorolaUtils.shouldShowWifiIconInCallLog(mContext, details.features));
     views.callTypeIcons.requestLayout();

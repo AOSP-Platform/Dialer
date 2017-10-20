@@ -93,12 +93,18 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
         (entry.getFeatures() & Calls.FEATURES_PULLED_EXTERNALLY)
             == Calls.FEATURES_PULLED_EXTERNALLY;
     boolean isDuoCall = entry.getIsDuoCall();
+    boolean shouldShowHdIcon =
+        (entry.getFeatures() & Calls.FEATURES_HD_CALL) == Calls.FEATURES_HD_CALL;
+    if (context.getPackageManager().hasSystemFeature(MotorolaUtils.HD_CALL_FEATRURE)) {
+      // The motorola specific feature is available.
+      shouldShowHdIcon = MotorolaUtils.shouldShowHdIconInCallLog(context, entry.getFeatures());
+    }
 
     callTime.setTextColor(getColorForCallType(context, callType));
     callTypeIcon.clear();
     callTypeIcon.add(callType);
     callTypeIcon.setShowVideo(isVideoCall);
-    callTypeIcon.setShowHd(MotorolaUtils.shouldShowHdIconInCallLog(context, entry.getFeatures()));
+    callTypeIcon.setShowHd(shouldShowHdIcon);
     callTypeIcon.setShowWifi(
         MotorolaUtils.shouldShowWifiIconInCallLog(context, entry.getFeatures()));
 

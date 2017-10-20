@@ -39,7 +39,7 @@ public class MotorolaUtils {
 
   // This is used to check if a Motorola device supports HD voice call feature, which comes from
   // system feature setting.
-  private static final String HD_CALL_FEATRURE = "com.motorola.software.sprint.hd_call";
+  public static final String HD_CALL_FEATRURE = "com.motorola.software.sprint.hd_call";
   // This is used to check if a Motorola device supports WiFi call feature, by checking if a certain
   // package is enabled.
   private static final String WIFI_CALL_PACKAGE_NAME = "com.motorola.sprintwfc";
