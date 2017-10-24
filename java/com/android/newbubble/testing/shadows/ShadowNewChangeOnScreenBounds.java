@@ -11,20 +11,21 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
  */
 
-package com.android.dialer.buildtype;
+package com.android.newbubble.testing.shadows;
 
-import com.android.dialer.proguard.UsedByReflection;
+import android.transition.TransitionValues;
+import com.android.newbubble.NewChangeOnScreenBounds;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
 
-/** Gets the build type. */
-@UsedByReflection(value = "BuildType.java")
-public class BuildTypeAccessorImpl implements BuildTypeAccessor {
-
-  @Override
-  @BuildType.Type
-  public int getBuildType() {
-    return BuildType.BUGFOOD;
+/** Shadow {@link NewChangeOnScreenBounds} for testing. */
+@Implements(NewChangeOnScreenBounds.class)
+public class ShadowNewChangeOnScreenBounds {
+  @Implementation
+  public void captureStartValues(TransitionValues transitionValues) {
+    transitionValues = new TransitionValues();
   }
 }
