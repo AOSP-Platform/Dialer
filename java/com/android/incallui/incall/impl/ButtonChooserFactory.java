@@ -80,6 +80,7 @@ class ButtonChooserFactory {
             .setSlotOrder(Integer.MAX_VALUE)
             .setMutuallyExclusiveButton(InCallButtonIds.BUTTON_SWAP)
             .build());
+    mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());
 
     return new ButtonChooser(new MappedButtonConfig(mapping));
   }
