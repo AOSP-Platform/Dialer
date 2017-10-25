@@ -22,6 +22,30 @@
       "revId": "2cb0136378f1e2930b81399da1bd606dc478e0b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6794cf24_38059b52",
+        "filename": "java/com/android/incallui/videotech/ims/ImsVideoTech.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1141529
+      },
+      "writtenOn": "2017-10-25T07:00:31Z",
+      "side": 0,
+      "message": "The sessionModificationState gets cleared when response for upgrade is received. Please refer: http://androidxref.com/8.0.0_r4/xref/packages/apps/Dialer/java/com/android/incallui/videotech/ims/ImsVideoCallCallback.java#117\n\nSo, this line can be safely removed",
+      "parentUuid": "6348ce31_239cb7e6",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 69
+      },
+      "revId": "2cb0136378f1e2930b81399da1bd606dc478e0b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
