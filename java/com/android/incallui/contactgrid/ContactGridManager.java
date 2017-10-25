@@ -16,6 +16,7 @@
 
 package com.android.incallui.contactgrid;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -333,6 +335,13 @@ public class ContactGridManager {
    */
   private void updateBottomRow() {
     BottomRow.Info info = BottomRow.getInfo(context, primaryCallState, primaryInfo);
+
+    ViewGroup parent = (ViewGroup) bottomTextSwitcher.getParent();
+    if (!info.shouldAnimateLayoutChanges) {
+      parent.setLayoutTransition(null);
+    } else if (parent.getLayoutTransition() == null) {
+      parent.setLayoutTransition(new LayoutTransition());
+    }
 
     bottomTextView.setText(info.label);
     bottomTextView.setAllCaps(info.isSpamIconVisible);

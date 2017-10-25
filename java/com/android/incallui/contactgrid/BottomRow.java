@@ -49,6 +49,7 @@ public class BottomRow {
     public final boolean isForwardIconVisible;
     public final boolean isSpamIconVisible;
     public final boolean shouldPopulateAccessibilityEvent;
+    public final boolean shouldAnimateLayoutChanges;
 
     public Info(
         @Nullable CharSequence label,
@@ -58,7 +59,8 @@ public class BottomRow {
         boolean isHdIconVisible,
         boolean isForwardIconVisible,
         boolean isSpamIconVisible,
-        boolean shouldPopulateAccessibilityEvent) {
+        boolean shouldPopulateAccessibilityEvent,
+        boolean shouldAnimateLayoutChanges) {
       this.label = label;
       this.isTimerVisible = isTimerVisible;
       this.isWorkIconVisible = isWorkIconVisible;
@@ -67,6 +69,7 @@ public class BottomRow {
       this.isForwardIconVisible = isForwardIconVisible;
       this.isSpamIconVisible = isSpamIconVisible;
       this.shouldPopulateAccessibilityEvent = shouldPopulateAccessibilityEvent;
+      this.shouldAnimateLayoutChanges = shouldAnimateLayoutChanges;
     }
   }
 
@@ -81,6 +84,9 @@ public class BottomRow {
     boolean isHdAttemptingIconVisible = state.isHdAttempting;
     boolean isSpamIconVisible = false;
     boolean shouldPopulateAccessibilityEvent = true;
+    // Suppress the animation in DISCONNECTING or DISCONNECTED status
+    boolean shouldAnimateLayoutChanges = state.state != State.DISCONNECTING
+        && state.state != State.DISCONNECTED;
 
     if (isIncoming(state) && primaryInfo.isSpam) {
       label = context.getString(R.string.contact_grid_incoming_suspected_spam);
@@ -110,7 +116,8 @@ public class BottomRow {
         isHdIconVisible,
         isForwardIconVisible,
         isSpamIconVisible,
-        shouldPopulateAccessibilityEvent);
+        shouldPopulateAccessibilityEvent,
+        shouldAnimateLayoutChanges);
   }
 
   private static CharSequence getLabelForPhoneNumber(PrimaryInfo primaryInfo) {
