@@ -46,6 +46,30 @@
       "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0ab26b6_377181ac",
+        "filename": "java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-10-31T17:17:45Z",
+      "side": 1,
+      "message": "I think it\u0027s OK to only check features. We are going to remove restriction of showing HD icon for Motorola only.",
+      "parentUuid": "0df8fe08_ef35b276",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
