@@ -41,7 +41,7 @@ public final class ConcreteCreator {
   // Floor set at N due to use of Optional.
   protected static final int BUILD_CODE_FLOOR = Build.VERSION_CODES.N;
   // Ceiling set at O because this feature will ship as part of the framework in P.
-  protected static final int BUILD_CODE_CEILING = Build.VERSION_CODES.O;
+  protected static final int BUILD_CODE_CEILING = Build.VERSION_CODES.O_MR1;
 
   /**
    * Creates a new AssistedDialingMediator
