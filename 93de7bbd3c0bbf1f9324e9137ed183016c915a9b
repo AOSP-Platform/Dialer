@@ -22,6 +22,30 @@
       "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0df8fe08_ef35b276",
+        "filename": "java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-31T12:11:04Z",
+      "side": 1,
+      "message": "It may cause a problem in Motorola devices because I guess Motorola devices also use features flag. If we implement the condition like you suggested, it will equal checking only features.\n\n  public static boolean shouldShowHdIconInCallLog(Context context, int features) {\n    return ConfigProviderBindings.get(context)\n            .getBoolean(CONFIG_HD_CODEC_SHOW_ICON_IN_CALL_LOG_ENABLED, true)\n        @@@ \u0026\u0026 (features \u0026 Calls.FEATURES_HD_CALL) \u003d\u003d Calls.FEATURES_HD_CALL @@@\n        \u0026\u0026 isSupportingSprintHdCodec(context);\n  }",
+      "parentUuid": "7ca37637_649e3109",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
