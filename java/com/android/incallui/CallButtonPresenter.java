@@ -219,7 +219,7 @@ public class CallButtonPresenter
   public void muteClicked(boolean checked, boolean clickedByUser) {
     LogUtil.i(
         "CallButtonPresenter", "turning on mute: %s, clicked by user: %s", checked, clickedByUser);
-    if (clickedByUser) {
+    if (clickedByUser && mCall != null) {
       Logger.get(mContext)
           .logCallImpression(
               checked
@@ -257,6 +257,10 @@ public class CallButtonPresenter
 
   @Override
   public void mergeClicked() {
+    if (mCall == null) {
+      return;
+    }
+
     Logger.get(mContext)
         .logCallImpression(
             DialerImpression.Type.IN_CALL_MERGE_BUTTON_PRESSED,
