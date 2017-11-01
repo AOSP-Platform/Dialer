@@ -70,6 +70,30 @@
       "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c64a5b34_30503a06",
+        "filename": "java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-11-01T00:19:24Z",
+      "side": 1,
+      "message": "I understand. So, I should implement like this?\n\nboolean shouldShowHdIcon \u003d\n        (entry.getFeatures() \u0026 Calls.FEATURES_HD_CALL) \u003d\u003d Calls.FEATURES_HD_CALL;\n\nOr I should keep the condition for Motorola like you suggested in this patch?\n\nboolean shouldShowHdIcon \u003d\n        (entry.getFeatures() \u0026 Calls.FEATURES_HD_CALL) \u003d\u003d Calls.FEATURES_HD_CALL || MotorolaUtils.shouldShowHdIconInCallLog(context, entry.getFeatures();",
+      "parentUuid": "c0ab26b6_377181ac",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "93de7bbd3c0bbf1f9324e9137ed183016c915a9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
