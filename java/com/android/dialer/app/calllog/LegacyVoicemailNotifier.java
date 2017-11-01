@@ -36,6 +36,7 @@ import com.android.dialer.common.Assert;
 import com.android.dialer.common.LogUtil;
 import com.android.dialer.notification.DialerNotificationManager;
 import com.android.dialer.notification.NotificationChannelManager;
+import com.android.voicemail.impl.SubscriptionInfoHelper;
 
 /** Shows a notification in the status bar for legacy vociemail. */
 @TargetApi(VERSION_CODES.O)
@@ -55,7 +56,8 @@ public final class LegacyVoicemailNotifier {
       String voicemailNumber,
       PendingIntent callVoicemailIntent,
       PendingIntent voicemailSettingsIntent,
-      boolean isRefresh) {
+      boolean isRefresh,
+      int subId) {
     LogUtil.enterBlock("LegacyVoicemailNotifier.showNotification");
     Assert.isNotNull(handle);
     Assert.checkArgument(BuildCompat.isAtLeastO());
@@ -76,8 +78,10 @@ public final class LegacyVoicemailNotifier {
             voicemailNumber,
             callVoicemailIntent,
             voicemailSettingsIntent,
-            isRefresh);
-    DialerNotificationManager.notify(context, NOTIFICATION_TAG, NOTIFICATION_ID, notification);
+            isRefresh,
+            subId);
+    DialerNotificationManager.notify(context, NOTIFICATION_TAG + subId, NOTIFICATION_ID,
+        notification);
   }
 
   @NonNull
@@ -89,7 +93,8 @@ public final class LegacyVoicemailNotifier {
       String voicemailNumber,
       PendingIntent callVoicemailIntent,
       PendingIntent voicemailSettingsIntent,
-      boolean isRefresh) {
+      boolean isRefresh,
+      int subId) {
     String notificationTitle =
         context
             .getResources()
@@ -109,9 +114,20 @@ public final class LegacyVoicemailNotifier {
       contentIntent = voicemailSettingsIntent;
     }
 
+    int resId = android.R.drawable.stat_notify_voicemail;
+
+    if (pinnedTelephonyManager.getPhoneCount() > 1) {
+      SubscriptionInfoHelper subInfoHelper = new SubscriptionInfoHelper(context,
+          handle);
+      int slotId = subInfoHelper.getSimSlotIndex();
+      resId = (slotId == 0) ? R.drawable.stat_notify_voicemail_sub1
+          : (slotId == 1) ? R.drawable.stat_notify_voicemail_sub2
+          : android.R.drawable.stat_notify_voicemail;
+    }
+
     Notification.Builder builder =
         new Notification.Builder(context)
-            .setSmallIcon(android.R.drawable.stat_notify_voicemail)
+            .setSmallIcon(resId)
             .setColor(context.getColor(R.color.dialer_theme_color))
             .setWhen(System.currentTimeMillis())
             .setContentTitle(notificationTitle)
@@ -146,10 +162,12 @@ public final class LegacyVoicemailNotifier {
     }
   }
 
-  public static void cancelNotification(@NonNull Context context) {
+  public static void cancelNotification(@NonNull Context context,
+      int subId) {
     LogUtil.enterBlock("LegacyVoicemailNotifier.cancelNotification");
     Assert.checkArgument(BuildCompat.isAtLeastO());
-    DialerNotificationManager.cancel(context, NOTIFICATION_TAG, NOTIFICATION_ID);
+    DialerNotificationManager.cancel(context, NOTIFICATION_TAG + subId,
+        NOTIFICATION_ID);
   }
 
   private LegacyVoicemailNotifier() {}

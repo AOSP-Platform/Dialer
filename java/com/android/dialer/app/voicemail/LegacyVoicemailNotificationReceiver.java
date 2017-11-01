@@ -34,6 +34,7 @@ import com.android.dialer.common.LogUtil;
 import com.android.dialer.common.PerAccountSharedPreferences;
 import com.android.dialer.compat.telephony.TelephonyManagerCompat;
 import com.android.dialer.storage.StorageComponent;
+import com.android.voicemail.impl.SubscriptionInfoHelper;
 import com.android.voicemail.VoicemailClient;
 import com.android.voicemail.VoicemailComponent;
 
@@ -72,6 +73,8 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
     PhoneAccountHandle phoneAccountHandle =
         Assert.isNotNull(intent.getParcelableExtra(TelephonyManager.EXTRA_PHONE_ACCOUNT_HANDLE));
     int count = intent.getIntExtra(TelephonyManager.EXTRA_NOTIFICATION_COUNT, -1);
+    int subId =  intent.getIntExtra(SubscriptionInfoHelper.SUB_ID_EXTRA, -1);
+
 
     boolean isRefresh = intent.getBooleanExtra(TelephonyManagerCompat.EXTRA_IS_REFRESH, false);
     LogUtil.i("LegacyVoicemailNotificationReceiver.onReceive", "isRefresh: " + isRefresh);
@@ -96,7 +99,7 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
 
     if (count == 0) {
       LogUtil.i("LegacyVoicemailNotificationReceiver.onReceive", "clearing notification");
-      LegacyVoicemailNotifier.cancelNotification(context);
+      LegacyVoicemailNotifier.cancelNotification(context, subId);
       return;
     }
 
@@ -125,7 +128,8 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
         voicemailNumber,
         callVoicemailIntent,
         voicemailSettingIntent,
-        isRefresh);
+        isRefresh,
+        subId);
   }
 
   public static void setDismissed(
