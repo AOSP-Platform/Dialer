@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8dbea3_1eb5f0ed",
+        "filename": "java/com/android/dialer/app/calllog/CallLogListItemViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "Consider passing array \"callIds\" to DeleteCallTask\u0027s constructor so that we don\u0027t have to check it beforehand.",
+      "range": {
+        "startLine": 441,
+        "startChar": 6,
+        "endLine": 443,
+        "endChar": 7
+      },
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd00d943_56bc5d1b",
+        "filename": "java/com/android/dialer/app/calllog/CallLogListItemViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "Please fix the indentation here.",
+      "range": {
+        "startLine": 1231,
+        "startChar": 10,
+        "endLine": 1231,
+        "endChar": 14
+      },
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "859a8c99_0d0104c9",
+        "filename": "java/com/android/dialer/app/res/drawable-xhdpi/ic_delete_call_log_gray600_24.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "All \"ic_delete_call_log_gray600_24\" resources should be added in drawable directories under \"java/com/android/dialer/calldetails/res/\".",
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "039016dd_55ad9648",
+        "filename": "java/com/android/dialer/app/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "This should be added in\n\njava/com/android/dialer/calldetails/res/values/strings.xml.",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 65
+      },
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b399ef72_44f12554",
+        "filename": "java/com/android/dialer/calldetails/CallDetailsActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "We don\u0027t need this after using a listener in CallDetailsFooterViewHolder to handle deletion.\n\nPlease see my comment in CallDetailsFooterViewHolder.java for details.",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 3
+      },
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9669af_2aaaa826",
+        "filename": "java/com/android/dialer/calldetails/CallDetailsFooterViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2017-11-01T18:01:34Z",
+      "side": 1,
+      "message": "We prefer to use a listener to handle the deletion rather than convert a Context to an Activity.\n\nThe \"ReportCallIdListener\" in this class is an example.\n\nPlease remember to rename the instance variable \"listener\" in this class as \"reportCallIdListener\" as we will have a \"callDetailDeletionListener\".",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 37
+      },
+      "revId": "639800d5d1c8b416b6d8319554eb340d557438dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
