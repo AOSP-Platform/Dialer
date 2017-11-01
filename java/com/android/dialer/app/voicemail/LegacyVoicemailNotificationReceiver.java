@@ -47,6 +47,9 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
 
   @VisibleForTesting static final String LEGACY_VOICEMAIL_DISMISSED = "legacy_voicemail_dismissed";
 
+  // Phone id for which voicemail notification update received
+  private static final String EXTRA_PHONE_ID = "phone_id";
+
   @Override
   public void onReceive(Context context, Intent intent) {
 
@@ -72,6 +75,8 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
     PhoneAccountHandle phoneAccountHandle =
         Assert.isNotNull(intent.getParcelableExtra(TelephonyManager.EXTRA_PHONE_ACCOUNT_HANDLE));
     int count = intent.getIntExtra(TelephonyManager.EXTRA_NOTIFICATION_COUNT, -1);
+    int phoneId =  intent.getIntExtra(EXTRA_PHONE_ID, -1);
+
 
     boolean isRefresh = intent.getBooleanExtra(TelephonyManagerCompat.EXTRA_IS_REFRESH, false);
     LogUtil.i("LegacyVoicemailNotificationReceiver.onReceive", "isRefresh: " + isRefresh);
@@ -96,7 +101,7 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
 
     if (count == 0) {
       LogUtil.i("LegacyVoicemailNotificationReceiver.onReceive", "clearing notification");
-      LegacyVoicemailNotifier.cancelNotification(context);
+      LegacyVoicemailNotifier.cancelNotification(context, phoneId);
       return;
     }
 
@@ -125,7 +130,8 @@ public class LegacyVoicemailNotificationReceiver extends BroadcastReceiver {
         voicemailNumber,
         callVoicemailIntent,
         voicemailSettingIntent,
-        isRefresh);
+        isRefresh,
+        phoneId);
   }
 
   public static void setDismissed(

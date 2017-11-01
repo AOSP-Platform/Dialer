@@ -55,7 +55,8 @@ public final class LegacyVoicemailNotifier {
       String voicemailNumber,
       PendingIntent callVoicemailIntent,
       PendingIntent voicemailSettingsIntent,
-      boolean isRefresh) {
+      boolean isRefresh,
+      int phoneId) {
     LogUtil.enterBlock("LegacyVoicemailNotifier.showNotification");
     Assert.isNotNull(handle);
     Assert.checkArgument(BuildCompat.isAtLeastO());
@@ -76,8 +77,10 @@ public final class LegacyVoicemailNotifier {
             voicemailNumber,
             callVoicemailIntent,
             voicemailSettingsIntent,
-            isRefresh);
-    DialerNotificationManager.notify(context, NOTIFICATION_TAG, NOTIFICATION_ID, notification);
+            isRefresh,
+            phoneId);
+    DialerNotificationManager.notify(context, NOTIFICATION_TAG + phoneId, NOTIFICATION_ID,
+        notification);
   }
 
   @NonNull
@@ -89,7 +92,8 @@ public final class LegacyVoicemailNotifier {
       String voicemailNumber,
       PendingIntent callVoicemailIntent,
       PendingIntent voicemailSettingsIntent,
-      boolean isRefresh) {
+      boolean isRefresh,
+      int phoneId) {
     String notificationTitle =
         context
             .getResources()
@@ -109,9 +113,17 @@ public final class LegacyVoicemailNotifier {
       contentIntent = voicemailSettingsIntent;
     }
 
+    int resId = android.R.drawable.stat_notify_voicemail;
+
+    if (pinnedTelephonyManager.getPhoneCount() > 1) {
+      resId = (phoneId == 0) ? R.drawable.stat_notify_voicemail_sub1
+          : (phoneId == 1) ? R.drawable.stat_notify_voicemail_sub2
+          : android.R.drawable.stat_notify_voicemail;
+    }
+
     Notification.Builder builder =
         new Notification.Builder(context)
-            .setSmallIcon(android.R.drawable.stat_notify_voicemail)
+            .setSmallIcon(resId)
             .setColor(context.getColor(R.color.dialer_theme_color))
             .setWhen(System.currentTimeMillis())
             .setContentTitle(notificationTitle)
@@ -146,10 +158,12 @@ public final class LegacyVoicemailNotifier {
     }
   }
 
-  public static void cancelNotification(@NonNull Context context) {
+  public static void cancelNotification(@NonNull Context context,
+      int phoneId) {
     LogUtil.enterBlock("LegacyVoicemailNotifier.cancelNotification");
     Assert.checkArgument(BuildCompat.isAtLeastO());
-    DialerNotificationManager.cancel(context, NOTIFICATION_TAG, NOTIFICATION_ID);
+    DialerNotificationManager.cancel(context, NOTIFICATION_TAG + phoneId,
+        NOTIFICATION_ID);
   }
 
   private LegacyVoicemailNotifier() {}
