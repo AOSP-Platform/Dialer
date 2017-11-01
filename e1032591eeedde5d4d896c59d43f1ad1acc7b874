@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "524495d2_5835e526",
+        "filename": "java/com/android/incallui/VideoChargesAlertDialogFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-11-01T10:46:27Z",
+      "side": 1,
+      "message": "Okay. I updated it in patchset3.",
+      "parentUuid": "40761e70_1f0ac8f7",
+      "range": {
+        "startLine": 163,
+        "startChar": 40,
+        "endLine": 163,
+        "endChar": 45
+      },
+      "revId": "e1032591eeedde5d4d896c59d43f1ad1acc7b874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459140fa_90a6394b",
         "filename": "java/com/android/incallui/call/DialerCall.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T22:05:25Z",
       "side": 1,
       "message": "is this ever called before cacheCarrierConfiguration?",
+      "range": {
+        "startLine": 693,
+        "startChar": 17,
+        "endLine": 693,
+        "endChar": 44
+      },
+      "revId": "e1032591eeedde5d4d896c59d43f1ad1acc7b874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64f77806_0a0fcda0",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-11-01T10:46:27Z",
+      "side": 1,
+      "message": "No, it is never called before DialerCall#cacheCarrierConfiguration.\n\nThe DialerCall#cacheCarrierConfiguration is called only when DialerCall#updateFromTelecomCall() can acquire a phoneAccount.\nAnd Telecom calls addCall after it sets PhoneAccount.\nThe showVideoChargesAlertDialog is called triggered by addCall.\nSo, showVideoChargesAlertDialog is never called before cacheCarrierConfiguration.",
+      "parentUuid": "459140fa_90a6394b",
       "range": {
         "startLine": 693,
         "startChar": 17,
