@@ -22,6 +22,30 @@
       "revId": "9f39c2f5564bbe16bc74776f73f8425a7ee1d3f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3d2b1c5_6ef84e2b",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1060300
+      },
+      "writtenOn": "2017-11-10T23:16:28Z",
+      "side": 1,
+      "message": "Yeah this is something different, has to do with annotation processors",
+      "parentUuid": "259b0037_4019460e",
+      "range": {
+        "startLine": 270,
+        "startChar": 4,
+        "endLine": 270,
+        "endChar": 16
+      },
+      "revId": "9f39c2f5564bbe16bc74776f73f8425a7ee1d3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
