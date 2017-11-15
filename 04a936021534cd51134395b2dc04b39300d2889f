@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6860d2b_86c09326",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2017-11-15T22:53:21Z",
+      "side": 1,
+      "message": "I don\u0027t think this is really necessary but it matches what the documentation says so I\u0027m +2\u0027ing.",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "04a936021534cd51134395b2dc04b39300d2889f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
