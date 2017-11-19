@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8751336_0587864b",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-11-19T04:17:14Z",
+      "side": 1,
+      "message": "If dialpad visibility is not changed, onInCallScreenDialpadVisibilityChange is not called.\n\nIf InCallActivity is recreated durin the dialpad is displayed, the status of dialpad is not changed(Visible-\u003eVisible). So, hold banner is still displayed even if dialpad is displayed.\n\nTo solve the issue, we need this third parameter to call onInCallScreenDialpadVisibilityChanged regardless of \"didChange\".",
+      "range": {
+        "startLine": 506,
+        "startChar": 68,
+        "endLine": 506,
+        "endChar": 87
+      },
+      "revId": "eda26006d643bb8b63bb29b21e706ec9b4a2c153",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
