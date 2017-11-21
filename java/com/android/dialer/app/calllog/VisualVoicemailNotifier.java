@@ -31,6 +31,8 @@ import android.support.v4.app.NotificationCompat;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
+import android.text.BidiFormatter;
+import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import com.android.contacts.common.util.ContactDisplayUtils;
 import com.android.dialer.app.DialtactsActivity;
@@ -63,6 +65,8 @@ final class VisualVoicemailNotifier {
    * group.
    */
   private static final String GROUP_KEY = "VisualVoicemailGroup";
+
+  private static final BidiFormatter mBidiFormatter = BidiFormatter.getInstance();
 
   /**
    * @param shouldAlert whether ringtone or vibration should be made when the notification is posted
@@ -156,6 +160,13 @@ final class VisualVoicemailNotifier {
       @NonNull Map<String, ContactInfo> contactInfos) {
     PhoneAccountHandle handle = getAccountForCall(context, voicemail);
     ContactInfo contactInfo = contactInfos.get(voicemail.number);
+    String contactInfoName = contactInfo.name;
+
+    if (TextUtils.equals(contactInfo.name, contactInfo.formattedNumber)
+        || TextUtils.equals(contactInfo.name, contactInfo.number)) {
+      contactInfoName =
+          mBidiFormatter.unicodeWrap(contactInfo.name, TextDirectionHeuristics.LTR);
+    }
 
     NotificationCompat.Builder builder =
         createNotificationBuilder(context)
@@ -163,7 +174,7 @@ final class VisualVoicemailNotifier {
                 ContactDisplayUtils.getTtsSpannedPhoneNumber(
                     context.getResources(),
                     R.string.notification_new_voicemail_ticker,
-                    contactInfo.name))
+                    contactInfoName))
             .setWhen(voicemail.dateMs)
             .setSound(getVoicemailRingtoneUri(context, handle))
             .setDefaults(getNotificationDefaultFlags(context, handle));
