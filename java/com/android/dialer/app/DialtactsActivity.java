@@ -1556,7 +1556,7 @@ public class DialtactsActivity extends TransactionSafeActivity
     // In RTL, scroll when the current tab is Call History instead, since the order of the tabs
     // is reversed and the ViewPager returns the left tab position during scroll.
     boolean isRtl = ViewUtil.isRtl();
-    if (!isRtl && tabIndex == DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL && !mIsLandscape) {
+    if (tabIndex == DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL && !mIsLandscape) {
       mFloatingActionButtonController.onPageScrolled(positionOffset);
     } else if (isRtl && tabIndex == DialtactsPagerAdapter.TAB_INDEX_HISTORY && !mIsLandscape) {
       mFloatingActionButtonController.onPageScrolled(1 - positionOffset);
