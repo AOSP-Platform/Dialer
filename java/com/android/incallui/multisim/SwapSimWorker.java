@@ -199,4 +199,7 @@ public class SwapSimWorker implements Worker<Void, Void>, DialerCallListener, Ca
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onSuplServiceMessage(String suplNotificationMessage) {}
 }

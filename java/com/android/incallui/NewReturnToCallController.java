@@ -246,6 +246,9 @@ public class NewReturnToCallController implements InCallUiListener, Listener, Au
     }
   }
 
+  @Override
+  public void onSuplServiceMessage(String suplNotificationMessage) {}
+
   private void startContactInfoSearch() {
     DialerCall dialerCall = CallList.getInstance().getActiveOrBackgroundCall();
     if (dialerCall != null) {

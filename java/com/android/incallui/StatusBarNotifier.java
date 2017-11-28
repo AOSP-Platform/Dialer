@@ -1111,5 +1111,8 @@ public class StatusBarNotifier
         updateNotification();
       }
     }
+
+    @Override
+    public void onSuplServiceMessage(String suplNotificationMessage) {}
   }
 }
