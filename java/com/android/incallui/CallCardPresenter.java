@@ -389,6 +389,9 @@ public class CallCardPresenter
   public void onInternationalCallOnWifi() {}
 
   @Override
+  public void onSupplementaryServiceMessage(String suplNotificationMessage) {}
+
+  @Override
   public void onEnrichedCallSessionUpdate() {
     LogUtil.enterBlock("CallCardPresenter.onEnrichedCallSessionUpdate");
     updatePrimaryDisplayInfo();

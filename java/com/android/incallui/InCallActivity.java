@@ -1183,6 +1183,10 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     enableInCallOrientationEventListener(allowOrientationChange);
   }
 
+  public void onSupplementaryServiceMessage(String suplNotificationMessage) {
+    Toast.makeText(this, suplNotificationMessage, Toast.LENGTH_LONG).show();
+  }
+
   public void hideMainInCallFragment() {
     LogUtil.enterBlock("InCallActivity.hideMainInCallFragment");
     if (getCallCardFragmentVisible()) {

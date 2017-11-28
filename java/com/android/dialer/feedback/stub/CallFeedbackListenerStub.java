@@ -59,4 +59,7 @@ public class CallFeedbackListenerStub implements CallList.Listener {
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onSupplementaryServiceMessage(String suplNotificationMessage) {}
 }

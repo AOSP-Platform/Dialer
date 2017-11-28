@@ -38,4 +38,6 @@ public interface DialerCallListener {
   void onInternationalCallOnWifi();
 
   void onEnrichedCallSessionUpdate();
+
+  void onSupplementaryServiceMessage(String suplNotificationMessage);
 }
