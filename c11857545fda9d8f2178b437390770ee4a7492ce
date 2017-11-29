@@ -16,6 +16,24 @@
       "revId": "c11857545fda9d8f2178b437390770ee4a7492ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "715972ce_27a878e5",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1099511
+      },
+      "writtenOn": "2017-11-29T22:30:59Z",
+      "side": 1,
+      "message": "In the comment #1 it also says:\nContinue to allow the initial author/user the ability to abandon changes in packages/apps/Dialer\nI thought that\u0027s \"Registered Users\" for, is it not?\nHow to get the initial author abandon then?",
+      "parentUuid": "40b1c2e5_c4ef4db2",
+      "revId": "c11857545fda9d8f2178b437390770ee4a7492ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
