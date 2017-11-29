@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a44c05_bf1e207b",
+        "filename": "groups",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2017-11-29T22:37:56Z",
+      "side": 1,
+      "message": "This is no longer needed...",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 6
+      },
+      "revId": "e9412cce5ff85f93b81c8c9c314554f2375c732a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
