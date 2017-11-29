@@ -34,6 +34,24 @@
       "revId": "c11857545fda9d8f2178b437390770ee4a7492ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e6553f7_e0a691e5",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2017-11-29T22:34:31Z",
+      "side": 1,
+      "message": "No, this is not an exclusive ACL so there is no need to grant unneeded access.  Abandon is granted to \"Android Maintainers\" at All-Projects level, and you should not extend it to \"Registered Users\" on AOSP because that means anyone would be able to abandon CLs here.",
+      "parentUuid": "715972ce_27a878e5",
+      "revId": "c11857545fda9d8f2178b437390770ee4a7492ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
