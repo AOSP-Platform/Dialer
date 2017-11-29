@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e07ea60_6f2449a8",
+        "filename": "java/com/android/incallui/CallCardPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-11-29T02:14:07Z",
+      "side": 1,
+      "message": "As you said in the comment, primaryChanged is always true. This method always return true right? \n\nAlso, if primaryChanged is not changed, can we take some parameters other then primaryChanged to determine whether the primaryInfo should be refreshed?",
+      "range": {
+        "startLine": 435,
+        "startChar": 11,
+        "endLine": 435,
+        "endChar": 25
+      },
+      "revId": "269c2f5852397d6be559515a4b54fef13e5f83f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
