@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40b1c2e5_c4ef4db2",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2017-11-29T21:57:25Z",
+      "side": 1,
+      "message": "Why \"Registered Users\" here? (It would cover all registered users, and including non-Googlers, so I think it should be removed.)",
+      "revId": "c11857545fda9d8f2178b437390770ee4a7492ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
