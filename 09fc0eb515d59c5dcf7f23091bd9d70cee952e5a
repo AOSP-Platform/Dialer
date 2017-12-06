@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b1a2dd_9b15bc0b",
+        "filename": "java/com/android/incallui/call/CallList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2017-12-06T20:12:36Z",
+      "side": 1,
+      "message": "Please change to onSupplementaryServiceMessage.",
+      "range": {
+        "startLine": 800,
+        "startChar": 9,
+        "endLine": 800,
+        "endChar": 29
+      },
+      "revId": "09fc0eb515d59c5dcf7f23091bd9d70cee952e5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
