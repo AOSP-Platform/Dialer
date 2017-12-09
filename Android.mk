@@ -191,7 +191,7 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-grpc-okhttp:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-okhttp/1.0.3/grpc-okhttp-1.0.3$(COMMON_JAVA_PACKAGE_SUFFIX) \
     dialer-grpc-protobuf-lite:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-protobuf-lite/1.0.3/grpc-protobuf-lite-1.0.3$(COMMON_JAVA_PACKAGE_SUFFIX) \
     dialer-grpc-stub:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-stub/1.0.3/grpc-stub-1.0.3$(COMMON_JAVA_PACKAGE_SUFFIX) \
-    dialer-guava:../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/20.0/guava-20.0$(COMMON_JAVA_PACKAGE_SUFFIX) \
+    dialer-guava:../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/23.0/guava-23.0$(COMMON_JAVA_PACKAGE_SUFFIX) \
     dialer-javax-annotation-api:../../../prebuilts/tools/common/m2/repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2$(COMMON_JAVA_PACKAGE_SUFFIX) \
     dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1$(COMMON_JAVA_PACKAGE_SUFFIX)
 
@@ -204,7 +204,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-guava-target
 LOCAL_SDK_VERSION := current
-LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/20.0/guava-20.0$(COMMON_JAVA_PACKAGE_SUFFIX)
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/23.0/guava-23.0$(COMMON_JAVA_PACKAGE_SUFFIX)
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
@@ -384,7 +384,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-auto-value-target
 LOCAL_SDK_VERSION := current
-LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.3/auto-value-1.3$(COMMON_JAVA_PACKAGE_SUFFIX)
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.5.2/auto-value-1.5.2$(COMMON_JAVA_PACKAGE_SUFFIX)
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
