@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1feac4bf_1b1e1053",
+        "filename": "proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1146693
+      },
+      "writtenOn": "2017-12-14T16:21:26Z",
+      "side": 1,
+      "message": "I think this may be because the android Guava is out of date?",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 30
+      },
+      "revId": "ab3ac8b808d0fe038f6ddd5411d8b3f983058e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
