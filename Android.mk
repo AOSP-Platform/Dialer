@@ -91,6 +91,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-common \
 	android-support-dynamic-animation \
 	com.android.vcard \
+	dialer-animal-sniffer-annotations-target \
 	dialer-commons-io-target \
 	dialer-dagger2-target \
 	dialer-disklrucache-target \
@@ -102,11 +103,14 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	dialer-grpc-okhttp-target \
 	dialer-grpc-protobuf-lite-target \
 	dialer-grpc-stub-target \
+	dialer-j2objc-annotations-target \
 	dialer-javax-annotation-api-target \
 	dialer-javax-inject-target \
 	dialer-libshortcutbadger-target \
 	dialer-mime4j-core-target \
 	dialer-mime4j-dom-target \
+	dialer-okhttp-target \
+	dialer-okio-target \
 	dialer-error-prone-target \
 	dialer-guava-target \
 	jsr305 \
@@ -141,22 +145,11 @@ LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
   com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor
 
 
-# Begin Bug: 37077388
-LOCAL_DX_FLAGS := --multi-dex
-LOCAL_JACK_FLAGS := --multi-dex native
-
-LOCAL_PROGUARD_ENABLED := disabled
-ifdef LOCAL_JACK_ENABLED
-
-
 # Proguard includes
-LOCAL_PROGUARD_FLAG_FILES := $(call all-named-files-under,proguard.*flags,$(BASE_DIR))
+LOCAL_PROGUARD_FLAG_FILES := proguard.flags $(call all-named-files-under,proguard.*flags,$(BASE_DIR))
 LOCAL_PROGUARD_ENABLED := custom
 
 LOCAL_PROGUARD_ENABLED += optimization
-endif
-
-# End Bug: 37077388
 
 LOCAL_SDK_VERSION := system_current
 LOCAL_MODULE_TAGS := optional
@@ -385,6 +378,46 @@ LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-auto-value-target
 LOCAL_SDK_VERSION := current
 LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.3/auto-value-1.3.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-okhttp-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/squareup/okhttp/okhttp/2.7.4/okhttp-2.7.4.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-okio-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/squareup/okio/okio/1.9.0/okio-1.9.0.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-j2objc-annotations-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-animal-sniffer-annotations-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
