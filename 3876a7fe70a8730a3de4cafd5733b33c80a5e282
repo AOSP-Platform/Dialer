@@ -16,6 +16,24 @@
       "revId": "3876a7fe70a8730a3de4cafd5733b33c80a5e282",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32d8073_5c0faacc",
+        "filename": "java/com/android/incallui/CallCardPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-01-23T01:51:48Z",
+      "side": 1,
+      "message": "Thank you for your comments. I stored previous number here. Could you please review the latest patchset?",
+      "parentUuid": "d648776c_a78f3ee2",
+      "revId": "3876a7fe70a8730a3de4cafd5733b33c80a5e282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
