@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8446259f_d67dd6c6",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1197203
+      },
+      "writtenOn": "2018-01-24T20:32:37Z",
+      "side": 1,
+      "message": "Could not instantiate an instance of processor \u0027com.google.auto.common.BasicAnnotationProcessor\u0027",
+      "range": {
+        "startLine": 158,
+        "startChar": 96,
+        "endLine": 158,
+        "endChar": 143
+      },
+      "revId": "4b63a6796875ecdc89d0aff230df6209afec4e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
