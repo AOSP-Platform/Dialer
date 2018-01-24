@@ -91,6 +91,21 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-common \
 	android-support-dynamic-animation \
 	com.android.vcard \
+	dialer-android-arch-core-common-nodeps \
+	dialer-android-arch-core-runtime-nodeps \
+	dialer-android-arch-lifecycle-common-nodeps \
+	dialer-android-arch-lifecycle-extensions-nodeps \
+	dialer-android-arch-lifecycle-livedata-nodeps \
+	dialer-android-arch-lifecycle-runtime-nodeps \
+	dialer-android-arch-lifecycle-viewmodel-nodeps \
+	dialer-android-arch-paging-common-nodeps \
+	dialer-android-arch-paging-runtime-nodeps \
+	dialer-android-arch-persistence-db-framework-nodeps \
+	dialer-android-arch-persistence-db-nodeps \
+	dialer-android-arch-room-common-nodeps \
+	dialer-android-arch-room-migration-nodeps \
+	dialer-android-arch-room-runtime-nodeps \
+	dialer-android-arch-room-testing-nodeps \
 	dialer-commons-io-target \
 	dialer-dagger2-target \
 	dialer-disklrucache-target \
@@ -130,16 +145,17 @@ LOCAL_JAVA_LIBRARIES := \
 
 LOCAL_ANNOTATION_PROCESSORS := \
 	dialer-auto-value \
+	dialer-auto-common \
 	dialer-dagger2 \
 	dialer-dagger2-compiler \
 	dialer-dagger2-producers \
 	dialer-guava \
 	dialer-javax-annotation-api \
 	dialer-javax-inject \
+	dialer-room-processor \
 
 LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
-  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor
-
+  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor,com.google.auto.common.BasicAnnotationProcessor,android.arch.persistence.room.RoomProcessor
 
 # Begin Bug: 37077388
 LOCAL_DX_FLAGS := --multi-dex
@@ -183,6 +199,7 @@ include $(CLEAR_VARS)
 
 LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-auto-value:../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.5.2/auto-value-1.5.2.jar \
+    dialer-auto-common:../../../prebuilts/tools/common/m2/repository/com/google/auto/auto-common/0.7/auto-common-0.7.jar \
     dialer-dagger2-compiler:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-compiler/2.7/dagger-compiler-2.7.jar \
     dialer-dagger2:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger/2.7/dagger-2.7.jar \
     dialer-dagger2-producers:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-producers/2.7/dagger-producers-2.7.jar \
@@ -193,7 +210,8 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-grpc-stub:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-stub/1.0.3/grpc-stub-1.0.3.jar \
     dialer-guava:../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/23.0/guava-23.0.jar \
     dialer-javax-annotation-api:../../../prebuilts/tools/common/m2/repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar \
-    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar
+    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar \
+    dialer-room-processor:../../../prebuilts/maven_repo/android/android/arch/persistence/room/compiler/1.0.0-alpha10/compiler-1.0.0-alpha10.jar \
 
 include $(BUILD_HOST_PREBUILT)
 
@@ -388,5 +406,216 @@ LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
+
+# foo
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-core-common-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/core/common/1.0.0/common-1.0.0.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-core-runtime-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/core/runtime/1.0.0/runtime-1.0.0.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-common-java8-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/common-java8/1.1.0-SNAPSHOT/common-java8-1.1.0-20180105.182255-1.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-common-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/common/1.0.3/common-1.0.3.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-extensions-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/extensions/1.1.0-SNAPSHOT/extensions-1.1.0-20180105.182328-1.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-lifecycle-runtime \
+  android-arch-core-runtime \
+  android-arch-lifecycle-livedata \
+  android-arch-lifecycle-viewmodel
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-livedata-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/livedata/1.1.0-SNAPSHOT/livedata-1.1.0-20180105.182329-1.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-core-runtime \
+  android-arch-lifecycle-runtime
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-runtime-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/runtime/1.0.3/runtime-1.0.3.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-lifecycle-viewmodel-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/lifecycle/viewmodel/1.1.0-SNAPSHOT/viewmodel-1.1.0-20180105.182308-1.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-paging-common-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/paging/common/1.0.0-alpha4-1/common-1.0.0-alpha4-1.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-paging-runtime-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/paging/runtime/1.0.0-alpha4-1/runtime-1.0.0-alpha4-1.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-core-runtime \
+  android-arch-lifecycle-runtime \
+  android-arch-lifecycle-extensions
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-persistence-db-framework-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/db-framework/1.0.0/db-framework-1.0.0.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-persistence-db
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-persistence-db-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/db/1.0.0/db-1.0.0.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-room-common-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/common/1.0.0/common-1.0.0.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-room-migration-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/migration/1.0.0/migration-1.0.0.jar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .jar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES :=
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-room-runtime-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/runtime/1.0.0/runtime-1.0.0.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-persistence-db-framework \
+  android-arch-persistence-db \
+  android-arch-core-runtime
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-android-arch-room-testing-nodeps
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_SRC_FILES := ../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/testing/1.0.0/testing-1.0.0.aar
+LOCAL_BUILT_MODULE_STEM := javalib.jar
+LOCAL_MODULE_SUFFIX := .aar
+LOCAL_USE_AAPT2 := true
+LOCAL_SDK_VERSION := current
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+  android-arch-room-runtime \
+  android-arch-persistence-db \
+  android-arch-persistence-db-framework \
+  android-arch-core-runtime
+include $(BUILD_PREBUILT)
+# foo
 
 include $(CLEAR_VARS)
