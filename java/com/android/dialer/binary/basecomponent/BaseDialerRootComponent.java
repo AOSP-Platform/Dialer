@@ -32,6 +32,7 @@ import com.android.dialer.precall.PreCallComponent;
 import com.android.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import com.android.dialer.simulator.SimulatorComponent;
 import com.android.dialer.spam.SpamComponent;
+import com.android.dialer.speeddial.room.SpeedDialDatabaseComponent;
 import com.android.dialer.storage.StorageComponent;
 import com.android.dialer.strictmode.StrictModeComponent;
 import com.android.incallui.calllocation.CallLocationComponent;
@@ -67,4 +68,5 @@ public interface BaseDialerRootComponent
         SpeakEasyComponent.HasComponent,
         StorageComponent.HasComponent,
         StrictModeComponent.HasComponent,
-        VoicemailComponent.HasComponent {}
+        VoicemailComponent.HasComponent,
+        SpeedDialDatabaseComponent.HasComponent {}
