@@ -91,6 +91,11 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-common \
 	android-support-dynamic-animation \
 	com.android.vcard \
+	android-arch-core-common-nodeps \
+	android-arch-lifecycle-common-nodeps \
+	android-arch-paging-common-nodeps \
+	android-arch-room-common-nodeps \
+	android-arch-room-migration-nodeps \
 	dialer-commons-io-target \
 	dialer-dagger2-target \
 	dialer-disklrucache-target \
@@ -115,6 +120,16 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	volley \
 
 LOCAL_STATIC_ANDROID_LIBRARIES := \
+	android-arch-core-runtime-nodeps \
+	android-arch-lifecycle-extensions-nodeps \
+	android-arch-lifecycle-livedata-nodeps \
+	android-arch-lifecycle-runtime-nodeps \
+	android-arch-lifecycle-viewmodel-nodeps \
+	android-arch-paging-runtime-nodeps \
+	android-arch-persistence-db-framework-nodeps \
+	android-arch-persistence-db-nodeps \
+	android-arch-room-runtime-nodeps \
+	android-arch-room-testing-nodeps \
 	android-support-core-ui \
 	android-support-design \
 	android-support-transition \
@@ -130,6 +145,7 @@ LOCAL_JAVA_LIBRARIES := \
 
 LOCAL_ANNOTATION_PROCESSORS := \
 	dialer-auto-value \
+	dialer-auto-common \
 	dialer-dagger2 \
 	dialer-dagger2-compiler \
 	dialer-dagger2-producers \
@@ -138,10 +154,16 @@ LOCAL_ANNOTATION_PROCESSORS := \
 	dialer-guava \
 	dialer-javax-annotation-api \
 	dialer-javax-inject \
+	dialer-antlr-runtime \
+	dialer-android-support-annotations \
+	dialer-room-common \
+	dialer-room-migration \
+	kotlin-stdlib \
+	dialer-apache-commons-codec \
+ 	dialer-room-processor \
 
 LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
-  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor,com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor
-
+  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor,com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor,android.arch.persistence.room.RoomProcessor
 
 # Begin Bug: 37077388
 LOCAL_DX_FLAGS := --multi-dex
@@ -185,6 +207,7 @@ include $(CLEAR_VARS)
 
 LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-auto-value:../../../prebuilts/tools/common/m2/repository/com/google/auto/value/auto-value/1.5.2/auto-value-1.5.2.jar \
+    dialer-auto-common:../../../prebuilts/tools/common/m2/repository/com/google/auto/auto-common/0.7/auto-common-0.7.jar \
     dialer-dagger2-compiler:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-compiler/2.7/dagger-compiler-2.7.jar \
     dialer-dagger2:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger/2.7/dagger-2.7.jar \
     dialer-dagger2-producers:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-producers/2.7/dagger-producers-2.7.jar \
@@ -197,7 +220,13 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-grpc-stub:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-stub/1.0.3/grpc-stub-1.0.3.jar \
     dialer-guava:../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/23.0/guava-23.0.jar \
     dialer-javax-annotation-api:../../../prebuilts/tools/common/m2/repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar \
-    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar
+    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar \
+    dialer-room-common:../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/common/1.1.0-alpha1/common-1.1.0-alpha1.jar \
+    dialer-room-processor:../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/compiler/1.1.0-alpha1/compiler-1.1.0-alpha1.jar \
+    dialer-antlr-runtime:../../../prebuilts/tools/common/m2/repository/org/antlr/antlr4/4.5.3/antlr4-4.5.3.jar \
+    dialer-android-support-annotations:../../../prebuilts/maven_repo/android/com/android/support/support-annotations/25.4.0/support-annotations-25.4.0.jar \
+    dialer-room-migration:../../../prebuilts/sdk/current/extras/app-toolkit/m2repository/android/arch/persistence/room/migration/1.1.0-alpha1/migration-1.1.0-alpha1.jar \
+    dialer-apache-commons-codec:../../../prebuilts/tools/common/m2/repository/org/eclipse/tycho/tycho-bundles-external/0.18.1/eclipse/plugins/org.apache.commons.codec_1.4.0.v201209201156.jar \
 
 include $(BUILD_HOST_PREBUILT)
 
@@ -392,5 +421,4 @@ LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/auto
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
-
 include $(CLEAR_VARS)
