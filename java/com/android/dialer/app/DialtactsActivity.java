@@ -1783,6 +1783,6 @@ public class DialtactsActivity extends TransactionSafeActivity
   }
 
   private boolean newFavoritesIsEnabled() {
-    return ConfigProviderBindings.get(this).getBoolean("enable_new_favorites_tab", false);
+    return true; // ConfigProviderBindings.get(this).getBoolean("enable_new_favorites_tab", false);
   }
 }
