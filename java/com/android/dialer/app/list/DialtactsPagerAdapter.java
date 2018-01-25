@@ -69,8 +69,8 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
   public DialtactsPagerAdapter(
       Context context, FragmentManager fm, String[] tabTitles, boolean hasVoicemailProvider) {
     super(fm);
-    useNewSpeedDialTab =
-        ConfigProviderBindings.get(context).getBoolean("enable_new_favorites_tab", false);
+    useNewSpeedDialTab = true;
+        // ConfigProviderBindings.get(context).getBoolean("enable_new_favorites_tab", false);
     useNewContactsTab =
         ConfigProviderBindings.get(context).getBoolean("enable_new_contacts_tab", true);
     this.tabTitles = tabTitles;
