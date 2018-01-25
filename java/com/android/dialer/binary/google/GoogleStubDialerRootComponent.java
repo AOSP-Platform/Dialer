@@ -31,6 +31,7 @@ import com.android.dialer.precall.impl.PreCallModule;
 import com.android.dialer.preferredsim.suggestion.stub.StubSimSuggestionModule;
 import com.android.dialer.simulator.impl.SimulatorModule;
 import com.android.dialer.spam.StubSpamModule;
+import com.android.dialer.speeddial.room.SpeedDialDatabaseModule;
 import com.android.dialer.storage.StorageModule;
 import com.android.dialer.strictmode.impl.SystemStrictModeModule;
 import com.android.incallui.calllocation.impl.CallLocationModule;
@@ -58,6 +59,7 @@ import javax.inject.Singleton;
     PreCallModule.class,
     SharedPrefConfigProviderModule.class,
     SimulatorModule.class,
+    SpeedDialDatabaseModule.class,
     StorageModule.class,
     StubDuoModule.class,
     StubEnrichedCallModule.class,
