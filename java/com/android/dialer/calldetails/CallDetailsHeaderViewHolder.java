@@ -40,6 +40,7 @@ import com.android.dialer.dialercontact.DialerContact;
 import com.android.dialer.glidephotomanager.GlidePhotoManagerComponent;
 import com.android.dialer.logging.InteractionEvent;
 import com.android.dialer.logging.Logger;
+import com.android.dialer.phonenumberutil.PhoneNumberHelper;
 import com.android.dialer.widget.BidiTextView;
 
 /**
@@ -166,7 +167,7 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
               : context.getString(
                   com.android.contacts.common.R.string.call_subject_type_and_number,
                   contact.getNumberLabel(),
-                  contact.getDisplayNumber());
+                  PhoneNumberHelper.spanDisplayNumber(contact.getDisplayNumber()));
       numberView.setText(secondaryInfo);
     } else {
       numberView.setVisibility(View.GONE);

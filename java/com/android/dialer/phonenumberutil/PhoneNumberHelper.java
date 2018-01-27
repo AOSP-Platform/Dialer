@@ -301,6 +301,17 @@ public class PhoneNumberHelper {
   }
 
   /**
+   * Created spannable string
+   *
+   * @param displayNumber Phone number to be displayed.
+   * @return Spannable string that will always be treated as an LTR-string.
+   */
+  public static CharSequence spanDisplayNumber(String displayNumber) {
+    return PhoneNumberUtils.createTtsSpannable(
+        BidiFormatter.getInstance(true).unicodeWrap(displayNumber, TextDirectionHeuristics.LTR));
+  }
+
+  /**
    * Determines if the specified number is actually a URI (i.e. a SIP address) rather than a regular
    * PSTN phone number, based on whether or not the number contains an "@" character.
    *
