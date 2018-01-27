@@ -18,10 +18,9 @@ package com.android.incallui.contactgrid;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.telephony.PhoneNumberUtils;
-import android.text.BidiFormatter;
-import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
+
+import com.android.dialer.phonenumberutil.PhoneNumberHelper;
 import com.android.incallui.call.DialerCall.State;
 import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
@@ -118,7 +117,7 @@ public class BottomRow {
       return primaryInfo.location();
     }
     if (!primaryInfo.nameIsNumber() && !TextUtils.isEmpty(primaryInfo.number())) {
-      CharSequence spannedNumber = spanDisplayNumber(primaryInfo.number());
+      CharSequence spannedNumber = PhoneNumberHelper.spanDisplayNumber(primaryInfo.number());
       if (primaryInfo.label() == null) {
         return spannedNumber;
       } else {
@@ -126,11 +125,6 @@ public class BottomRow {
       }
     }
     return null;
-  }
-
-  private static CharSequence spanDisplayNumber(String displayNumber) {
-    return PhoneNumberUtils.createTtsSpannable(
-        BidiFormatter.getInstance().unicodeWrap(displayNumber, TextDirectionHeuristics.LTR));
   }
 
   private static boolean isIncoming(PrimaryCallState state) {

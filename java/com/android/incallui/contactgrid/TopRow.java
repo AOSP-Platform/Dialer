@@ -19,12 +19,10 @@ package com.android.incallui.contactgrid;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.telephony.PhoneNumberUtils;
-import android.text.BidiFormatter;
-import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import com.android.dialer.common.Assert;
 import com.android.dialer.common.LogUtil;
+import com.android.dialer.phonenumberutil.PhoneNumberHelper;
 import com.android.incallui.call.DialerCall.State;
 import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
@@ -81,7 +79,8 @@ public class TopRow {
         // Show phone number if it's not displayed in name (center row) or location field (bottom
         // row).
         if (shouldShowNumber(primaryInfo, true /* isIncoming */)) {
-          label = TextUtils.concat(label, " ", spanDisplayNumber(primaryInfo.number()));
+          label = TextUtils
+              .concat(label, " ", PhoneNumberHelper.spanDisplayNumber(primaryInfo.number()));
         }
       }
     } else if (VideoUtils.hasSentVideoUpgradeRequest(state.sessionModificationState())
@@ -97,7 +96,7 @@ public class TopRow {
       label = context.getString(R.string.incall_remotely_held);
     } else if (state.state() == State.ACTIVE
         && shouldShowNumber(primaryInfo, false /* isIncoming */)) {
-      label = spanDisplayNumber(primaryInfo.number());
+      label = PhoneNumberHelper.spanDisplayNumber(primaryInfo.number());
     } else if (state.state() == State.CALL_PENDING && !TextUtils.isEmpty(state.customLabel())) {
       label = state.customLabel();
     } else {
@@ -107,11 +106,6 @@ public class TopRow {
     }
 
     return new Info(label, icon, labelIsSingleLine);
-  }
-
-  private static CharSequence spanDisplayNumber(String displayNumber) {
-    return PhoneNumberUtils.createTtsSpannable(
-        BidiFormatter.getInstance().unicodeWrap(displayNumber, TextDirectionHeuristics.LTR));
   }
 
   private static boolean shouldShowNumber(PrimaryInfo primaryInfo, boolean isIncoming) {

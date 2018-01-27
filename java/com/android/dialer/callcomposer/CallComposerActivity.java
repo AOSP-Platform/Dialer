@@ -72,6 +72,7 @@ import com.android.dialer.enrichedcall.extensions.StateExtension;
 import com.android.dialer.logging.DialerImpression;
 import com.android.dialer.logging.Logger;
 import com.android.dialer.multimedia.MultimediaData;
+import com.android.dialer.phonenumberutil.PhoneNumberHelper;
 import com.android.dialer.precall.PreCall;
 import com.android.dialer.protos.ProtoParsers;
 import com.android.dialer.storage.StorageComponent;
@@ -606,7 +607,7 @@ public class CallComposerActivity extends AppCompatActivity
               : getString(
                   com.android.contacts.common.R.string.call_subject_type_and_number,
                   contact.getNumberLabel(),
-                  contact.getDisplayNumber());
+                  PhoneNumberHelper.spanDisplayNumber(contact.getDisplayNumber()));
       numberView.setText(secondaryInfo);
       toolbar.setSubtitle(secondaryInfo);
     } else {
