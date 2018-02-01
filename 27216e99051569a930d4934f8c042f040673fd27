@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ac25b5_5e28aa73",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "I would prefer to move this into VideoCallPresenter and call it from VideoCallPresenter#onVideoCallScreenUiReady. This logic belongs to video call and you could remove the need of saved instance states of didShowVideoChargesAlertDialog this way.",
+      "range": {
+        "startLine": 1179,
+        "startChar": 72,
+        "endLine": 1179,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ae67b7_0007226f",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "If this doesn\u0027t really do anything, consider remove this callback and its interface?",
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a257514_0d2643b6",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "LogUtil.enterBlock(\"VideoChargesAlertCallback.onDismiss\");",
+      "range": {
+        "startLine": 1649,
+        "startChar": 16,
+        "endLine": 1649,
+        "endChar": 19
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f8206f_55d48fbd",
+        "filename": "java/com/android/incallui/InCallPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "You might need to add a listener to VideoCallPresenter if it\u0027s being moved there.",
+      "range": {
+        "startLine": 699,
+        "startChar": 60,
+        "endLine": 699,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd92283_64bf107e",
+        "filename": "java/com/android/incallui/res/layout/frag_video_charges_alert_dialog.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "Is this ScrollView necessary?",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823e2867_81a12808",
+        "filename": "java/com/android/incallui/res/layout/frag_video_charges_alert_dialog.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "Please follow pattern of \"@+id/do_not_show\".",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c87b9a_f522e59e",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "Add [CHAR LIMIT\u003dNONE]",
+      "range": {
+        "startLine": 32,
+        "startChar": 80,
+        "endLine": 32,
+        "endChar": 81
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b64890f_fbc00e68",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-01T19:53:39Z",
+      "side": 1,
+      "message": "Add [CHAR LIMIT\u003d20]",
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
