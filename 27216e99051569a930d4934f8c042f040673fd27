@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "21b8834f_2ef211d6",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-07T19:38:51Z",
+      "side": 1,
+      "message": "Check out the logic in VideoCallPresenter#shouldShowCameraPermissionToast, it\u0027s a similar per call based dialog. You could add a flag in DialerCall to make sure it\u0027s only shown once per call.\n\nAnother reason to put it into VideoCallPresenter is because this dialog shouldn\u0027t be shown for RCS video share(RcsVideoSharePresenter).\n\nAlso it makes more sense to show it when VideoCallFragment is shown. Easier to maintain it inside VideoCallPresenter/VideoCallFragment\u0027s lifecycle for rotation etc.",
+      "parentUuid": "f48d953a_2635a044",
+      "range": {
+        "startLine": 1179,
+        "startChar": 72,
+        "endLine": 1179,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67ae67b7_0007226f",
         "filename": "java/com/android/incallui/InCallActivity.java",
         "patchSetId": 5
