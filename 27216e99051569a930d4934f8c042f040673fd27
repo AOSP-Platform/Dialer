@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f48d953a_2635a044",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "We would like to display this dialog once per call. If we move this logic to VideoCallPresenter and the dialog is displayed many times because instance of VideoCallPresenter is recreated by call state change, display rotation change, etc. So, I would like to keep this in InCallActivity. Should w consider to move the logic but remain didShowVideoChargesAlertDialog here and update it from VideoCallPresenter? What do you think?",
+      "parentUuid": "49ac25b5_5e28aa73",
+      "range": {
+        "startLine": 1179,
+        "startChar": 72,
+        "endLine": 1179,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67ae67b7_0007226f",
         "filename": "java/com/android/incallui/InCallActivity.java",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2f9d8aa6_392fbefa",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Thank you. I agree with you.",
+      "parentUuid": "67ae67b7_0007226f",
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a257514_0d2643b6",
         "filename": "java/com/android/incallui/InCallActivity.java",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2018-02-01T19:53:39Z",
       "side": 1,
       "message": "LogUtil.enterBlock(\"VideoChargesAlertCallback.onDismiss\");",
+      "range": {
+        "startLine": 1649,
+        "startChar": 16,
+        "endLine": 1649,
+        "endChar": 19
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d7625d_bb3f514d",
+        "filename": "java/com/android/incallui/InCallActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "I will remove this method itself.",
+      "parentUuid": "6a257514_0d2643b6",
       "range": {
         "startLine": 1649,
         "startChar": 16,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "5771a6c2_58a3ff66",
+        "filename": "java/com/android/incallui/InCallPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Could you check the comment on InCallActivity?",
+      "parentUuid": "85f8206f_55d48fbd",
+      "range": {
+        "startLine": 699,
+        "startChar": 60,
+        "endLine": 699,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbd92283_64bf107e",
         "filename": "java/com/android/incallui/res/layout/frag_video_charges_alert_dialog.xml",
         "patchSetId": 5
@@ -99,6 +189,30 @@
       "writtenOn": "2018-02-01T19:53:39Z",
       "side": 1,
       "message": "Is this ScrollView necessary?",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08eb44bb_857df544",
+        "filename": "java/com/android/incallui/res/layout/frag_video_charges_alert_dialog.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Yes, the message and checkbox may be out of the view due to large font size, kind of language, multi-window, etc.",
+      "parentUuid": "fbd92283_64bf107e",
       "range": {
         "startLine": 20,
         "startChar": 35,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d1e5bcc7_41610369",
+        "filename": "java/com/android/incallui/res/layout/frag_video_charges_alert_dialog.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Thank you. I will update it.",
+      "parentUuid": "823e2867_81a12808",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7c87b9a_f522e59e",
         "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
         "patchSetId": 5
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c8df6939_ca1c9557",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Thank you. I will update it.",
+      "parentUuid": "b7c87b9a_f522e59e",
+      "range": {
+        "startLine": 32,
+        "startChar": 80,
+        "endLine": 32,
+        "endChar": 81
+      },
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b64890f_fbc00e68",
         "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
         "patchSetId": 5
@@ -168,6 +330,24 @@
       "writtenOn": "2018-02-01T19:53:39Z",
       "side": 1,
       "message": "Add [CHAR LIMIT\u003d20]",
+      "revId": "27216e99051569a930d4934f8c042f040673fd27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67345215_06c42f8b",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-07T02:43:37Z",
+      "side": 1,
+      "message": "Thank you. I will update it.",
+      "parentUuid": "6b64890f_fbc00e68",
       "revId": "27216e99051569a930d4934f8c042f040673fd27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
