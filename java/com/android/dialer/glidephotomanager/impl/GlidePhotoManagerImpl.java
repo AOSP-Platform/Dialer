@@ -65,6 +65,10 @@ public class GlidePhotoManagerImpl implements GlidePhotoManager {
   }
 
   private GlideRequest<Drawable> buildRequest(GlideRequests requestManager, PhotoInfo photoInfo) {
+    // The spam status takes precedence over whether the number is blocked.
+    if (photoInfo.isSpam()) {
+      return requestManager.load(R.drawable.ic_report_red_48dp);
+    }
     if (photoInfo.isBlocked()) {
       return requestManager.load(R.drawable.ic_block_grey_48dp);
     }
