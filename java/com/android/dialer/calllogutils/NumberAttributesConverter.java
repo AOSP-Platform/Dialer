@@ -30,6 +30,7 @@ public final class NumberAttributesConverter {
         .setPhotoId(numberAttributes.getPhotoId())
         .setLookupUri(numberAttributes.getLookupUri())
         .setIsBusiness(numberAttributes.getIsBusiness())
+        .setIsSpam(numberAttributes.getIsSpam())
         .setIsVoicemail(numberAttributes.getIsVoicemail())
         .setIsBlocked(numberAttributes.getIsBlocked());
   }

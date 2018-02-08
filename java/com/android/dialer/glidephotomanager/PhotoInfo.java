@@ -51,6 +51,9 @@ public abstract class PhotoInfo {
   /** Should a blocked icon be displayed */
   public abstract boolean isBlocked();
 
+  /** Should a spam icon be displayed */
+  public abstract boolean isSpam();
+
   /**
    * Should the photo be badged as video call.
    *
@@ -85,6 +88,8 @@ public abstract class PhotoInfo {
 
     public abstract Builder setIsBlocked(boolean isBlocked);
 
+    public abstract Builder setIsSpam(boolean isSpam);
+
     public abstract Builder setIsVideo(boolean isVideo);
 
     public abstract Builder setIsCircular(boolean isCircular);
@@ -98,6 +103,7 @@ public abstract class PhotoInfo {
         .setIsBusiness(false)
         .setIsVoicemail(false)
         .setIsBlocked(false)
+        .setIsSpam(false)
         .setIsCircular(true)
         .setIsVideo(false);
   }
