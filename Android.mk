@@ -37,6 +37,11 @@ EXCLUDE_FILES := \
 EXCLUDE_FILES += \
 	$(BASE_DIR)/contacts/common/format/testing/SpannedTestUtils.java
 
+# Exclude glide module which is built separately.
+EXCLUDE_FILES += \
+	$(BASE_DIR)/dialer/glide/DialerGlideModule.java
+
+
 # Exclude build variants for now
 EXCLUDE_FILES += \
 	$(BASE_DIR)/dialer/constants/googledialer/ConstantsImpl.java \
@@ -96,6 +101,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	dialer-disklrucache-target \
 	dialer-gifdecoder-target \
 	dialer-glide-target \
+	dialer-glide-app-target \
 	dialer-grpc-all-target \
 	dialer-grpc-context-target \
 	dialer-grpc-core-target \
@@ -133,14 +139,13 @@ LOCAL_ANNOTATION_PROCESSORS := \
 	dialer-dagger2 \
 	dialer-dagger2-compiler \
 	dialer-dagger2-producers \
-	dialer-glide-compiler \
 	dialer-glide-annotation \
 	dialer-guava \
 	dialer-javax-annotation-api \
 	dialer-javax-inject \
 
 LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
-  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor,com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor
+  com.google.auto.value.processor.AutoValueProcessor,dagger.internal.codegen.ComponentProcessor
 
 
 # Begin Bug: 37077388
@@ -172,6 +177,30 @@ LOCAL_JACK_ENABLED := javac_frontend
 
 include $(BUILD_PACKAGE)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := dialer-glide-app
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := $(call all-java-files-under, $(BASE_DIR)/dialer/glide)
+
+LOCAL_STATIC_JAVA_LIBRARIES := \
+	android-common \
+	android-support-annotations \
+	android-support-compat \
+	android-support-fragment \
+	dialer-glide-target \
+	dialer-glide-annotation-target \
+
+LOCAL_ANNOTATION_PROCESSORS := \
+	dialer-javapoet \
+  dialer-guava \
+	dialer-glide-compiler \
+	dialer-glide-annotation
+
+LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
+  com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor
+
+include $(BUILD_STATIC_JAVA_LIBRARY)
+
 # Cleanup local state
 BASE_DIR :=
 EXCLUDE_FILES :=
@@ -197,7 +226,8 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     dialer-grpc-stub:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-stub/1.0.3/grpc-stub-1.0.3.jar \
     dialer-guava:../../../prebuilts/tools/common/m2/repository/com/google/guava/guava/23.0/guava-23.0.jar \
     dialer-javax-annotation-api:../../../prebuilts/tools/common/m2/repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar \
-    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar
+    dialer-javax-inject:../../../prebuilts/tools/common/m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar \
+    dialer-javapoet:../../../prebuilts/tools/common/m2/repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar
 
 include $(BUILD_HOST_PREBUILT)
 
@@ -259,6 +289,26 @@ LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-glide-target
 LOCAL_SDK_VERSION := current
 LOCAL_SRC_FILES := ../../../prebuilts/maven_repo/bumptech/com/github/bumptech/glide/glide/SNAPSHOT/glide-SNAPSHOT.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-glide-annotation-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../prebuilts/maven_repo/bumptech/com/github/bumptech/glide/annotation/SNAPSHOT/annotation-SNAPSHOT.jar
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE := dialer-glide-app-target
+LOCAL_SDK_VERSION := current
+LOCAL_SRC_FILES := ../../../out/target/common/obj/JAVA_LIBRARIES/dialer-glideapp_intermediates/classes.jar
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
