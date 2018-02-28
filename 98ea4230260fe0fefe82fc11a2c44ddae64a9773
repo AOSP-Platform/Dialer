@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d03fc7f1_5c6f218f",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "Consider move these into VideoChargesAlertDialogFragment.shouldShow()?\nThen we could get rid of the method of VideoCallScreenDelegate#shouldShowVideoChargesAlertDialog.",
+      "range": {
+        "startLine": 1120,
+        "startChar": 4,
+        "endLine": 1135,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bdbe4b_98053eac",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "Same as above.\nI think VideoCallScreenDelegate#onVideoChargesAlertDialogDismissed could be deleted and this logic could be moved into VideoChargesAlertDialogFragment.\nSee comments in VideoChargesAlertDialogFragment.",
+      "range": {
+        "startLine": 1149,
+        "startChar": 61,
+        "endLine": 1149,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03cd393_822bc64f",
+        "filename": "java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this for SurfaceViewVideoCallFragment. It\u0027s used for RCS video call which is not carrier video call.",
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9080fcc_510103a1",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "Have you tested it? e.g. screen rotation.\nI think it\u0027s generally a good idea to add a small delay here.\n\nAlso how does it interference with camera permission dialog?",
+      "range": {
+        "startLine": 376,
+        "startChar": 52,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61f2040_9bd9f464",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "A nested class is not necessary here.\nPlease remove it and rename the constant to TAG_VIDEO_CHARGES_ALERT.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 3,
+        "endLine": 1320,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19a8495_c7fe8f33",
+        "filename": "java/com/android/incallui/video/impl/VideoChargesAlertDialogFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "InCallActivityCommon is deleted recently. Could you please revisit this and update it?\nThanks.",
+      "range": {
+        "startLine": 58,
+        "startChar": 51,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc45b2c3_d9b6a756",
+        "filename": "java/com/android/incallui/video/impl/VideoChargesAlertDialogFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "Since we have access to DialerCall, this callback is not necessary anymore.\nThis code could be replace by following:\n\nDialerCall dialerCall  \u003d CallList.getInstance().getCallById(getArguments().getString(ARG_CALL_ID)));\ndialerCall.setDidDismissVideoChargesAlertDialog(true);",
+      "range": {
+        "startLine": 165,
+        "startChar": 64,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68858b1_c0924841",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-02-28T18:32:19Z",
+      "side": 1,
+      "message": "20 is probably not enough. 40 might be better.",
+      "range": {
+        "startLine": 35,
+        "startChar": 88,
+        "endLine": 35,
+        "endChar": 90
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
