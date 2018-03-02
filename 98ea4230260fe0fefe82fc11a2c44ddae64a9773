@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f146df58_deae2848",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "It\u0027s okay. I will move it to VideoCallScreenDelegate#shouldShowVideoChargesAlertDialog.",
+      "parentUuid": "d03fc7f1_5c6f218f",
+      "range": {
+        "startLine": 1120,
+        "startChar": 4,
+        "endLine": 1135,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6bdbe4b_98053eac",
         "filename": "java/com/android/incallui/VideoCallPresenter.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-28T18:32:19Z",
       "side": 1,
       "message": "Same as above.\nI think VideoCallScreenDelegate#onVideoChargesAlertDialogDismissed could be deleted and this logic could be moved into VideoChargesAlertDialogFragment.\nSee comments in VideoChargesAlertDialogFragment.",
+      "range": {
+        "startLine": 1149,
+        "startChar": 61,
+        "endLine": 1149,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf567a3_664a354a",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "I will remove this method.",
+      "parentUuid": "d6bdbe4b_98053eac",
       "range": {
         "startLine": 1149,
         "startChar": 61,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1e3255ab_3fdfa7e6",
+        "filename": "java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "I agree with you. I will remove this.",
+      "parentUuid": "c03cd393_822bc64f",
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9080fcc_510103a1",
         "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
         "patchSetId": 7
@@ -76,6 +142,30 @@
       "writtenOn": "2018-02-28T18:32:19Z",
       "side": 1,
       "message": "Have you tested it? e.g. screen rotation.\nI think it\u0027s generally a good idea to add a small delay here.\n\nAlso how does it interference with camera permission dialog?",
+      "range": {
+        "startLine": 376,
+        "startChar": 52,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8e3c6b_967b544b",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "Yes, we did test and there was no problem. But I agree to add the delay because it may cause a problem in the future.\n\nThis dialog was not displayed on camera permission dialog.\nSo, I don\u0027t think it impact on the permission dialog.",
+      "parentUuid": "a9080fcc_510103a1",
       "range": {
         "startLine": 376,
         "startChar": 52,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "324c86fa_764fb540",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "I agree with you.",
+      "parentUuid": "d61f2040_9bd9f464",
+      "range": {
+        "startLine": 1319,
+        "startChar": 3,
+        "endLine": 1320,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f19a8495_c7fe8f33",
         "filename": "java/com/android/incallui/video/impl/VideoChargesAlertDialogFragment.java",
         "patchSetId": 7
@@ -122,6 +236,30 @@
       "writtenOn": "2018-02-28T18:32:19Z",
       "side": 1,
       "message": "InCallActivityCommon is deleted recently. Could you please revisit this and update it?\nThanks.",
+      "range": {
+        "startLine": 58,
+        "startChar": 51,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae78c3e_45f947ee",
+        "filename": "java/com/android/incallui/video/impl/VideoChargesAlertDialogFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "I don\u0027t need the callback anymore.",
+      "parentUuid": "f19a8495_c7fe8f33",
       "range": {
         "startLine": 58,
         "startChar": 51,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "3a41634f_4060a64f",
+        "filename": "java/com/android/incallui/video/impl/VideoChargesAlertDialogFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "I agree with you.",
+      "parentUuid": "dc45b2c3_d9b6a756",
+      "range": {
+        "startLine": 165,
+        "startChar": 64,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b68858b1_c0924841",
         "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
         "patchSetId": 7
@@ -168,6 +330,30 @@
       "writtenOn": "2018-02-28T18:32:19Z",
       "side": 1,
       "message": "20 is probably not enough. 40 might be better.",
+      "range": {
+        "startLine": 35,
+        "startChar": 88,
+        "endLine": 35,
+        "endChar": 90
+      },
+      "revId": "98ea4230260fe0fefe82fc11a2c44ddae64a9773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905b780f_84eb8ba9",
+        "filename": "java/com/android/incallui/video/impl/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T09:44:49Z",
+      "side": 1,
+      "message": "It\u0027s okay.",
+      "parentUuid": "b68858b1_c0924841",
       "range": {
         "startLine": 35,
         "startChar": 88,
