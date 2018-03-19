@@ -120,6 +120,10 @@
         <action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION"/>
       </intent-filter>
     </receiver>
+    <service android:name="com.android.dialer.app.calllog.MissedCallNotificationService"
+        android:directBootAware="true"
+        android:exported="false">
+    </service>
     <!-- Handles voicemail notifications from telephony. Requires O -->
     <receiver android:name=".voicemail.LegacyVoicemailNotificationReceiver"
       android:directBootAware="true">
