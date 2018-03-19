@@ -16,6 +16,7 @@
 
 package com.android.dialer.app.calllog;
 
+import android.os.Bundle;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,28 +54,36 @@ public class MissedCallNotificationReceiver extends BroadcastReceiver {
             EXTRA_NOTIFICATION_COUNT, CallLogNotificationsService.UNKNOWN_MISSED_CALL_COUNT);
     String phoneNumber = intent.getStringExtra(EXTRA_NOTIFICATION_PHONE_NUMBER);
 
-    PendingResult pendingResult = goAsync();
++    /* we always hope start thread on service and do not use PendingResult because it may casue ANR,
++       and the system maybe denied start service while dialer app is in background, eg reboot device,
++       so if service start failed,we will start thread directly here.
++    */
+    final boolean success
+            = startServiceUpdateMisscall(context.getApplicationContext(), count, phoneNumber);
++    if (!success) {
++        PendingResult pendingResult = goAsync();
 
-    DialerExecutorComponent.get(context)
-        .dialerExecutorFactory()
-        .createNonUiTaskBuilder(MissedCallNotifier.getInstance(context))
-        .onSuccess(
-            output -> {
-              LogUtil.i(
-                  "MissedCallNotificationReceiver.onReceive",
-                  "update missed call notifications successful");
-              updateBadgeCount(context, count);
-              pendingResult.finish();
-            })
-        .onFailure(
-            throwable -> {
-              LogUtil.i(
-                  "MissedCallNotificationReceiver.onReceive",
-                  "update missed call notifications failed");
-              pendingResult.finish();
-            })
-        .build()
-        .executeParallel(new Pair<>(count, phoneNumber));
+        DialerExecutorComponent.get(context)
+            .dialerExecutorFactory()
+            .createNonUiTaskBuilder(MissedCallNotifier.getInstance(context))
+            .onSuccess(
+                output -> {
+                  LogUtil.i(
+                      "MissedCallNotificationReceiver.onReceive",
+                      "update missed call notifications successful");
+                  updateBadgeCount(context, count);
+                  pendingResult.finish();
+                })
+            .onFailure(
+                throwable -> {
+                  LogUtil.i(
+                      "MissedCallNotificationReceiver.onReceive",
+                      "update missed call notifications failed");
+                  pendingResult.finish();
+                })
+            .build()
+            .executeParallel(new Pair<>(count, phoneNumber));
+        }
   }
 
   private static void updateBadgeCount(Context context, int count) {
@@ -84,5 +93,19 @@ public class MissedCallNotificationReceiver extends BroadcastReceiver {
         "update badge count: %d success: %b",
         count,
         success);
+  }
+  private boolean startServiceUpdateMisscall(Context context, int count, String phoneNumber) {
+      boolean success = true;
+      try {
+          LogUtil.i("MissedCallNotificationReceiver.startServiceUpdateMisscall","");
+          final Intent serviceIntent =
+                  MissedCallNotificationService.createMissedCallNotifyIntent(context, count, phoneNumber);
+          context.startService(serviceIntent);
+      } catch (java.lang.IllegalStateException e) {
+          success = false;
+          LogUtil.i("MissedCallNotificationReceiver.startServiceUpdateMisscall","FAILED");
+      }
+
+      return success;
   }
 }
