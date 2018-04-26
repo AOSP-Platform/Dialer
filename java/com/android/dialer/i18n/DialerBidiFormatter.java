@@ -26,6 +26,7 @@ import com.google.auto.value.AutoValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An enhanced version of {@link BidiFormatter} that can recognize a formatted phone number
@@ -39,6 +40,9 @@ import java.util.regex.Matcher;
 public final class DialerBidiFormatter {
 
   private DialerBidiFormatter() {}
+
+  // Regular expresssion that matches a single space in the beginning or end of a string.
+  private static final String REGEXP_SURROUNDING_SPACE = "^[ ]|[ ]$";
 
   /**
    * Divides the given text into segments, applies {@link BidiFormatter#unicodeWrap(CharSequence)}
@@ -65,19 +69,38 @@ public final class DialerBidiFormatter {
   }
 
   /**
-   * Segments the given text using {@link Patterns#PHONE}.
+   * Segments the given text using {@link Patterns#PHONE}. Single spaces before and after phone
+   * number will be placed within its own segment to prevent misplaced space due to RLT-layout.
    *
-   * <p>For example, "Mobile, +1 650-253-0000, 20 seconds" will be segmented into {"Mobile, ", "+1
-   * 650-253-0000", ", 20 seconds"}.
+   * <p>For example, "Mobile, +1 650-253-0000, 20 seconds" will be segmented into {"Mobile,", " ",
+   * "+1 650-253-0000", ", 20 seconds"}.
    */
   @VisibleForTesting
   static List<CharSequence> segmentText(CharSequence text) {
     Assert.checkArgument(!TextUtils.isEmpty(text));
 
+    // Segment the text to extract any phone numbers into its own segment
+    List<CharSequence> segments = segmentText(text, Patterns.PHONE);
+
+    // Segment the previous segments to extract starting and ending spaces into its own segment
+    // to make sure spaces are placed correctly within the final string.
+    List<CharSequence> resultingSegments = new ArrayList<>();
+    Pattern patternSurroundingSpace = Pattern.compile(REGEXP_SURROUNDING_SPACE);
+    for (CharSequence segment : segments) {
+      List<CharSequence> allSegments = segmentText(segment, patternSurroundingSpace);
+      resultingSegments.addAll(allSegments);
+    }
+
+    return resultingSegments;
+  }
+
+  private static List<CharSequence> segmentText(CharSequence text, Pattern pattern) {
+    Assert.checkArgument(!TextUtils.isEmpty(text));
+
     List<CharSequence> segments = new ArrayList<>();
 
-    // Find the start index and the end index of each segment matching the phone number pattern.
-    Matcher matcher = Patterns.PHONE.matcher(text.toString());
+    // Find the start index and the end index of each segment matching the pattern.
+    Matcher matcher = pattern.matcher(text.toString());
     List<Range> segmentRanges = new ArrayList<>();
     while (matcher.find()) {
       segmentRanges.add(Range.newBuilder().setStart(matcher.start()).setEnd(matcher.end()).build());

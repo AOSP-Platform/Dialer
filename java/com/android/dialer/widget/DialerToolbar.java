@@ -28,13 +28,13 @@ import android.widget.TextView;
 public class DialerToolbar extends Toolbar {
 
   private final TextView title;
-  private final TextView subtitle;
+  private final BidiTextView subtitle;
 
   public DialerToolbar(Context context, @Nullable AttributeSet attributeSet) {
     super(context, attributeSet);
     inflate(context, R.layout.dialer_toolbar, this);
     title = (TextView) findViewById(R.id.title);
-    subtitle = (TextView) findViewById(R.id.subtitle);
+    subtitle = (BidiTextView) findViewById(R.id.subtitle);
 
     setElevation(getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     setBackgroundColor(getResources().getColor(R.color.dialer_theme_color));
