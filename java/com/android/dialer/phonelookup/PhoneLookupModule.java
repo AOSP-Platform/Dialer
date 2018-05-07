@@ -16,8 +16,12 @@
 
 package com.android.dialer.phonelookup;
 
-import com.android.dialer.phonelookup.composite.CompositePhoneLookup;
-import com.android.dialer.phonelookup.cp2.Cp2PhoneLookup;
+import com.android.dialer.phonelookup.blockednumber.SystemBlockedNumberPhoneLookup;
+import com.android.dialer.phonelookup.cequint.CequintPhoneLookup;
+import com.android.dialer.phonelookup.cnap.CnapPhoneLookup;
+import com.android.dialer.phonelookup.cp2.Cp2DefaultDirectoryPhoneLookup;
+import com.android.dialer.phonelookup.cp2.Cp2ExtendedDirectoryPhoneLookup;
+import com.android.dialer.phonelookup.spam.SpamPhoneLookup;
 import com.google.common.collect.ImmutableList;
 import dagger.Module;
 import dagger.Provides;
@@ -27,12 +31,20 @@ import dagger.Provides;
 public abstract class PhoneLookupModule {
 
   @Provides
-  static ImmutableList<PhoneLookup> providePhoneLookupList(Cp2PhoneLookup cp2PhoneLookup) {
-    return ImmutableList.of(cp2PhoneLookup);
-  }
-
-  @Provides
-  static PhoneLookup providePhoneLookup(CompositePhoneLookup compositePhoneLookup) {
-    return compositePhoneLookup;
+  @SuppressWarnings({"unchecked", "rawtype"})
+  static ImmutableList<PhoneLookup> providePhoneLookupList(
+      CequintPhoneLookup cequintPhoneLookup,
+      CnapPhoneLookup cnapPhoneLookup,
+      Cp2DefaultDirectoryPhoneLookup cp2DefaultDirectoryPhoneLookup,
+      Cp2ExtendedDirectoryPhoneLookup cp2ExtendedDirectoryPhoneLookup,
+      SystemBlockedNumberPhoneLookup systemBlockedNumberPhoneLookup,
+      SpamPhoneLookup spamPhoneLookup) {
+    return ImmutableList.of(
+        cequintPhoneLookup,
+        cnapPhoneLookup,
+        cp2DefaultDirectoryPhoneLookup,
+        cp2ExtendedDirectoryPhoneLookup,
+        systemBlockedNumberPhoneLookup,
+        spamPhoneLookup);
   }
 }

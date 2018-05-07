@@ -132,6 +132,20 @@ public class AnswerScreenPresenter
   }
 
   @Override
+  public void onSpeakEasyCall() {
+    LogUtil.enterBlock("AnswerScreenPresenter.onSpeakEasyCall");
+    DialerCall incomingCall = CallList.getInstance().getIncomingCall();
+    if (incomingCall == null) {
+      LogUtil.i("AnswerScreenPresenter.onSpeakEasyCall", "incomingCall == null");
+      return;
+    }
+    incomingCall.setIsSpeakEasyCall(true);
+    InCallActivity inCallActivity =
+        (InCallActivity) answerScreen.getAnswerScreenFragment().getActivity();
+    inCallActivity.onPrimaryCallStateChanged();
+  }
+
+  @Override
   public void onAnswerAndReleaseCall() {
     LogUtil.enterBlock("AnswerScreenPresenter.onAnswerAndReleaseCall");
     DialerCall activeCall = CallList.getInstance().getActiveCall();

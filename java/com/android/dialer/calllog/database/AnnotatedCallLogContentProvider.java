@@ -37,18 +37,15 @@ import com.android.dialer.calllog.database.contract.AnnotatedCallLogContract.Ann
 import com.android.dialer.calllog.database.contract.AnnotatedCallLogContract.CoalescedAnnotatedCallLog;
 import com.android.dialer.common.Assert;
 import com.android.dialer.common.LogUtil;
+import com.android.dialer.metrics.Metrics;
+import com.android.dialer.metrics.MetricsComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /** {@link ContentProvider} for the annotated call log. */
 public class AnnotatedCallLogContentProvider extends ContentProvider {
 
-  /**
-   * We sometimes run queries where we potentially pass every ID into a where clause using the
-   * (?,?,?,...) syntax. The maximum number of host parameters is 999, so that's the maximum size
-   * this table can be. See https://www.sqlite.org/limits.html for more details.
-   */
-  private static final int MAX_ROWS = 999;
+
 
   private static final int ANNOTATED_CALL_LOG_TABLE_CODE = 1;
   private static final int ANNOTATED_CALL_LOG_TABLE_ID_CODE = 2;
@@ -75,7 +72,6 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
   }
 
   private AnnotatedCallLogDatabaseHelper databaseHelper;
-  private Coalescer coalescer;
 
   private final ThreadLocal<Boolean> applyingBatch = new ThreadLocal<>();
 
@@ -86,12 +82,17 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    databaseHelper = new AnnotatedCallLogDatabaseHelper(getContext(), MAX_ROWS);
-    coalescer = CallLogDatabaseComponent.get(getContext()).coalescer();
+    databaseHelper = CallLogDatabaseComponent.get(getContext()).annotatedCallLogDatabaseHelper();
+
+    // Note: As this method is called before Application#onCreate, we must *not* initialize objects
+    // that require preparation work done in Application#onCreate.
+    // One example is to avoid obtaining an instance that depends on Google's proprietary config,
+    // which is initialized in Application#onCreate.
+
     return true;
   }
 
-  @TargetApi(Build.VERSION_CODES.M) // Uses try-with-resources
+  @TargetApi(Build.VERSION_CODES.N) // Uses try-with-resources
   @Nullable
   @Override
   public Cursor query(
@@ -149,6 +150,7 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
         Assert.checkArgument(
             selectionArgs == null, "selection args not supported for coalesced call log");
         Assert.checkArgument(sortOrder == null, "sort order not supported for coalesced call log");
+        MetricsComponent.get(getContext()).metrics().startTimer(Metrics.NEW_CALL_LOG_COALESCE);
         try (Cursor allAnnotatedCallLogRows =
             queryBuilder.query(
                 db,
@@ -158,9 +160,13 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
                 null,
                 null,
                 AnnotatedCallLog.TIMESTAMP + " DESC")) {
-          Cursor coalescedRows = coalescer.coalesce(allAnnotatedCallLogRows);
+          Cursor coalescedRows =
+              CallLogDatabaseComponent.get(getContext())
+                  .coalescer()
+                  .coalesce(allAnnotatedCallLogRows);
           coalescedRows.setNotificationUri(
               getContext().getContentResolver(), CoalescedAnnotatedCallLog.CONTENT_URI);
+          MetricsComponent.get(getContext()).metrics().stopTimer(Metrics.NEW_CALL_LOG_COALESCE);
           return coalescedRows;
         }
       default:
