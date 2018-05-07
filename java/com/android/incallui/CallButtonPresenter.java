@@ -22,6 +22,7 @@ import android.os.Trace;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.UserManagerCompat;
 import android.telecom.CallAudioState;
+import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import com.android.contacts.common.compat.CallCompat;
 import com.android.dialer.common.Assert;
@@ -487,9 +488,15 @@ public class CallButtonPresenter
             && call.getState() != DialerCallState.DIALING
             && call.getState() != DialerCallState.CONNECTING;
 
+    PhoneAccount currentAccount =
+        TelecomUtil.getPhoneAccount(getContext(), call.getAccountHandle());
+    boolean isSimCall =
+        currentAccount != null
+            && currentAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION);
     otherAccount = TelecomUtil.getOtherAccount(getContext(), call.getAccountHandle());
     boolean showSwapSim =
         !call.isEmergencyCall()
+            && isSimCall
             && otherAccount != null
             && !call.isVoiceMailNumber()
             && DialerCallState.isDialing(call.getState())
