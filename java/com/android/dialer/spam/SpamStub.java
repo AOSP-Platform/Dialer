@@ -16,45 +16,59 @@
 
 package com.android.dialer.spam;
 
+import com.android.dialer.DialerPhoneNumber;
+import com.android.dialer.common.concurrent.Annotations.BackgroundExecutor;
 import com.android.dialer.logging.ContactLookupResult;
 import com.android.dialer.logging.ContactSource;
 import com.android.dialer.logging.ReportingLocation;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
 import javax.inject.Inject;
 
 /** Default implementation of Spam. */
 public class SpamStub implements Spam {
 
+  private final ListeningExecutorService backgroundExecutorService;
+
   @Inject
-  public SpamStub() {}
-
-  @Override
-  public boolean isSpamEnabled() {
-    return false;
+  public SpamStub(@BackgroundExecutor ListeningExecutorService backgroundExecutorService) {
+    this.backgroundExecutorService = backgroundExecutorService;
   }
 
   @Override
-  public boolean isSpamNotificationEnabled() {
-    return false;
+  public ListenableFuture<ImmutableMap<DialerPhoneNumber, SpamStatus>> batchCheckSpamStatus(
+      ImmutableSet<DialerPhoneNumber> dialerPhoneNumbers) {
+    return backgroundExecutorService.submit(
+        () -> {
+          ImmutableMap.Builder<DialerPhoneNumber, SpamStatus> resultBuilder =
+              new ImmutableMap.Builder<>();
+          for (DialerPhoneNumber dialerPhoneNumber : dialerPhoneNumbers) {
+            resultBuilder.put(
+                dialerPhoneNumber,
+                new SpamStatus() {
+                  @Override
+                  public boolean isSpam() {
+                    return false;
+                  }
+
+                  @Override
+                  public Optional<Long> getTimestampMillis() {
+                    return Optional.absent();
+                  }
+                });
+          }
+          return resultBuilder.build();
+        });
   }
 
   @Override
-  public boolean isDialogEnabledForSpamNotification() {
-    return false;
-  }
-
-  @Override
-  public boolean isDialogReportSpamCheckedByDefault() {
-    return false;
-  }
-
-  @Override
-  public int percentOfSpamNotificationsToShow() {
-    return 0;
-  }
-
-  @Override
-  public int percentOfNonSpamNotificationsToShow() {
-    return 0;
+  public ListenableFuture<Void> updateSpamListDownload(boolean isEnabledByUser) {
+    // no-op
+    return Futures.immediateFuture(null);
   }
 
   @Override
@@ -80,6 +94,11 @@ public class SpamStub implements Spam {
   @Override
   public boolean checkSpamStatusSynchronous(String number, String countryIso) {
     return false;
+  }
+
+  @Override
+  public ListenableFuture<Boolean> dataUpdatedSince(long timestampMillis) {
+    return Futures.immediateFuture(false);
   }
 
   @Override
