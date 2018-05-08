@@ -54,6 +54,7 @@ public class SpeakerButtonController implements OnCheckedChangeListener, OnClick
 
   public void setEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
+    updateButtonState();
   }
 
   public void updateButtonState() {
