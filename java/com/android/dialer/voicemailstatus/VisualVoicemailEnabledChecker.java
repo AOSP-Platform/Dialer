@@ -75,7 +75,7 @@ public class VisualVoicemailEnabledChecker implements CallLogQueryHandler.Listen
   @Override
   public void onVoicemailStatusFetched(Cursor statusCursor) {
     boolean hasActiveVoicemailProvider =
-        VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor) > 0;
+        VoicemailStatusHelper.getNumberActivityVoicemailSources(context, statusCursor) > 0;
     if (hasActiveVoicemailProvider != this.hasActiveVoicemailProvider) {
       this.hasActiveVoicemailProvider = hasActiveVoicemailProvider;
       prefs

@@ -16,8 +16,11 @@
 
 package com.android.dialer.voicemailstatus;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.provider.VoicemailContract.Status;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 
 /**
  * Utility used by the call log UI to determine what user message, if any, related to voicemail
@@ -37,16 +40,17 @@ public final class VoicemailStatusHelper {
    *
    * <p>The number of sources is counted by querying the voicemail status table.
    *
+   * @param context Application context
    * @param cursor The caller is responsible for the life cycle of the cursor and resetting the
    *     position
    */
-  public static int getNumberActivityVoicemailSources(Cursor cursor) {
+  public static int getNumberActivityVoicemailSources(Context context, Cursor cursor) {
     int count = 0;
     if (!cursor.moveToFirst()) {
       return 0;
     }
     do {
-      if (isVoicemailSourceActive(cursor)) {
+      if (isVoicemailSourceActive(cursor) && isVoicemailSubscriptionActive(context, cursor)) {
         ++count;
       }
     } while (cursor.moveToNext());
@@ -67,5 +71,26 @@ public final class VoicemailStatusHelper {
         && !cursor.isNull(VoicemailStatusQuery.CONFIGURATION_STATE_INDEX)
         && cursor.getInt(VoicemailStatusQuery.CONFIGURATION_STATE_INDEX)
             != Status.CONFIGURATION_STATE_NOT_CONFIGURED;
+  }
+
+  /**
+   * Returns whether the SIM for the voicemail source is present. Always return true if iccID is
+   * not set for the voicemail source.
+   */
+  private static boolean isVoicemailSubscriptionActive(Context context, Cursor cursor) {
+    String iccId = cursor.getString(VoicemailStatusQuery.PHONE_ACCOUNT_ID);
+    if (iccId == null) {
+      return true;
+    }
+    SubscriptionManager sm = (SubscriptionManager) context.getSystemService(
+        Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+    if (sm != null && sm.getActiveSubscriptionInfoCount() > 0) {
+      for (SubscriptionInfo si : sm.getActiveSubscriptionInfoList()) {
+        if (si != null && iccId.equals(si.getIccId())) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

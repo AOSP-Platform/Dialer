@@ -947,7 +947,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
       // Update hasActiveVoicemailProvider, which controls the number of tabs displayed.
       int numberOfActiveVoicemailSources =
-          VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor);
+          VoicemailStatusHelper.getNumberActivityVoicemailSources(context, statusCursor);
 
       boolean hasActiveVoicemailProvider = numberOfActiveVoicemailSources > 0;
       LogUtil.i(
