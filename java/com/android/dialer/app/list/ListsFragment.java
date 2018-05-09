@@ -338,7 +338,7 @@ public class ListsFragment extends Fragment
 
     // Update hasActiveVoicemailProvider, which controls the number of tabs displayed.
     boolean hasActiveVoicemailProvider =
-        VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor) > 0;
+        VoicemailStatusHelper.getNumberActivityVoicemailSources(getContext(), statusCursor) > 0;
     if (hasActiveVoicemailProvider != adapter.hasActiveVoicemailProvider()) {
       adapter.setHasActiveVoicemailProvider(hasActiveVoicemailProvider);
       adapter.notifyDataSetChanged();
