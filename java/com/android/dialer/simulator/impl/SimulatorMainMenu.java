@@ -21,33 +21,65 @@ import android.content.Intent;
 import android.provider.VoicemailContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ActionProvider;
 import com.android.dialer.common.concurrent.DialerExecutor.Worker;
 import com.android.dialer.common.concurrent.DialerExecutorComponent;
+import com.android.dialer.databasepopulator.BlockedBumberPopulator;
 import com.android.dialer.databasepopulator.CallLogPopulator;
 import com.android.dialer.databasepopulator.ContactsPopulator;
 import com.android.dialer.databasepopulator.VoicemailPopulator;
 import com.android.dialer.enrichedcall.simulator.EnrichedCallSimulatorActivity;
 import com.android.dialer.persistentlog.PersistentLogger;
 import com.android.dialer.preferredsim.PreferredSimFallbackContract;
+import com.android.dialer.simulator.SimulatorComponent;
 
 /** Implements the top level simulator menu. */
 final class SimulatorMainMenu {
 
-  static ActionProvider getActionProvider(@NonNull Context context) {
-    return new SimulatorSubMenu(context)
-        .addItem("Voice call", SimulatorVoiceCall.getActionProvider(context))
-        .addItem("IMS video", SimulatorVideoCall.getActionProvider(context))
-        .addItem("Notifications", SimulatorNotifications.getActionProvider(context))
-        .addItem("Populate database", () -> populateDatabase(context))
-        .addItem("Fast populate database", () -> fastPopulateDatabase(context))
-        .addItem("Clean database", () -> cleanDatabase(context))
-        .addItem("clear preferred SIM", () -> clearPreferredSim(context))
-        .addItem("Sync voicemail", () -> syncVoicemail(context))
-        .addItem("Share persistent log", () -> sharePersistentLog(context))
+  static ActionProvider getActionProvider(@NonNull AppCompatActivity activity) {
+    SimulatorSubMenu simulatorSubMenu = new SimulatorSubMenu(activity.getApplicationContext());
+    simulatorSubMenu
+        .addItem("Voice call", SimulatorVoiceCall.getActionProvider(activity))
+        .addItem("Rtt call", SimulatorRttCall.getActionProvider(activity.getApplicationContext()))
+        .addItem(
+            "IMS video", SimulatorVideoCall.getActionProvider(activity.getApplicationContext()))
+        .addItem(
+            "Notifications",
+            SimulatorNotifications.getActionProvider(activity.getApplicationContext()))
+        .addItem("Populate database", () -> populateDatabase(activity.getApplicationContext()))
+        .addItem("Populate voicemail", () -> populateVoicemail(activity.getApplicationContext()))
+        .addItem(
+            "Fast populate database", () -> fastPopulateDatabase(activity.getApplicationContext()))
+        .addItem(
+            "Fast populate voicemail database",
+            () -> populateVoicemailFast(activity.getApplicationContext()))
+        .addItem("Clean database", () -> cleanDatabase(activity.getApplicationContext()))
+        .addItem("clear preferred SIM", () -> clearPreferredSim(activity.getApplicationContext()))
+        .addItem("Sync voicemail", () -> syncVoicemail(activity.getApplicationContext()))
+        .addItem("Share persistent log", () -> sharePersistentLog(activity.getApplicationContext()))
         .addItem(
             "Enriched call simulator",
-            () -> context.startActivity(EnrichedCallSimulatorActivity.newIntent(context)));
+            () ->
+                activity.startActivity(
+                    EnrichedCallSimulatorActivity.newIntent(activity.getApplicationContext())))
+        .addItem(
+            "Enable simulator mode",
+            () -> {
+              SimulatorComponent.get(activity.getApplicationContext())
+                  .getSimulator()
+                  .enableSimulatorMode();
+              SimulatorSimCallManager.register(activity.getApplicationContext());
+            })
+        .addItem(
+            "Disable simulator mode",
+            () -> {
+              SimulatorComponent.get(activity.getApplicationContext())
+                  .getSimulator()
+                  .disableSimulatorMode();
+              SimulatorSimCallManager.unregister(activity.getApplicationContext());
+            });
+    return simulatorSubMenu;
   }
 
   private static void populateDatabase(@NonNull Context context) {
@@ -56,6 +88,32 @@ final class SimulatorMainMenu {
         .createNonUiTaskBuilder(new PopulateDatabaseWorker())
         .build()
         .executeSerial(new PopulateDatabaseWorkerInput(context, false));
+  }
+
+  private static void populateVoicemail(@NonNull Context context) {
+    DialerExecutorComponent.get(context)
+        .dialerExecutorFactory()
+        .createNonUiTaskBuilder(new PopulateVoicemailWorker())
+        .build()
+        .executeSerial(new PopulateDatabaseWorkerInput(context, false));
+  }
+
+  private static void populateVoicemailFast(@NonNull Context context) {
+    DialerExecutorComponent.get(context)
+        .dialerExecutorFactory()
+        .createNonUiTaskBuilder(new PopulateVoicemailWorker())
+        .build()
+        .executeSerial(new PopulateDatabaseWorkerInput(context, true));
+  }
+
+  private static class PopulateVoicemailWorker
+      implements Worker<PopulateDatabaseWorkerInput, Void> {
+    @Nullable
+    @Override
+    public Void doInBackground(PopulateDatabaseWorkerInput input) {
+      VoicemailPopulator.populateVoicemail(input.context, input.fastMode);
+      return null;
+    }
   }
 
   private static void fastPopulateDatabase(@NonNull Context context) {
@@ -124,6 +182,7 @@ final class SimulatorMainMenu {
       ContactsPopulator.deleteAllContacts(context);
       CallLogPopulator.deleteAllCallLog(context);
       VoicemailPopulator.deleteAllVoicemail(context);
+      BlockedBumberPopulator.deleteBlockedNumbers(context);
       return null;
     }
   }
