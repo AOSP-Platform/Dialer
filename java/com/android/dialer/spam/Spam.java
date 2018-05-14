@@ -16,36 +16,63 @@
 
 package com.android.dialer.spam;
 
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.android.dialer.DialerPhoneNumber;
 import com.android.dialer.logging.ContactLookupResult;
 import com.android.dialer.logging.ContactSource;
 import com.android.dialer.logging.ReportingLocation;
+import com.android.dialer.spam.status.SpamStatus;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.util.concurrent.ListenableFuture;
 
 /** Allows the container application to mark calls as spam. */
 public interface Spam {
 
-  boolean isSpamEnabled();
-
-  boolean isSpamNotificationEnabled();
-
-  boolean isDialogEnabledForSpamNotification();
-
-  boolean isDialogReportSpamCheckedByDefault();
-
-  /** @return what percentage of aftercall notifications to show to the user */
-  int percentOfSpamNotificationsToShow();
-
-  int percentOfNonSpamNotificationsToShow();
+  /**
+   * Checks if each of numbers in the given list is suspected of being a spam.
+   *
+   * @param dialerPhoneNumbers A set of {@link DialerPhoneNumber}.
+   * @return A {@link ListenableFuture} of a map that maps each number to its {@link SpamStatus}.
+   */
+  ListenableFuture<ImmutableMap<DialerPhoneNumber, SpamStatus>> batchCheckSpamStatus(
+      ImmutableSet<DialerPhoneNumber> dialerPhoneNumbers);
 
   /**
-   * Checks if the given number is suspected of being a spamer.
+   * Checks if the given number is suspected of being spam.
    *
-   * @param number The phone number of the call.
-   * @param countryIso The country ISO of the call.
-   * @param listener The callback to be invoked after {@code Info} is fetched.
+   * @param dialerPhoneNumber the phone number.
+   * @return the {@link SpamStatus} for the given number.
    */
-  void checkSpamStatus(String number, String countryIso, Listener listener);
+  ListenableFuture<SpamStatus> checkSpamStatus(DialerPhoneNumber dialerPhoneNumber);
+
+  /**
+   * Checks if the given number is suspected of being spam.
+   *
+   * <p>See {@link #checkSpamStatus(DialerPhoneNumber)}.
+   *
+   * @param number the phone number.
+   * @param defaultCountryIso the default country to use if it's not part of the number.
+   * @return the {@link SpamStatus} for the given number.
+   */
+  ListenableFuture<SpamStatus> checkSpamStatus(String number, @Nullable String defaultCountryIso);
+
+  /**
+   * Called as an indication that the Spam implementation should check whether downloading a spam
+   * list needs to occur or not.
+   *
+   * @param isEnabledByUser true if spam is enabled by the user. Generally, this value should be
+   *     passed as {@link SpamSettings#isSpamEnabled()}. In the scenario where the user toggles the
+   *     spam setting isSpamEnabled returns stale data: the SharedPreferences will not have updated
+   *     prior to executing {@link OnPreferenceChangeListener#onPreferenceChange(Preference,
+   *     Object)}. For that case, use the new value provided in the onPreferenceChange callback.
+   * @return a future containing no value. It is only an indication of success or failure of the
+   *     operation.
+   */
+  ListenableFuture<Void> updateSpamListDownload(boolean isEnabledByUser);
 
   /**
    * @param number The number to check if the number is in the user's white list (non spam list)
@@ -79,6 +106,15 @@ public interface Spam {
    * @return True if the number is spam.
    */
   boolean checkSpamStatusSynchronous(String number, String countryIso);
+
+  /**
+   * Returns a {@link ListenableFuture} indicating whether the spam data have been updated since
+   * {@code timestampMillis}.
+   *
+   * <p>It is the caller's responsibility to ensure the timestamp is in milliseconds. Failure to do
+   * so will result in undefined behavior.
+   */
+  ListenableFuture<Boolean> dataUpdatedSince(long timestampMillis);
 
   /**
    * Reports number as spam.
