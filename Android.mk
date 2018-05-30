@@ -438,7 +438,8 @@ LOCAL_SRC_FILES := \
         $(BASE_DIR)/dialer/inject/HasRootComponent.java \
         $(BASE_DIR)/dialer/inject/IncludeInDialerRoot.java \
         $(BASE_DIR)/dialer/inject/InstallIn.java \
-        $(BASE_DIR)/dialer/inject/RootComponentGeneratorMetadata.java
+        $(BASE_DIR)/dialer/inject/RootComponentGeneratorMetadata.java \
+        $(BASE_DIR)/dialer/inject/testing/GenerateTestDaggerApp.java
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
 	dialer-guava \
