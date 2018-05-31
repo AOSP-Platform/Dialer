@@ -138,6 +138,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
   private String dtmfTextToPrepopulate;
   private boolean allowOrientationChange;
   private boolean animateDialpadOnShow;
+  private boolean automaticallyMutedByAddCall;
   private boolean didShowAnswerScreen;
   private boolean didShowInCallScreen;
   private boolean didShowVideoCallScreen;
@@ -149,6 +150,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
   private boolean isRecreating; // whether the activity is going to be recreated
   private boolean isVisible;
   private boolean needDismissPendingDialogs;
+  private boolean previousMuteState;
   private boolean touchDownWhenPseudoScreenOff;
   @DialpadRequestType private int showDialpadRequest = DIALPAD_REQUEST_NONE;
   private SpeakEasyCallManager speakEasyCallManager;
@@ -192,6 +194,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
       didShowVideoCallScreen = bundle.getBoolean(KeysForSavedInstance.DID_SHOW_VIDEO_CALL_SCREEN);
       didShowRttCallScreen = bundle.getBoolean(KeysForSavedInstance.DID_SHOW_RTT_CALL_SCREEN);
       didShowSpeakEasyScreen = bundle.getBoolean(KeysForSavedInstance.DID_SHOW_SPEAK_EASY_SCREEN);
+
+      automaticallyMutedByAddCall =
+          bundle.getBoolean(
+              KeysForSavedInstance.AUTOMATICALLY_MUTED_BY_ADD_CALL, automaticallyMutedByAddCall);
+      previousMuteState =
+          bundle.getBoolean(KeysForSavedInstance.PREVIOUS_MUTE_STATE, previousMuteState);
     }
 
     setWindowFlags();
@@ -405,6 +413,25 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     return true;
   }
 
+  public void setAutomaticallyMutedByAddCall(boolean automaticallyMutedByAddCall,
+      boolean previousMuteState) {
+    this.automaticallyMutedByAddCall = automaticallyMutedByAddCall;
+    this.previousMuteState = previousMuteState;
+  }
+
+  public boolean isAutomaticallyMutedByAddCall() {
+    return automaticallyMutedByAddCall;
+  }
+
+  private void refreshMuteState() {
+    // Restore the previous mute state
+    if (automaticallyMutedByAddCall
+        && AudioModeProvider.getInstance().getAudioState().isMuted() != previousMuteState) {
+      TelecomAdapter.getInstance().mute(previousMuteState);
+    }
+    automaticallyMutedByAddCall = false;
+  }
+
   @Override
   protected void onSaveInstanceState(Bundle out) {
     LogUtil.enterBlock("InCallActivity.onSaveInstanceState");
@@ -421,6 +448,10 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     out.putBoolean(KeysForSavedInstance.DID_SHOW_VIDEO_CALL_SCREEN, didShowVideoCallScreen);
     out.putBoolean(KeysForSavedInstance.DID_SHOW_RTT_CALL_SCREEN, didShowRttCallScreen);
     out.putBoolean(KeysForSavedInstance.DID_SHOW_SPEAK_EASY_SCREEN, didShowSpeakEasyScreen);
+
+    out.putBoolean(KeysForSavedInstance.AUTOMATICALLY_MUTED_BY_ADD_CALL,
+        automaticallyMutedByAddCall);
+    out.putBoolean(KeysForSavedInstance.PREVIOUS_MUTE_STATE, previousMuteState);
 
     super.onSaveInstanceState(out);
     isVisible = false;
@@ -484,6 +515,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
       }
       showDialpadRequest = DIALPAD_REQUEST_NONE;
     }
+
+    refreshMuteState();
 
     CallList.getInstance()
         .onInCallUiShown(getIntent().getBooleanExtra(IntentExtraNames.FOR_FULL_SCREEN, false));
@@ -1648,6 +1681,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     static final String DID_SHOW_VIDEO_CALL_SCREEN = "did_show_video_call_screen";
     static final String DID_SHOW_RTT_CALL_SCREEN = "did_show_rtt_call_screen";
     static final String DID_SHOW_SPEAK_EASY_SCREEN = "did_show_speak_easy_screen";
+    static final String AUTOMATICALLY_MUTED_BY_ADD_CALL = "automatically_muted_by_add_call";
+    static final String PREVIOUS_MUTE_STATE = "previous_mute_state";
   }
 
   /** Request codes for pending intents. */
