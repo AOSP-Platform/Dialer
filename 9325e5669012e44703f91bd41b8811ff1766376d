@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666a08b8_b62e56e2",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2018-06-18T18:34:21Z",
+      "side": 1,
+      "message": "I would recommend to move this into checkForOrientationAllowedChange.\nThanks.",
+      "range": {
+        "startLine": 634,
+        "startChar": 4,
+        "endLine": 634,
+        "endChar": 33
+      },
+      "revId": "9325e5669012e44703f91bd41b8811ff1766376d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
