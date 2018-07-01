@@ -378,6 +378,14 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
                 update();
               }
               break;
+            case TelephonyManagerCompat.EVENT_CALL_PROPERTY_CHANGED:
+              final int property = extras.getInt(
+                    android.telecom.Connection.EXTRA_CALL_PROPERTY, 0);
+              final int rttAudio = property & android.telecom.Connection.PROPERTY_RTT_AUDIO_SPEECH;
+              LogUtil.i("DialerCall - Rtt audio : ",
+                    ((rttAudio == android.telecom.Connection.PROPERTY_RTT_AUDIO_SPEECH) ?
+                        "ON" : "OFF"));
+              break;
             default:
               break;
           }
