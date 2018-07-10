@@ -722,7 +722,6 @@ public class CallCardPresenter
                       : null)
               .setLabel(isChildNumberShown || isCallSubjectShown ? null : primaryContactInfo.label)
               .setPhoto(primaryContactInfo.photo)
-              .setPhotoUri(primaryContactInfo.displayPhotoUri)
               .setPhotoType(primaryContactInfo.photoType)
               .setIsSipCall(primaryContactInfo.isSipCall)
               .setIsContactPhotoShown(showContactPhoto)
