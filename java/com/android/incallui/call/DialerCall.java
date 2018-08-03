@@ -627,6 +627,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     PhoneAccountHandle newPhoneAccountHandle = telecomCall.getDetails().getAccountHandle();
     if (!Objects.equals(phoneAccountHandle, newPhoneAccountHandle)) {
       phoneAccountHandle = newPhoneAccountHandle;
+      clearCacheForPhoneAccountHandle();
 
       if (phoneAccountHandle != null) {
         PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
@@ -1770,6 +1771,13 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         listener.onDialerCallSpeakEasyStateChange();
       }
     }
+  }
+
+  /** Clears any cache when phone account handle changes */
+  private void clearCacheForPhoneAccountHandle() {
+    callProviderLabel = null;
+    videoTech = null;
+    callbackNumber = null;
   }
 
   /**
