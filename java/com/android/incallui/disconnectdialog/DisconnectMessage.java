@@ -42,7 +42,7 @@ public class DisconnectMessage {
     cause = call.getDisconnectCause();
 
     for (DisconnectDialog disconnectDialog : DISCONNECT_DIALOGS) {
-      if (disconnectDialog.shouldShow(cause)) {
+      if (disconnectDialog.shouldShow(cause, call)) {
         Pair<Dialog, CharSequence> pair = disconnectDialog.createDialog(context, call);
         dialog = pair.first;
         toastMessage = pair.second;

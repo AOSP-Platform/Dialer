@@ -34,8 +34,8 @@ import com.android.incallui.call.DialerCall;
 public class VideoCallNotAvailablePrompt implements DisconnectDialog {
 
   @Override
-  public boolean shouldShow(DisconnectCause disconnectCause) {
-    if (disconnectCause.getCode() == DisconnectCause.ERROR
+  public boolean shouldShow(DisconnectCause disconnectCause, DialerCall call) {
+    if (call.isVideoCall() && disconnectCause.getCode() == DisconnectCause.ERROR
         && TelecomManagerCompat.REASON_IMS_ACCESS_BLOCKED.equals(disconnectCause.getReason())) {
       LogUtil.i(
           "VideoCallNotAvailablePrompt.shouldShowPrompt",
