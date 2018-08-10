@@ -26,7 +26,7 @@ import com.android.incallui.call.DialerCall;
 /** Interface for disconnect dialog. */
 public interface DisconnectDialog {
 
-  boolean shouldShow(DisconnectCause disconnectCause);
+  boolean shouldShow(DisconnectCause disconnectCause, DialerCall call);
 
   Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call);
 }
