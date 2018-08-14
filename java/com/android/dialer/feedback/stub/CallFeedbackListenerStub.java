@@ -46,7 +46,7 @@ public class CallFeedbackListenerStub implements CallList.Listener {
   public void onSessionModificationStateChange(DialerCall call) {}
 
   @Override
-  public void onCallListChange(CallList callList) {}
+  public void onCallListChange(CallList callList, DialerCall call) {}
 
   @Override
   public void onDisconnect(DialerCall call) {}
@@ -59,4 +59,10 @@ public class CallFeedbackListenerStub implements CallList.Listener {
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
 }

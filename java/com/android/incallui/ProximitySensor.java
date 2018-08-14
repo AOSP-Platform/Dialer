@@ -101,7 +101,8 @@ public class ProximitySensor
 
   /** Called to keep track of the overall UI state. */
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall call) {
     // We ignore incoming state because we do not want to enable proximity
     // sensor during incoming call screen. We check hasLiveCall() because a disconnected call
     // can also put the in-call screen in the INCALL state.

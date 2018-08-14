@@ -50,7 +50,8 @@ public class ConferenceManagerPresenter extends Presenter<ConferenceManagerUi>
   }
 
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall dcall) {
     if (getUi().isFragmentVisible()) {
       Log.v(this, "onStateChange" + newState);
       if (newState == InCallState.INCALL) {

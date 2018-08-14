@@ -49,6 +49,7 @@ import com.android.incallui.incall.protocol.InCallButtonUi;
 import com.android.incallui.incall.protocol.InCallButtonUiDelegate;
 import com.android.incallui.multisim.SwapSimWorker;
 import com.android.incallui.videotech.utils.VideoUtils;
+import java.util.Objects;
 
 /** Logic for call buttons. */
 public class CallButtonPresenter
@@ -91,7 +92,8 @@ public class CallButtonPresenter
     inCallPresenter.getInCallCameraManager().addCameraSelectionListener(this);
 
     // Update the buttons state immediately for the current call
-    onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(), CallList.getInstance());
+    onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(),
+        CallList.getInstance(), null);
     isInCallButtonUiReady = true;
   }
 
@@ -109,18 +111,19 @@ public class CallButtonPresenter
   }
 
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall call) {
     Trace.beginSection("CallButtonPresenter.onStateChange");
     if (newState == InCallState.OUTGOING) {
-      call = callList.getOutgoingCall();
+      this.call = callList.getOutgoingCall();
     } else if (newState == InCallState.INCALL) {
-      call = callList.getActiveOrBackgroundCall();
+      this.call = callList.getActiveOrBackgroundCall();
 
       // When connected to voice mail, automatically shows the dialpad.
       // (On previous releases we showed it when in-call shows up, before waiting for
       // OUTGOING.  We may want to do that once we start showing "Voice mail" label on
       // the dialpad too.)
-      if (oldState == InCallState.OUTGOING && call != null) {
+      if (oldState == InCallState.OUTGOING && this.call != null) {
         if (call.isVoiceMailNumber() && getActivity() != null) {
           getActivity().showDialpadFragment(true /* show */, true /* animate */);
         }
@@ -129,11 +132,13 @@ public class CallButtonPresenter
       if (getActivity() != null) {
         getActivity().showDialpadFragment(false /* show */, true /* animate */);
       }
-      call = callList.getIncomingCall();
+      this.call = callList.getIncomingCall();
     } else {
-      call = null;
+      this.call = null;
     }
-    updateUi(newState, call);
+    if (call == null || Objects.equals(this.call, call)) {
+      updateUi(newState, this.call);
+    }
     Trace.endSection();
   }
 
@@ -148,14 +153,17 @@ public class CallButtonPresenter
   @Override
   public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {
     // Only update if the changes are for the currently active call
-    if (inCallButtonUi != null && call != null && call.equals(this.call)) {
+    if (inCallButtonUi != null && call != null && call.equals(this.call)
+        && this.call.getTelecomCall() != null && details != null
+        && (this.call.getTelecomCall().getDetails().getVideoState() != details.getVideoState() ||
+        this.call.getTelecomCall().getDetails().getCallCapabilities() != details.getCallCapabilities())) {
       updateButtonsState(call);
     }
   }
 
   @Override
   public void onIncomingCall(InCallState oldState, InCallState newState, DialerCall call) {
-    onStateChange(oldState, newState, CallList.getInstance());
+    onStateChange(oldState, newState, CallList.getInstance(), call);
   }
 
   @Override

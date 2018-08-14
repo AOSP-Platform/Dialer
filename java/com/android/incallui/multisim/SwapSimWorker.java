@@ -146,7 +146,7 @@ public class SwapSimWorker implements Worker<Void, Void>, DialerCallListener, Ca
   }
 
   @Override
-  public void onCallListChange(CallList callList) {
+  public void onCallListChange(CallList callList, DialerCall call) {
     if (callList.getOutgoingCall() != null) {
       dialingLatch.countDown();
     }
@@ -204,4 +204,10 @@ public class SwapSimWorker implements Worker<Void, Void>, DialerCallListener, Ca
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
 }

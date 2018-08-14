@@ -100,7 +100,8 @@ public class RttCallPresenter implements RttCallScreenDelegate, InCallStateListe
   }
 
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+        DialerCall call) {
     LogUtil.enterBlock("RttCallPresenter.onStateChange");
     if (newState == InCallState.INCALL) {
       startListenOnRemoteMessage();

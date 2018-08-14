@@ -42,4 +42,8 @@ public interface DialerCallListener {
   void onInternationalCallOnWifi();
 
   void onEnrichedCallSessionUpdate();
+
+  void onPostDialWait(DialerCall call, String remainingPostDialSequence);
+
+  void onDetailsChanged(DialerCall call, android.telecom.Call.Details details);
 }

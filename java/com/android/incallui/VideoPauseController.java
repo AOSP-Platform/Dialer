@@ -129,7 +129,8 @@ class VideoPauseController implements InCallStateListener, IncomingCallListener 
    * @param callList List of current call.
    */
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall dcall) {
     DialerCall call;
     if (newState == InCallState.INCOMING) {
       call = callList.getIncomingCall();

@@ -186,7 +186,7 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
   public void onSessionModificationStateChange(DialerCall call) {}
 
   @Override
-  public void onCallListChange(CallList callList) {
+  public void onCallListChange(CallList callList, DialerCall call) {
     if (!isEnabled(context)) {
       hide();
       return;
@@ -247,6 +247,12 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
 
   @Override
   public void onAudioStateChanged(CallAudioState audioState) {

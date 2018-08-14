@@ -163,7 +163,7 @@ public class SpamCallListListener implements CallList.Listener {
   public void onSessionModificationStateChange(DialerCall call) {}
 
   @Override
-  public void onCallListChange(CallList callList) {}
+  public void onCallListChange(CallList callList, DialerCall call) {}
 
   @Override
   public void onWiFiToLteHandover(DialerCall call) {}
@@ -190,6 +190,14 @@ public class SpamCallListListener implements CallList.Listener {
       return;
     }
     showNotification(call);
+  }
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {
+  }
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {
   }
 
   /** Posts the intent for displaying the after call spam notification to the user. */

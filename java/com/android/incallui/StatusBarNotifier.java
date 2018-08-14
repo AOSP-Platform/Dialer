@@ -177,7 +177,8 @@ public class StatusBarNotifier
   /** Creates notifications according to the state we receive from {@link InCallPresenter}. */
   @Override
   @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall call) {
     LogUtil.d("StatusBarNotifier.onStateChange", "%s->%s", oldState, newState);
     updateNotification();
   }
@@ -1161,5 +1162,11 @@ public class StatusBarNotifier
         updateNotification();
       }
     }
+
+    @Override
+    public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+    @Override
+    public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
   }
 }

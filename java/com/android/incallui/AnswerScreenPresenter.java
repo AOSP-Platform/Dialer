@@ -266,6 +266,12 @@ public class AnswerScreenPresenter
 
     @Override
     public void onEnrichedCallSessionUpdate() {}
+
+    @Override
+    public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+    @Override
+    public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
   }
 
   private boolean isSmsResponseAllowed(DialerCall call) {

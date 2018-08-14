@@ -173,7 +173,7 @@ public class CallList implements DialerCallDelegate {
                         call.getTimeAddedMs());
               }
               onUpdateCall(call);
-              notifyGenericListeners();
+              notifyGenericListeners(call);
             }
 
             @Override
@@ -182,9 +182,6 @@ public class CallList implements DialerCallDelegate {
             }
           },
           DialerExecutorComponent.get(context).uiExecutor());
-
-      Trace.beginSection("updateUserMarkedSpamStatus");
-      Trace.endSection();
     }
     Trace.endSection();
 
@@ -228,7 +225,7 @@ public class CallList implements DialerCallDelegate {
                 call.getTimeAddedMs());
       }
       onUpdateCall(call);
-      notifyGenericListeners();
+      notifyGenericListeners(call);
     }
 
     if (call.getState() != DialerCallState.INCOMING) {
@@ -357,7 +354,7 @@ public class CallList implements DialerCallDelegate {
     listeners.add(listener);
 
     // Let the listener know about the active calls immediately.
-    listener.onCallListChange(this);
+    listener.onCallListChange(this, null);
   }
 
   public void setUiListener(UiListener uiListener) {
@@ -569,7 +566,7 @@ public class CallList implements DialerCallDelegate {
         updateCallInMap(call);
       }
     }
-    notifyGenericListeners();
+    notifyGenericListeners(null);
   }
 
   /**
@@ -612,10 +609,10 @@ public class CallList implements DialerCallDelegate {
    * Sends a generic notification to all listeners that something has changed. It is up to the
    * listeners to call back to determine what changed.
    */
-  private void notifyGenericListeners() {
+  private void notifyGenericListeners(DialerCall call) {
     Trace.beginSection("CallList.notifyGenericListeners");
     for (Listener listener : listeners) {
-      listener.onCallListChange(this);
+      listener.onCallListChange(this, call);
     }
     Trace.endSection();
   }
@@ -707,7 +704,7 @@ public class CallList implements DialerCallDelegate {
     }
     call.setState(DialerCallState.IDLE);
     updateCallInMap(call);
-    notifyGenericListeners();
+    notifyGenericListeners(call);
   }
 
   /**
@@ -765,7 +762,7 @@ public class CallList implements DialerCallDelegate {
      * calls that switch to disconnected state. Listeners must add actions to those method
      * implementations if they want to deal with those actions.
      */
-    void onCallListChange(CallList callList);
+    void onCallListChange(CallList callList, DialerCall call);
 
     /**
      * Called when a call switches to the disconnected state. This is the only method that will get
@@ -783,6 +780,10 @@ public class CallList implements DialerCallDelegate {
 
     /** Called when the user initiates a call to an international number while on WiFi. */
     void onInternationalCallOnWifi(@NonNull DialerCall call);
+
+    void onPostDialWait(DialerCall call, String remainingPostDialSequence);
+
+    void onDetailsChanged(DialerCall call, android.telecom.Call.Details details);
   }
 
   /** UiListener interface for measuring incall latency.(used by testing only) */
@@ -816,7 +817,7 @@ public class CallList implements DialerCallDelegate {
     public void onDialerCallUpdate() {
       Trace.beginSection("CallList.onDialerCallUpdate");
       onUpdateCall(call);
-      notifyGenericListeners();
+      notifyGenericListeners(call);
       Trace.endSection();
     }
 
@@ -876,6 +877,20 @@ public class CallList implements DialerCallDelegate {
     public void onDialerCallSessionModificationStateChange() {
       for (Listener listener : listeners) {
         listener.onSessionModificationStateChange(call);
+      }
+    }
+
+    @Override
+    public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {
+      for (Listener listener : listeners) {
+        listener.onPostDialWait(call, remainingPostDialSequence);
+      }
+    }
+
+    @Override
+    public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {
+      for (Listener listener : listeners) {
+        listener.onDetailsChanged(call, details);
       }
     }
   }

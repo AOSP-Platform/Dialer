@@ -162,6 +162,12 @@ public class AnswerProximitySensor
   public void onDialerCallSessionModificationStateChange() {}
 
   @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
+
+  @Override
   public void onScreenOn() {
     cleanup();
   }

@@ -321,7 +321,7 @@ public class VideoCallPresenter
     currentCallState = DialerCallState.INVALID;
 
     InCallPresenter.InCallState inCallState = InCallPresenter.getInstance().getInCallState();
-    onStateChange(inCallState, inCallState, CallList.getInstance());
+    onStateChange(inCallState, inCallState, CallList.getInstance(), null);
     isVideoCallScreenUiReady = true;
   }
 
@@ -451,7 +451,7 @@ public class VideoCallPresenter
       return;
     }
     // same logic should happen as with onStateChange()
-    onStateChange(oldState, newState, CallList.getInstance());
+    onStateChange(oldState, newState, CallList.getInstance(), call);
   }
 
   /**
@@ -464,7 +464,7 @@ public class VideoCallPresenter
   public void onStateChange(
       InCallPresenter.InCallState oldState,
       InCallPresenter.InCallState newState,
-      CallList callList) {
+      CallList callList, DialerCall call) {
     LogUtil.v(
         "VideoCallPresenter.onStateChange",
         "oldState: %s, newState: %s, isVideoMode: %b",
