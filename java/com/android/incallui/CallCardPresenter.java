@@ -85,7 +85,6 @@ import java.lang.ref.WeakReference;
 public class CallCardPresenter
     implements InCallStateListener,
         IncomingCallListener,
-        InCallDetailsListener,
         InCallEventListener,
         InCallScreenDelegate,
         DialerCallListener {
@@ -126,6 +125,7 @@ public class CallCardPresenter
   private InCallScreen inCallScreen;
   private boolean isInCallScreenReady;
   private boolean shouldSendAccessibilityEvent;
+  private int primayCallState = DialerCall.State.IDLE;
 
   @NonNull private final CallLocation callLocation;
   private final Runnable sendAccessibilityEventRunnable =
@@ -174,7 +174,8 @@ public class CallCardPresenter
       }
     }
 
-    onStateChange(null, InCallPresenter.getInstance().getInCallState(), CallList.getInstance());
+    onStateChange(null, InCallPresenter.getInstance().getInCallState(),
+        CallList.getInstance(), null);
   }
 
   @Override
@@ -190,7 +191,6 @@ public class CallCardPresenter
     // Register for call state changes last
     InCallPresenter.getInstance().addListener(this);
     InCallPresenter.getInstance().addIncomingCallListener(this);
-    InCallPresenter.getInstance().addDetailsListener(this);
     InCallPresenter.getInstance().addInCallEventListener(this);
     isInCallScreenReady = true;
 
@@ -225,7 +225,6 @@ public class CallCardPresenter
     // stop getting call state changes
     InCallPresenter.getInstance().removeListener(this);
     InCallPresenter.getInstance().removeIncomingCallListener(this);
-    InCallPresenter.getInstance().removeDetailsListener(this);
     InCallPresenter.getInstance().removeInCallEventListener(this);
     if (primary != null) {
       primary.removeListener(this);
@@ -242,11 +241,12 @@ public class CallCardPresenter
   @Override
   public void onIncomingCall(InCallState oldState, InCallState newState, DialerCall call) {
     // same logic should happen as with onStateChange()
-    onStateChange(oldState, newState, CallList.getInstance());
+    onStateChange(oldState, newState, CallList.getInstance(), call);
   }
 
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+      DialerCall call) {
     Trace.beginSection("CallCardPresenter.onStateChange");
     LogUtil.v("CallCardPresenter.onStateChange", "oldState: %s, newState: %s", oldState, newState);
     if (inCallScreen == null) {
@@ -273,8 +273,7 @@ public class CallCardPresenter
       secondary = InCallPresenter.getCallToDisplay(callList, primary, true);
     }
 
-    LogUtil.v("CallCardPresenter.onStateChange", "primary call: " + primary);
-    LogUtil.v("CallCardPresenter.onStateChange", "secondary call: " + secondary);
+    LogUtil.v("CallCardPresenter.onStateChange", "primary call: " + primary + " secondary call: " + secondary);
     String primaryNumber = null;
     String secondaryNumber = null;
     if (primary != null) {
@@ -338,10 +337,13 @@ public class CallCardPresenter
     }
 
     // Set the call state
-    int callState = DialerCallState.IDLE;
+    int primayCallState = DialerCall.State.IDLE;
     if (this.primary != null) {
-      callState = this.primary.getState();
-      updatePrimaryCallState();
+      if (primaryChanged || primayCallState != this.primary.getState()) {
+        primayCallState = this.primary.getState();
+        updatePrimaryCallState();
+        informPrimaryCallStateChnaged();
+      }
     } else {
       getUi().setCallState(PrimaryCallState.empty());
     }
@@ -351,16 +353,21 @@ public class CallCardPresenter
     // Hide the end call button instantly if we're receiving an incoming call.
     getUi()
         .setEndCallButtonEnabled(
-            shouldShowEndCallButton(this.primary, callState),
-            callState != DialerCallState.INCOMING /* animate */);
+            shouldShowEndCallButton(this.primary, primayCallState),
+            primayCallState != DialerCall.State.INCOMING /* animate */);
 
     maybeSendAccessibilityEvent(oldState, newState, primaryChanged);
     Trace.endSection();
   }
 
   @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
   public void onDetailsChanged(DialerCall call, Details details) {
-    updatePrimaryCallState();
+    if (this.primary != null && this.primary.equals(call)) {
+      updatePrimaryCallState();
+    }
 
     if (call.can(Details.CAPABILITY_MANAGE_CONFERENCE)
         != details.can(Details.CAPABILITY_MANAGE_CONFERENCE)) {
@@ -431,6 +438,7 @@ public class CallCardPresenter
                 != SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
             true /* shouldAnimate */);
     updatePrimaryCallState();
+    informPrimaryCallStateChnaged();
   }
 
   private boolean shouldRefreshPrimaryInfo(boolean primaryChanged) {
@@ -500,11 +508,14 @@ public class CallCardPresenter
                   .setAssistedDialingExtras(primary.getAssistedDialingExtras())
                   .build());
 
-      InCallActivity activity =
-          (InCallActivity) (inCallScreen.getInCallScreenFragment().getActivity());
-      if (activity != null) {
-        activity.onPrimaryCallStateChanged();
-      }
+    }
+  }
+
+  private void informPrimaryCallStateChnaged() {
+    InCallActivity activity =
+        (InCallActivity) (inCallScreen.getInCallScreenFragment().getActivity());
+    if (activity != null) {
+      activity.onPrimaryCallStateChanged();
     }
   }
 
@@ -620,10 +631,10 @@ public class CallCardPresenter
   }
 
   private void updateContactEntry(ContactCacheEntry entry, boolean isPrimary) {
-    if (isPrimary) {
+    if (isPrimary && entry != null && !entry.equals(primaryContactInfo)) {
       primaryContactInfo = entry;
       updatePrimaryDisplayInfo();
-    } else {
+    } else if (entry != null && !entry.equals(secondaryContactInfo)){
       secondaryContactInfo = entry;
       updateSecondaryDisplayInfo();
     }
@@ -867,7 +878,7 @@ public class CallCardPresenter
       return;
     }
 
-    if (secondary.isConferenceCall()) {
+    if (secondary.isConferenceCall() && primary != null && !primary.isMergeInProcess()) {
       inCallScreen.setSecondary(
           SecondaryInfo.builder()
               .setShouldShow(true)
@@ -879,7 +890,7 @@ public class CallCardPresenter
               .setIsVideoCall(secondary.isVideoCall())
               .setIsFullscreen(isFullscreen)
               .build());
-    } else if (secondaryContactInfo != null) {
+    } else if (secondaryContactInfo != null && !secondary.isConferenceCall()) {
       LogUtil.v("CallCardPresenter.updateSecondaryDisplayInfo", "" + secondaryContactInfo);
       String name = getNameForCall(secondaryContactInfo);
       boolean nameIsNumber = name != null && name.equals(secondaryContactInfo.number);

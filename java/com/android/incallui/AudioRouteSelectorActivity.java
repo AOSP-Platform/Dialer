@@ -125,7 +125,7 @@ public class AudioRouteSelectorActivity extends FragmentActivity
   public void onSessionModificationStateChange(DialerCall call) {}
 
   @Override
-  public void onCallListChange(CallList callList) {}
+  public void onCallListChange(CallList callList, DialerCall call) {}
 
   @Override
   public void onWiFiToLteHandover(DialerCall call) {}
@@ -135,4 +135,10 @@ public class AudioRouteSelectorActivity extends FragmentActivity
 
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {}
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {}
 }

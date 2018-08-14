@@ -253,9 +253,15 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
         @Override
         public void onDetailsChanged(Call call, Call.Details details) {
-          LogUtil.v(
-              "TelecomCallCallback.onDetailsChanged", " call=" + call + " details=" + details);
-          update();
+          LogUtil.v("TelecomCallCallback.onDetailsChanged", " call="
+                  + call + " details=" + details);
+          for (DialerCallListener listener : listeners) {
+            listener.onDetailsChanged(DialerCall.this, details);
+          }
+          // Acutaly I wouldn't like calling update here
+          //if (getState() == State.ACTIVE) {
+          //    update();
+          //}
         }
 
         @Override
@@ -273,6 +279,9 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
           LogUtil.v(
               "TelecomCallCallback.onPostDialWait",
               "call=" + call + " remainingPostDialSequence=" + remainingPostDialSequence);
+          for (DialerCallListener listener : listeners) {
+            listener.onPostDialWait(DialerCall.this, remainingPostDialSequence);
+          }
           update();
         }
 
@@ -509,7 +518,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     }
   }
 
-  /* package-private */ Call getTelecomCall() {
+  public Call getTelecomCall() {
     return telecomCall;
   }
 

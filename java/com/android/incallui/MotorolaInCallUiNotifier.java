@@ -26,6 +26,7 @@ import com.android.incallui.InCallPresenter.InCallState;
 import com.android.incallui.InCallPresenter.InCallStateListener;
 import com.android.incallui.InCallPresenter.InCallUiListener;
 import com.android.incallui.call.CallList;
+import com.android.incallui.call.DialerCall;
 
 /**
  * Responsible for broadcasting the Intent INCOMING_CALL_VISIBILITY_CHANGED so other processes could
@@ -57,7 +58,8 @@ public class MotorolaInCallUiNotifier implements InCallUiListener, InCallStateLi
   }
 
   @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+  public void onStateChange(InCallState oldState, InCallState newState, CallList callListi,
+      DialerCall call) {
     if (oldState != null
         && oldState.isConnectingOrConnected()
         && newState == InCallState.NO_CALLS) {

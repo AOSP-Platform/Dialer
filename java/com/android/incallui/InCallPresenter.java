@@ -144,56 +144,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   private ExternalCallList externalCallList;
   private InCallActivity inCallActivity;
   private ManageConferenceActivity manageConferenceActivity;
-  private final android.telecom.Call.Callback callCallback =
-      new android.telecom.Call.Callback() {
-        @Override
-        public void onPostDialWait(
-            android.telecom.Call telecomCall, String remainingPostDialSequence) {
-          final DialerCall call = callList.getDialerCallFromTelecomCall(telecomCall);
-          if (call == null) {
-            LogUtil.w(
-                "InCallPresenter.onPostDialWait",
-                "DialerCall not found in call list: " + telecomCall);
-            return;
-          }
-          onPostDialCharWait(call.getId(), remainingPostDialSequence);
-        }
-
-        @Override
-        public void onDetailsChanged(
-            android.telecom.Call telecomCall, android.telecom.Call.Details details) {
-          final DialerCall call = callList.getDialerCallFromTelecomCall(telecomCall);
-          if (call == null) {
-            LogUtil.w(
-                "InCallPresenter.onDetailsChanged",
-                "DialerCall not found in call list: " + telecomCall);
-            return;
-          }
-
-          if (details.hasProperty(Details.PROPERTY_IS_EXTERNAL_CALL)
-              && !externalCallList.isCallTracked(telecomCall)) {
-
-            // A regular call became an external call so swap call lists.
-            LogUtil.i("InCallPresenter.onDetailsChanged", "Call became external: " + telecomCall);
-            callList.onInternalCallMadeExternal(context, telecomCall);
-            externalCallList.onCallAdded(telecomCall);
-            return;
-          }
-
-          for (InCallDetailsListener listener : detailsListeners) {
-            listener.onDetailsChanged(call, details);
-          }
-        }
-
-        @Override
-        public void onConferenceableCallsChanged(
-            android.telecom.Call telecomCall, List<android.telecom.Call> conferenceableCalls) {
-          LogUtil.i(
-              "InCallPresenter.onConferenceableCallsChanged",
-              "onConferenceableCallsChanged: " + telecomCall);
-          onDetailsChanged(telecomCall, telecomCall.getDetails());
-        }
-      };
   private InCallState inCallState = InCallState.NO_CALLS;
   private ProximitySensor proximitySensor;
   private final PseudoScreenState pseudoScreenState = new PseudoScreenState();
@@ -248,7 +198,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
           latencyReport.onCallBlockingDone();
           // Note: External calls do not require spam checking.
           callList.onCallAdded(context, call, latencyReport);
-          call.registerCallback(callCallback);
         }
 
         @Override
@@ -592,7 +541,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     // state here even if the service is disconnected since we may not have finished a state
     // transition while finish()ing.
     if (updateListeners) {
-      onCallListChange(callList);
+      onCallListChange(callList, null);
     }
 
     if (doAttemptCleanup) {
@@ -631,7 +580,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
     // Since a call has been added we are no longer waiting for Telecom to send us a call.
     setBoundAndWaitingForOutgoingCall(false, null);
-    call.registerCallback(callCallback);
     // TODO(maxwelb): Return the future in recordPhoneLookupInfo and propagate.
     PhoneLookupHistoryRecorder.recordPhoneLookupInfo(context.getApplicationContext(), call);
     Trace.endSection();
@@ -757,7 +705,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       externalCallList.onCallRemoved(call);
     } else {
       callList.onCallRemoved(context, call);
-      call.unregisterCallback(callCallback);
     }
   }
 
@@ -817,11 +764,10 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
    * calculates.
    */
   @Override
-  public void onCallListChange(CallList callList) {
+  public void onCallListChange(CallList callList, DialerCall call) {
     Trace.beginSection("InCallPresenter.onCallListChange");
     if (inCallActivity != null && inCallActivity.isInCallScreenAnimating()) {
       awaitingCallListUpdate = true;
-      Trace.endSection();
       return;
     }
     if (callList == null) {
@@ -883,7 +829,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       LogUtil.d(
           "InCallPresenter.onCallListChange",
           "Notify " + listener + " of state " + inCallState.toString());
-      listener.onStateChange(oldState, inCallState, callList);
+      listener.onStateChange(oldState, inCallState, callList, call);
     }
 
     if (isActivityStarted()) {
@@ -1024,7 +970,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     showDialogOrToastForDisconnectedCall(call);
 
     // We need to do the run the same code as onCallListChange.
-    onCallListChange(callList);
+    onCallListChange(callList, call);
 
     if (isActivityStarted()) {
       inCallActivity.dismissKeyguard(false);
@@ -1039,6 +985,41 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         && !isSecretCode(call.getNumber())
         && !call.isVoiceMailNumber()) {
       PostCall.onCallDisconnected(context, call.getNumber(), call.getConnectTimeMillis());
+    }
+  }
+
+  @Override
+  public void onPostDialWait(DialerCall call, String remainingPostDialSequence) {
+    if (call == null) {
+      LogUtil.w(
+          "InCallPresenter.onPostDialWait",
+          "DialerCall not found in call list");
+        return;
+      }
+      onPostDialCharWait(call.getId(), remainingPostDialSequence);
+  }
+
+  @Override
+  public void onDetailsChanged(DialerCall call, android.telecom.Call.Details details) {
+    if (call == null) {
+      LogUtil.w(
+          "InCallPresenter.onDetailsChanged",
+          "DialerCall not found in call list");
+      return;
+    }
+
+    if (details.hasProperty(Details.PROPERTY_IS_EXTERNAL_CALL)
+        && !externalCallList.isCallTracked(call.getTelecomCall())) {
+
+       // A regular call became an external call so swap call lists.
+       LogUtil.i("InCallPresenter.onDetailsChanged", "Call became external: " + call.getTelecomCall());
+       callList.onInternalCallMadeExternal(context, call.getTelecomCall());
+       externalCallList.onCallAdded(call.getTelecomCall());
+       return;
+    }
+
+    for (InCallDetailsListener listener : detailsListeners) {
+        listener.onDetailsChanged(call, details);
     }
   }
 
@@ -1096,7 +1077,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
   public void onShrinkAnimationComplete() {
     if (awaitingCallListUpdate) {
-      onCallListChange(callList);
+      onCallListChange(callList, null);
     }
   }
 
@@ -1941,7 +1922,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   public interface InCallStateListener {
 
     // TODO: Enhance state to contain the call objects instead of passing CallList
-    void onStateChange(InCallState oldState, InCallState newState, CallList callList);
+    void onStateChange(InCallState oldState, InCallState newState, CallList callList,
+        DialerCall call);
   }
 
   public interface IncomingCallListener {
