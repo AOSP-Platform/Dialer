@@ -337,7 +337,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       ExternalCallNotifier externalCallNotifier,
       ContactInfoCache contactInfoCache,
       ProximitySensor proximitySensor,
-      FilteredNumberAsyncQueryHandler filteredNumberQueryHandler,
       @NonNull SpeakEasyCallManager speakEasyCallManager) {
     Trace.beginSection("InCallPresenter.setUp");
     if (serviceConnected) {
@@ -390,8 +389,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
     VideoPauseController.getInstance().setUp(this);
 
-    filteredQueryHandler = filteredNumberQueryHandler;
     this.speakEasyCallManager = speakEasyCallManager;
+    filteredQueryHandler = new FilteredNumberAsyncQueryHandler(context);
     this.context
         .getSystemService(TelephonyManager.class)
         .listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -1113,7 +1112,9 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
   public void addListener(InCallStateListener listener) {
     Objects.requireNonNull(listener);
-    listeners.add(listener);
+    if (!listeners.contains(listener)) {
+      mListeners.add(listener);
+    }
   }
 
   public void removeListener(InCallStateListener listener) {

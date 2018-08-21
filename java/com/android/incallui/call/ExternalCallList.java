@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ExternalCallList {
 
+  private static ExternalCallList sInstance;
   private final Set<Call> externalCalls = new ArraySet<>();
   private final Set<ExternalCallListener> externalCallListeners =
       Collections.newSetFromMap(new ConcurrentHashMap<ExternalCallListener, Boolean>(8, 0.9f, 1));
@@ -46,6 +47,13 @@ public class ExternalCallList {
           notifyExternalCallUpdated(call);
         }
       };
+
+  public static ExternalCallList getInstance() {
+    if (sInstance == null) {
+      sInstance = new ExternalCallList();
+    }
+    return sInstance;
+  }
 
   /** Begins tracking an external call and notifies listeners of the new call. */
   public void onCallAdded(Call telecomCall) {
@@ -70,7 +78,9 @@ public class ExternalCallList {
 
   /** Adds a new listener to external call events. */
   public void addExternalCallListener(@NonNull ExternalCallListener listener) {
-    externalCallListeners.add(listener);
+    if (!externalCallListeners.contains(listener)) {
+      externalCallListeners.add(listener);
+    }
   }
 
   /** Removes a listener to external call events. */

@@ -117,6 +117,7 @@ public class StatusBarNotifier
 
   private static final long[] VIBRATE_PATTERN = new long[] {0, 1000, 1000};
 
+  private static StatusBarNotifier sInstance;
   private final Context context;
   private final ContactInfoCache contactInfoCache;
   private final DialerRingtoneManager dialerRingtoneManager;
@@ -131,7 +132,7 @@ public class StatusBarNotifier
   private Uri ringtone;
   private StatusBarCallListener statusBarCallListener;
 
-  public StatusBarNotifier(@NonNull Context context, @NonNull ContactInfoCache contactInfoCache) {
+  private StatusBarNotifier(@NonNull Context context, @NonNull ContactInfoCache contactInfoCache) {
     Trace.beginSection("StatusBarNotifier.Constructor");
     this.context = Assert.isNotNull(context);
     this.contactInfoCache = contactInfoCache;
@@ -141,6 +142,14 @@ public class StatusBarNotifier
             CallList.getInstance());
     currentNotification = NOTIFICATION_NONE;
     Trace.endSection();
+  }
+
+  public static StatusBarNotifier getInstance(@NonNull Context context,
+      @NonNull ContactInfoCache contactInfoCache) {
+    if (sInstance == null) {
+      sInstance = new StatusBarNotifier(context, contactInfoCache);
+    }
+    return sInstance;
   }
 
   /**

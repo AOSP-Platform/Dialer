@@ -101,13 +101,12 @@ public class InCallServiceImpl extends InCallService {
         .setUp(
             context,
             CallList.getInstance(),
-            new ExternalCallList(),
-            new StatusBarNotifier(context, contactInfoCache),
-            new ExternalCallNotifier(context, contactInfoCache),
+            ExternalCallList.getInstance(),
+            StatusBarNotifier.getInstance(context, contactInfoCache),
+            ExternalCallNotifier.getInstance(context, contactInfoCache),
             contactInfoCache,
-            new ProximitySensor(
-                context, AudioModeProvider.getInstance(), new AccelerometerListener(context)),
-            new FilteredNumberAsyncQueryHandler(context),
+            ProximitySensor.getInstance(
+                context, AudioModeProvider.getInstance()),
             speakEasyCallManager);
     InCallPresenter.getInstance().onServiceBind();
     InCallPresenter.getInstance().maybeStartRevealAnimation(intent);

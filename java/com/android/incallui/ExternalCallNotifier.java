@@ -73,16 +73,24 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
    */
   private static final String GROUP_KEY = "ExternalCallGroup";
 
+  private static ExternalCallNotifier sInstance;
   private final Context context;
   private final ContactInfoCache contactInfoCache;
   private Map<Call, NotificationInfo> notifications = new ArrayMap<>();
   private int nextUniqueNotificationId;
 
   /** Initializes a new instance of the external call notifier. */
-  public ExternalCallNotifier(
-      @NonNull Context context, @NonNull ContactInfoCache contactInfoCache) {
+  public ExternalCallNotifier(@NonNull Context context, @NonNull ContactInfoCache contactInfoCache) {
     this.context = context;
     this.contactInfoCache = contactInfoCache;
+  }
+
+  public static ExternalCallNotifier getInstance(@NonNull Context context,
+      @NonNull ContactInfoCache contactInfoCache) {
+    if (sInstance == null) {
+      sInstance = new ExternalCallNotifier(context, contactInfoCache);
+    }
+    return sInstance;
   }
 
   /**

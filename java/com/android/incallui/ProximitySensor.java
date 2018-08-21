@@ -44,6 +44,7 @@ public class ProximitySensor
 
   private static final String TAG = ProximitySensor.class.getSimpleName();
 
+  private static ProximitySensor sInstance;
   private final PowerManager powerManager;
   private final PowerManager.WakeLock proximityWakeLock;
   private final AudioModeProvider audioModeProvider;
@@ -57,10 +58,9 @@ public class ProximitySensor
   private boolean isVideoCall;
   private boolean isRttCall;
 
-  public ProximitySensor(
+  private ProximitySensor(
       @NonNull Context context,
-      @NonNull AudioModeProvider audioModeProvider,
-      @NonNull AccelerometerListener accelerometerListener) {
+      @NonNull AudioModeProvider audioModeProvider) {
     Trace.beginSection("ProximitySensor.Constructor");
     powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     if (powerManager.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)) {
@@ -70,7 +70,7 @@ public class ProximitySensor
       LogUtil.i("ProximitySensor.constructor", "Device does not support proximity wake lock.");
       proximityWakeLock = null;
     }
-    this.accelerometerListener = accelerometerListener;
+    this.accelerometerListener = new AccelerometerListener(context);
     this.accelerometerListener.setListener(this);
 
     displayListener =
@@ -81,6 +81,15 @@ public class ProximitySensor
     this.audioModeProvider = audioModeProvider;
     this.audioModeProvider.addListener(this);
     Trace.endSection();
+  }
+
+  public static ProximitySensor getInstance(
+      @NonNull Context context,
+      @NonNull AudioModeProvider audioModeProvider) {
+    if (sInstance == null) {
+      sInstance = new ProximitySensor(context, audioModeProvider);
+    }
+    return sInstance;
   }
 
   public void tearDown() {
