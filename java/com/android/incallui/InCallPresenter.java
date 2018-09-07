@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.Trace;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -209,6 +210,9 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
   private boolean screenTimeoutEnabled = true;
 
+  private PowerManager powerManager;
+  private PowerManager.WakeLock wakeLock = null;
+
   private PhoneStateListener phoneStateListener =
       new PhoneStateListener() {
         @Override
@@ -373,6 +377,10 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     externalCallList.addExternalCallListener(this.externalCallNotifier);
     externalCallList.addExternalCallListener(externalCallListener);
 
+    powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+    wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
+        PowerManager.ACQUIRE_CAUSES_WAKEUP, "InCallPresenter");
+
     // This only gets called by the service so this is okay.
     serviceConnected = true;
 
@@ -388,6 +396,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     activeCallsListener = new ActiveCallsCallListListener(context);
     this.callList.addListener(activeCallsListener);
 
+    InCallUiStateNotifier.getInstance().setUp(context);
     VideoPauseController.getInstance().setUp(this);
 
     filteredQueryHandler = filteredNumberQueryHandler;
@@ -488,6 +497,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
     attemptCleanup();
     VideoPauseController.getInstance().tearDown();
+    InCallUiStateNotifier.getInstance().tearDown();
     AudioModeProvider.getInstance().removeListener(this);
   }
 
@@ -977,6 +987,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
           "InCallPresenter.onUpgradeToVideo",
           "rejecting upgrade request due to existing incoming call");
       call.getVideoTech().declineVideoRequest();
+    } else {
+      wakeUpScreen();
     }
 
     if (inCallActivity != null) {
@@ -1258,22 +1270,22 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   /*package*/
   void onActivityStarted() {
     LogUtil.d("InCallPresenter.onActivityStarted", "onActivityStarted");
-    notifyVideoPauseController(true);
+    notifyInCallUiStateNotifier(true);
     applyScreenTimeout();
   }
 
   /*package*/
   void onActivityStopped() {
     LogUtil.d("InCallPresenter.onActivityStopped", "onActivityStopped");
-    notifyVideoPauseController(false);
+    notifyInCallUiStateNotifier(false);
   }
 
-  private void notifyVideoPauseController(boolean showing) {
+  private void notifyInCallUiStateNotifier(boolean showing) {
     LogUtil.d(
-        "InCallPresenter.notifyVideoPauseController",
+        "InCallPresenter.notifyInCallUiStateNotifier",
         "mIsChangingConfigurations=" + isChangingConfigurations);
     if (!isChangingConfigurations) {
-      VideoPauseController.getInstance().onUiShowing(showing);
+      InCallUiStateNotifier.getInstance().onUiShowing(showing);
     }
   }
 
@@ -1636,6 +1648,9 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       }
       proximitySensor = null;
 
+      wakeLock = null;
+      powerManager = null;
+
       if (statusBarNotifier != null) {
         removeListener(statusBarNotifier);
         EnrichedCallComponent.get(context)
@@ -1781,6 +1796,34 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       return;
     }
     inCallActivity.setAllowOrientationChange(allowOrientationChange);
+  }
+
+  /* returns TRUE if screen is turned ON else false */
+  private boolean isScreenInteractive() {
+    return powerManager.isInteractive();
+  }
+
+  public void wakeUpScreen() {
+    if (!isScreenInteractive()) {
+      acquireWakeLock();
+      releaseWakeLock();
+    }
+  }
+
+  private void acquireWakeLock() {
+    LogUtil.v("InCallPresenter.acquireWakeLock", "acquireWakeLock");
+
+    if (wakeLock != null) {
+      wakeLock.acquire();
+    }
+  }
+
+  private void releaseWakeLock() {
+    LogUtil.v("InCallPresenter.releaseWakeLock", "releaseWakeLock");
+
+    if (wakeLock != null && wakeLock.isHeld()) {
+      wakeLock.release();
+    }
   }
 
   public void enableScreenTimeout(boolean enable) {

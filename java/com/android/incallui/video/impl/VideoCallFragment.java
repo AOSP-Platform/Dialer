@@ -400,6 +400,7 @@ public class VideoCallFragment extends Fragment
     getView().removeCallbacks(videoChargesAlertDialogRunnable);
     getView().removeCallbacks(cameraPermissionDialogRunnable);
     videoCallScreenDelegate.onVideoCallScreenUiUnready();
+    videoCallScreenDelegate.onUiShowing(false);
   }
 
   private void exitFullscreenMode() {
