@@ -81,7 +81,8 @@ public class VideoCallPresenter
         SurfaceChangeListener,
         InCallPresenter.InCallEventListener,
         VideoCallScreenDelegate,
-        CallList.Listener {
+        CallList.Listener,
+        InCallUiStateNotifierListener {
 
   private static boolean isVideoMode = false;
 
@@ -123,6 +124,10 @@ public class VideoCallPresenter
   /** Whether if the call is remotely held. */
   private boolean isRemotelyHeld = false;
   /**
+   * Caches information about whether InCall UI is in the background or foreground
+   */
+   private boolean isInBackground;
+  /**
    * Runnable which is posted to schedule automatically entering fullscreen mode. Will not auto
    * enter fullscreen mode if the dialpad is visible (doing so would make it impossible to exit the
    * dialpad).
@@ -148,10 +153,44 @@ public class VideoCallPresenter
 
   private boolean isVideoCallScreenUiReady;
 
-  private static boolean isCameraRequired(int videoState, int sessionModificationState) {
-    return VideoProfile.isBidirectional(videoState)
+  private boolean isCameraRequired(int videoState, int sessionModificationState) {
+    return !isInBackground && (VideoProfile.isBidirectional(videoState)
         || VideoProfile.isTransmissionEnabled(videoState)
-        || isVideoUpgrade(sessionModificationState);
+        || isVideoUpgrade(sessionModificationState));
+  }
+
+  /**
+   * Opens camera if the camera has not yet been set on the {@link VideoCall}; negotiation has
+   * not yet started and if camera is required
+   */
+  private void maybeEnableCamera() {
+    if (previewSurfaceState == PreviewSurfaceState.NONE && isCameraRequired()) {
+      enableCamera(primaryCall, true);
+    }
+  }
+
+  /**
+   * This method gets invoked when visibility of InCallUI is changed. For eg.
+   * when UE moves in/out of the foreground, display either turns ON/OFF
+   * @param showing true if InCallUI is visible, false  otherwise.
+   */
+  @Override
+  public void onUiShowing(boolean showing) {
+    LogUtil.i("VideoCallPresenter.onUiShowing", " showing = " + showing + " primaryCall = " +
+        primaryCall + " previewSurfaceState = " + previewSurfaceState);
+
+    isInBackground = !showing;
+
+    if (!isVideoCall(primaryCall)) {
+      LogUtil.w("VideoCallPresenter.onUiShowing", " received for voice call");
+      return;
+    }
+
+    if (showing) {
+      maybeEnableCamera();
+    } else if (previewSurfaceState != PreviewSurfaceState.NONE) {
+      enableCamera(primaryCall, false);
+    }
   }
 
   /**
@@ -317,6 +356,7 @@ public class VideoCallPresenter
 
     // Register for surface and video events from {@link InCallVideoCallListener}s.
     InCallVideoCallCallbackNotifier.getInstance().addSurfaceChangeListener(this);
+    InCallUiStateNotifier.getInstance().addListener(this, true);
     currentVideoState = VideoProfile.STATE_AUDIO_ONLY;
     currentCallState = DialerCallState.INVALID;
 
@@ -343,6 +383,7 @@ public class VideoCallPresenter
     CallList.getInstance().removeListener(this);
 
     InCallVideoCallCallbackNotifier.getInstance().removeSurfaceChangeListener(this);
+    InCallUiStateNotifier.getInstance().removeListener(this);
 
     // Ensure that the call's camera direction is updated (most likely to UNKNOWN). Normally this
     // happens after any call state changes but we're unregistering from InCallPresenter above so
@@ -561,6 +602,11 @@ public class VideoCallPresenter
         VideoProfile.videoStateToString(call.getVideoState()));
     if (!hasVideoStateChanged) {
       return;
+    }
+
+    // Wakes up the screen,if its off, when user upgrades to VT call.
+    if (VideoProfile.isAudioOnly(currentVideoState) && isVideoCall(call)) {
+      InCallPresenter.getInstance().wakeUpScreen();
     }
 
     updateCameraSelection(call);
@@ -949,6 +995,12 @@ public class VideoCallPresenter
       return;
     }
 
+    if (previewSurfaceState == PreviewSurfaceState.NONE) {
+      LogUtil.w("VideoCallPresenter.onCameraDimensionsChange",
+          "capabilities received when camera is OFF.");
+      return;
+    }
+
     previewSurfaceState = PreviewSurfaceState.CAPABILITIES_RECEIVED;
     changePreviewDimensions(width, height);
 
@@ -1166,8 +1218,8 @@ public class VideoCallPresenter
       if (previewSurfaceState == PreviewSurfaceState.CAPABILITIES_RECEIVED) {
         previewSurfaceState = PreviewSurfaceState.SURFACE_SET;
         videoCall.setPreviewSurface(videoCallSurface.getSavedSurface());
-      } else if (previewSurfaceState == PreviewSurfaceState.NONE && isCameraRequired()) {
-        enableCamera(primaryCall, true);
+      } else {
+        maybeEnableCamera();
       }
     }
 
