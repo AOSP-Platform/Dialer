@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df3efd82_6e60df5e",
+        "filename": "java/com/android/incallui/VideoCallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-09-18T22:17:47Z",
+      "side": 1,
+      "message": "Perhaps can put this method in VideoCallFragment as a private method so we could save changing the interface. It doesn\u0027t really interact with VideoCallPresenter.\n\nAnd why it\u0027s setting default to false when dialerCall is null? Thought it\u0027s true for most of carriers.",
+      "revId": "4c695ed0e632853f0b635387770e91725a4f8e4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65a24e0_67f62317",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-09-18T22:17:47Z",
+      "side": 1,
+      "message": "The carrierConfig sets showMuteOverlay to true by default:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/731570/2/telephony/java/android/telephony/CarrierConfigManager.java\n\nI\u0027m not sure whether this should be true/false. Any suggestions/thoughts on this?",
+      "revId": "4c695ed0e632853f0b635387770e91725a4f8e4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
