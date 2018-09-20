@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd756399_81bd87c8",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-09-20T18:08:58Z",
+      "side": 1,
+      "message": "Any reasons for creating a local parameter instead of using the method directly when setVisibility?",
+      "revId": "04a4b51536c94a70b43852c9bbeec74d69b1d5d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
