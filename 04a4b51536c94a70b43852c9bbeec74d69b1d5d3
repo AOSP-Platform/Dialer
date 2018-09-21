@@ -16,6 +16,24 @@
       "revId": "04a4b51536c94a70b43852c9bbeec74d69b1d5d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c2b639_6ffb70aa",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-09-21T07:10:29Z",
+      "side": 1,
+      "message": "Thank you. Since it was redundant, I\u0027ve updated to use the method directly.",
+      "parentUuid": "cd756399_81bd87c8",
+      "revId": "04a4b51536c94a70b43852c9bbeec74d69b1d5d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
