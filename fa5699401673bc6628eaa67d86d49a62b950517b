@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9b5b20_97971d5d",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2018-09-24T18:14:06Z",
+      "side": 1,
+      "message": "This defaults to false. Since the key is new it will be missing on older platforms. Use getBoolean(String, boolean) instead.",
+      "range": {
+        "startLine": 799,
+        "startChar": 25,
+        "endLine": 799,
+        "endChar": 35
+      },
+      "revId": "fa5699401673bc6628eaa67d86d49a62b950517b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cb7a7e_7da018e5",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2018-09-24T18:14:06Z",
+      "side": 1,
+      "message": "showMuteOverlayOnVideoCall",
+      "range": {
+        "startLine": 1235,
+        "startChar": 18,
+        "endLine": 1235,
+        "endChar": 38
+      },
+      "revId": "fa5699401673bc6628eaa67d86d49a62b950517b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
