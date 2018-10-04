@@ -1121,6 +1121,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     getTelecomCall().sendRttRequest();
   }
 
+  public void sendRttDowngradeRequest() {
+    getTelecomCall().stopRtt();
+  }
+
   @TargetApi(28)
   public void respondToRttRequest(boolean accept, int rttRequestId) {
     Logger.get(context)
