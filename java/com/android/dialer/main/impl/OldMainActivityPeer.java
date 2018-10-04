@@ -45,6 +45,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -127,6 +128,8 @@ import com.android.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandle
 import com.android.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler.Source;
 import com.android.dialer.voicemailstatus.VisualVoicemailEnabledChecker;
 import com.android.dialer.voicemailstatus.VoicemailStatusHelper;
+import com.android.dialer.voicemailstatus.VoicemailStatusQuery;
+import com.android.voicemail.impl.settings.VisualVoicemailSettingsUtil;
 import com.android.voicemail.VoicemailComponent;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -969,6 +972,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       VoicemailStatusCorruptionHandler.maybeFixVoicemailStatus(
           context, statusCursor, Source.Activity);
 
+      deleteObsoleteVvmAccount(context, statusCursor);
       // Update hasActiveVoicemailProvider, which controls the number of tabs displayed.
       int numberOfActiveVoicemailSources =
           VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor);
@@ -1099,6 +1103,29 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       return currentTab == TabIndex.CALL_LOG
           && timeSelected != -1
           && System.currentTimeMillis() - timeSelected > TimeUnit.SECONDS.toMillis(3);
+    }
+
+    /**
+     * Delete voicemail accout for SIMs no longer present.
+     */
+    private void deleteObsoleteVvmAccount(Context context, Cursor cursor) {
+      if (cursor.moveToFirst()) {
+        do {
+          String iccId = cursor.getString(VoicemailStatusQuery.PHONE_ACCOUNT_ID);
+          if (iccId != null) {
+            boolean simPresent = false;
+            for (PhoneAccountHandle phoneAccountHandle :
+                context.getSystemService(TelecomManager.class).getAllPhoneAccountHandles()) {
+              if (iccId.equals(phoneAccountHandle.getId())) {
+                simPresent = true;
+              }
+            }
+            if (!simPresent) {
+              VisualVoicemailSettingsUtil.delete(context, iccId);
+            }
+          }
+        } while (cursor.moveToNext());
+      }
     }
   }
 

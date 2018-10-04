@@ -19,6 +19,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
+import android.provider.VoicemailContract.Status;
 import android.provider.VoicemailContract.Voicemails;
 import android.support.annotation.VisibleForTesting;
 import android.telecom.PhoneAccountHandle;
@@ -28,6 +29,7 @@ import com.android.dialer.common.concurrent.DialerExecutor.Worker;
 import com.android.dialer.common.concurrent.DialerExecutorComponent;
 import com.android.dialer.common.database.Selection;
 import com.android.dialer.compat.android.provider.VoicemailCompat;
+import com.android.incallui.Log;
 import com.android.voicemail.VoicemailComponent;
 import com.android.voicemail.impl.OmtpVvmCarrierConfigHelper;
 import com.android.voicemail.impl.VisualVoicemailPreferences;
@@ -62,8 +64,37 @@ public class VisualVoicemailSettingsUtil {
           .onSuccess(VisualVoicemailSettingsUtil::onSuccess)
           .onFailure(VisualVoicemailSettingsUtil::onFailure)
           .build()
-          .executeParallel(null);
+          .executeParallel(phoneAccount.getId());
     }
+  }
+
+  public static void delete(Context context, String iccId) {
+    VvmLog.i("VisualVoicemailSettingsUtil.delete", Log.pii(iccId));
+    // Remove all voicemails from the database
+    DialerExecutorComponent.get(context)
+        .dialerExecutorFactory()
+        .createNonUiTaskBuilder(new VoicemailDeleteWorker(context))
+        .onSuccess(VisualVoicemailSettingsUtil::onSuccess)
+        .onFailure(VisualVoicemailSettingsUtil::onFailure)
+        .build()
+        .executeParallel(iccId);
+
+    Selection selection = null;
+    if (iccId != null) {
+      selection =
+          Selection.builder()
+              .and(Selection.column(Status.PHONE_ACCOUNT_ID).is("=", iccId))
+              .build();
+    }
+
+    int deleted =
+        context
+            .getContentResolver()
+            .delete(Status.buildSourceUri(context.getPackageName()),
+                selection.getSelection(),
+                selection.getSelectionArgs());
+
+    VvmLog.i("VisualVoicemailSettingsUtil.delete", "deleted " + deleted + " voicemail account");
   }
 
   private static void onSuccess(Void unused) {
@@ -183,7 +214,7 @@ public class VisualVoicemailSettingsUtil {
   }
 
   /** Delete all the voicemails whose source_package field matches this package */
-  private static class VoicemailDeleteWorker implements Worker<Void, Void> {
+  private static class VoicemailDeleteWorker implements Worker<String, Void> {
     private final Context context;
 
     VoicemailDeleteWorker(Context context) {
@@ -191,11 +222,20 @@ public class VisualVoicemailSettingsUtil {
     }
 
     @Override
-    public Void doInBackground(Void unused) {
+    public Void doInBackground(String iccId) {
+      Selection selection = null;
+      if (iccId != null) {
+        selection =
+            Selection.builder()
+                .and(Selection.column(Voicemails.PHONE_ACCOUNT_ID).is("=", iccId))
+                .build();
+      }
       int deleted =
           context
               .getContentResolver()
-              .delete(Voicemails.buildSourceUri(context.getPackageName()), null, null);
+              .delete(Voicemails.buildSourceUri(context.getPackageName()),
+                  selection.getSelection(),
+                  selection.getSelectionArgs());
 
       VvmLog.i("VisualVoicemailSettingsUtil.doInBackground", "deleted " + deleted + " voicemails");
       return null;
