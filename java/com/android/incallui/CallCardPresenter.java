@@ -689,16 +689,12 @@ public class CallCardPresenter
       String number;
 
       boolean isChildNumberShown = !TextUtils.isEmpty(primary.getChildNumber());
-      boolean isForwardedNumberShown = !TextUtils.isEmpty(primary.getLastForwardedNumber());
       boolean isCallSubjectShown = shouldShowCallSubject(primary);
 
       if (isCallSubjectShown) {
         number = null;
       } else if (isChildNumberShown) {
         number = context.getString(R.string.child_number, primary.getChildNumber());
-      } else if (isForwardedNumberShown) {
-        // Use last forwarded number instead of second line, if present.
-        number = primary.getLastForwardedNumber();
       } else {
         number = primaryContactInfo.number;
       }
@@ -731,6 +727,7 @@ public class CallCardPresenter
               .setMultimediaData(multimediaData)
               .setShowInCallButtonGrid(true)
               .setNumberPresentation(primary.getNumberPresentation())
+              .setForwardedNumber(primary.getLastForwardedNumber())
               .build());
     } else {
       // Clear the primary display info.

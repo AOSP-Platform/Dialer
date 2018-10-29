@@ -74,6 +74,9 @@ public abstract class PrimaryInfo {
 
   public abstract int numberPresentation();
 
+  @Nullable
+  public abstract String forwardedNumber();
+
   public static Builder builder() {
     return new AutoValue_PrimaryInfo.Builder();
   }
@@ -119,6 +122,8 @@ public abstract class PrimaryInfo {
     public abstract Builder setShowInCallButtonGrid(boolean showInCallButtonGrid);
 
     public abstract Builder setNumberPresentation(int numberPresentation);
+
+    public abstract Builder setForwardedNumber(String forwardedNumber);
 
     public abstract PrimaryInfo build();
   }

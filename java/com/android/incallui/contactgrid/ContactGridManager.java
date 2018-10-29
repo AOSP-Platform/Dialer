@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
@@ -74,8 +75,6 @@ public class ContactGridManager {
   // Row 2: Your emergency callback number: +1 (650) 253-0000
   private final ImageView workIconImageView;
   private final ImageView hdIconImageView;
-  private final ImageView forwardIconImageView;
-  private final TextView forwardedNumberView;
   private final ImageView spamIconImageView;
   private final ViewAnimator bottomTextSwitcher;
   private final BidiTextView bottomTextView;
@@ -86,6 +85,11 @@ public class ContactGridManager {
   private boolean showAnonymousAvatar;
   private boolean middleRowVisible = true;
   private boolean isTimerStarted;
+
+  // Row 3 : Forwarded Number : +1 (650) 253-0000
+  private final LinearLayout forwardedNumberView;
+  private final ImageView forwardIconImageView;
+  private final TextView forwardedNumberTextView;
 
   // Row in emergency call: This phone's number: +1 (650) 253-0000
   private final TextView deviceNumberTextView;
@@ -109,8 +113,6 @@ public class ContactGridManager {
     contactNameTextView = view.findViewById(R.id.contactgrid_contact_name);
     workIconImageView = view.findViewById(R.id.contactgrid_workIcon);
     hdIconImageView = view.findViewById(R.id.contactgrid_hdIcon);
-    forwardIconImageView = view.findViewById(R.id.contactgrid_forwardIcon);
-    forwardedNumberView = view.findViewById(R.id.contactgrid_forwardNumber);
     spamIconImageView = view.findViewById(R.id.contactgrid_spamIcon);
     bottomTextSwitcher = view.findViewById(R.id.contactgrid_bottom_text_switcher);
     bottomTextView = view.findViewById(R.id.contactgrid_bottom_text);
@@ -120,6 +122,10 @@ public class ContactGridManager {
     contactGridLayout = (View) contactNameTextView.getParent();
     letterTile = new LetterTileDrawable(context.getResources());
     isTimerStarted = false;
+
+    forwardedNumberView = (LinearLayout) view.findViewById(R.id.contactgrid_forwardNumber);
+    forwardIconImageView = view.findViewById(R.id.contactgrid_forwardIcon);
+    forwardedNumberTextView = (TextView) view.findViewById(R.id.forwardedNumber);
 
     deviceNumberTextView = view.findViewById(R.id.contactgrid_device_number_text);
     deviceNumberDivider = view.findViewById(R.id.contactgrid_location_divider);
@@ -155,6 +161,8 @@ public class ContactGridManager {
     middleRowVisible = isMiddleRowVisible;
 
     contactNameTextView.setVisibility(isMiddleRowVisible ? View.VISIBLE : View.GONE);
+    forwardedNumberTextView.setVisibility((primaryCallState.isForwardedNumber()
+            && isMiddleRowVisible) ? View.VISIBLE : View.GONE);
     updateAvatarVisibility();
   }
 
@@ -409,24 +417,11 @@ public class ContactGridManager {
     }
     spamIconImageView.setVisibility(info.isSpamIconVisible ? View.VISIBLE : View.GONE);
 
-    if (info.isForwardIconVisible) {
-      forwardIconImageView.setVisibility(View.VISIBLE);
+    if (primaryCallState.isForwardedNumber() && middleRowVisible) {
+      forwardedNumberTextView.setText(primaryInfo.forwardedNumber());
       forwardedNumberView.setVisibility(View.VISIBLE);
-      if (info.isTimerVisible) {
-        bottomTextSwitcher.setVisibility(View.VISIBLE);
-        if (ViewCompat.getLayoutDirection(contactGridLayout) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-          forwardedNumberView.setText(TextUtils.concat(info.label, " • "));
-        } else {
-          forwardedNumberView.setText(TextUtils.concat(" • ", info.label));
-        }
-      } else {
-        bottomTextSwitcher.setVisibility(View.GONE);
-        forwardedNumberView.setText(info.label);
-      }
     } else {
-      forwardIconImageView.setVisibility(View.GONE);
       forwardedNumberView.setVisibility(View.GONE);
-      bottomTextSwitcher.setVisibility(View.VISIBLE);
     }
 
     if (info.isTimerVisible) {
