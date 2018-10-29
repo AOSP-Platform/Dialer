@@ -86,6 +86,14 @@ public class TelephonyManagerCompat {
       "show_video_call_charges_alert_dialog_bool";
 
   /**
+   * Flag specifying whether to show forwarded number on call-in-progress screen.
+   * When true, forwarded number is shown.
+   * When false, forwarded number is not shown.
+   */
+  public static final String CARRIER_CONFIG_KEY_SHOW_FORWARDED_NUMBER_BOOL =
+      "show_forwarded_number_bool";
+
+  /**
    * Returns the number of phones available. Returns 1 for Single standby mode (Single SIM
    * functionality) Returns 2 for Dual standby mode.(Dual SIM functionality)
    *

@@ -795,6 +795,19 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         TelephonyManagerCompat.CARRIER_CONFIG_KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL);
   }
 
+  /**
+   * Gets the flag as determine whether to show a forwarded number.
+   *
+   * @return Whether to show a forwarded number as boolean.
+   */
+  public boolean showForwardedNumber() {
+    if (carrierConfig == null) {
+        return false;
+    }
+    return carrierConfig.getBoolean(
+        TelephonyManagerCompat.CARRIER_CONFIG_KEY_SHOW_FORWARDED_NUMBER_BOOL);
+  }
+
   public long getTimeAddedMs() {
     return timeAddedMs;
   }
