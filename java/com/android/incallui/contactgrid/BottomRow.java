@@ -43,7 +43,6 @@ public class BottomRow {
     public final boolean isWorkIconVisible;
     public final boolean isHdAttemptingIconVisible;
     public final boolean isHdIconVisible;
-    public final boolean isForwardIconVisible;
     public final boolean isSpamIconVisible;
     public final boolean shouldPopulateAccessibilityEvent;
 
@@ -53,7 +52,6 @@ public class BottomRow {
         boolean isWorkIconVisible,
         boolean isHdAttemptingIconVisible,
         boolean isHdIconVisible,
-        boolean isForwardIconVisible,
         boolean isSpamIconVisible,
         boolean shouldPopulateAccessibilityEvent) {
       this.label = label;
@@ -61,7 +59,6 @@ public class BottomRow {
       this.isWorkIconVisible = isWorkIconVisible;
       this.isHdAttemptingIconVisible = isHdAttemptingIconVisible;
       this.isHdIconVisible = isHdIconVisible;
-      this.isForwardIconVisible = isForwardIconVisible;
       this.isSpamIconVisible = isSpamIconVisible;
       this.shouldPopulateAccessibilityEvent = shouldPopulateAccessibilityEvent;
     }
@@ -72,9 +69,8 @@ public class BottomRow {
   public static Info getInfo(Context context, PrimaryCallState state, PrimaryInfo primaryInfo) {
     CharSequence label;
     boolean isTimerVisible = state.state() == DialerCallState.ACTIVE;
-    boolean isForwardIconVisible = state.isForwardedNumber();
     boolean isWorkIconVisible = state.isWorkCall();
-    boolean isHdIconVisible = state.isHdAudioCall() && !isForwardIconVisible;
+    boolean isHdIconVisible = state.isHdAudioCall();
     boolean isHdAttemptingIconVisible = state.isHdAttempting();
     boolean isSpamIconVisible = false;
     boolean shouldPopulateAccessibilityEvent = true;
@@ -105,7 +101,6 @@ public class BottomRow {
         isWorkIconVisible,
         isHdAttemptingIconVisible,
         isHdIconVisible,
-        isForwardIconVisible,
         isSpamIconVisible,
         shouldPopulateAccessibilityEvent);
   }
