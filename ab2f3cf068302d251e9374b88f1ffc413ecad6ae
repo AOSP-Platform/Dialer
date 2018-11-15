@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d5c381_2e82ba37",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1313092
+      },
+      "writtenOn": "2018-11-15T11:12:59Z",
+      "side": 1,
+      "message": "Maybe the name can be like showMuteOverlayOnVideoCallByCarrierConfig()",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008da833_b6dd1c16",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1313092
+      },
+      "writtenOn": "2018-11-15T11:12:59Z",
+      "side": 1,
+      "message": "Just a tiny thing, I guess we can move the condition to an assign statement, it could be easier to read since the conditional expression is quite complex now.\n\nint mutePreviewOverlayVisibility \u003d showMuteOverlayOnVideoCall() \u0026\u0026 muteButton.isChecked() \u0026\u0026 !isInGreenScreenMode ? View.VISIBLE : View.GONE;\nmutePreviewOverlay.setVisibility(mutePreviewOverlayVisibility);",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
