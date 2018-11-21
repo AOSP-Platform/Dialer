@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c5b1fbd_9a83d452",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-11-21T03:44:06Z",
+      "side": 1,
+      "message": "Thanks, done in next patch set.",
+      "parentUuid": "c6d5c381_2e82ba37",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "008da833_b6dd1c16",
         "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a16053_6d6e9e2c",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-11-21T03:44:06Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "008da833_b6dd1c16",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
