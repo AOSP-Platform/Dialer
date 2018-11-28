@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2e112f2b_4a6d70b8",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-11-28T09:32:40Z",
+      "side": 1,
+      "message": "Hi Ta-wei Yen, thank you, I\u0027ve reverted it in patchset 8.",
+      "parentUuid": "6a1e47fa_4e28461f",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "008da833_b6dd1c16",
         "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
         "patchSetId": 6
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "please revert. the temporary value is unnecessary.",
       "parentUuid": "54a16053_6d6e9e2c",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef394202_a7dfe45d",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-11-28T09:32:40Z",
+      "side": 1,
+      "message": "Thank you, I\u0027ve reverted it too.",
+      "parentUuid": "f8ee824a_4f131d87",
       "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
