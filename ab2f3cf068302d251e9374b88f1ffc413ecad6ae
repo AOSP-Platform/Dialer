@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6a1e47fa_4e28461f",
+        "filename": "java/com/android/incallui/call/DialerCall.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2018-11-28T02:56:37Z",
+      "side": 1,
+      "message": "This does not conform to naming styles on other methods, please revert.",
+      "parentUuid": "7c5b1fbd_9a83d452",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "008da833_b6dd1c16",
         "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8ee824a_4f131d87",
+        "filename": "java/com/android/incallui/video/impl/VideoCallFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2018-11-28T02:56:37Z",
+      "side": 1,
+      "message": "please revert. the temporary value is unnecessary.",
+      "parentUuid": "54a16053_6d6e9e2c",
+      "revId": "ab2f3cf068302d251e9374b88f1ffc413ecad6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
