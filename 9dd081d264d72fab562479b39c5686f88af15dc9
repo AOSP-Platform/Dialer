@@ -45,6 +45,29 @@
       "revId": "9dd081d264d72fab562479b39c5686f88af15dc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0187c1_0c33e456",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103264
+      },
+      "writtenOn": "2019-01-15T22:57:13Z",
+      "side": 1,
+      "message": "You can remove me since I\u0027m no longer in Dialer team.\nSame for calderwoodra@",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "9dd081d264d72fab562479b39c5686f88af15dc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
