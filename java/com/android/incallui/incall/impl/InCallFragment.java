@@ -172,13 +172,8 @@ public class InCallFragment extends Fragment
     endCallButton = view.findViewById(R.id.incall_end_call);
     endCallButton.setOnClickListener(this);
 
-    if (ContextCompat.checkSelfPermission(getContext(), permission.READ_PHONE_STATE)
-        != PackageManager.PERMISSION_GRANTED) {
-      voiceNetworkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
-    } else {
-      voiceNetworkType =
-          getContext().getSystemService(TelephonyManager.class).getVoiceNetworkType();
-    }
+    updateVoiceNetworkType();
+
     // TODO(a bug): Change to use corresponding phone type used for current call.
     phoneType = getContext().getSystemService(TelephonyManager.class).getPhoneType();
 
@@ -338,6 +333,7 @@ public class InCallFragment extends Fragment
   @Override
   public void setCallState(@NonNull PrimaryCallState primaryCallState) {
     LogUtil.i("InCallFragment.setCallState", primaryCallState.toString());
+    updateVoiceNetworkType();
     contactGridManager.setCallState(primaryCallState);
     getButtonController(InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY)
         .setAllowed(primaryCallState.swapToSecondaryButtonState() != ButtonState.NOT_SUPPORT);
@@ -347,6 +343,19 @@ public class InCallFragment extends Fragment
         ButtonChooserFactory.newButtonChooser(
             voiceNetworkType, primaryCallState.isWifi(), phoneType);
     updateButtonStates();
+  }
+
+  private void updateVoiceNetworkType() {
+    if (ContextCompat.checkSelfPermission(getContext(), permission.READ_PHONE_STATE)
+        != PackageManager.PERMISSION_GRANTED) {
+      voiceNetworkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+    } else {
+      voiceNetworkType =
+          getContext().getSystemService(TelephonyManager.class).getVoiceNetworkType();
+    }
+    LogUtil.v(
+        "InCallFragment.updateVoiceNetwork", "NetworkType: " +
+        Integer.toString(voiceNetworkType));
   }
 
   @Override
