@@ -689,14 +689,18 @@ public class VideoCallFragment extends Fragment
       boolean shouldShowPreview, boolean shouldShowRemote, boolean isRemotelyHeld) {
     LogUtil.i(
         "VideoCallFragment.showVideoViews",
-        "showPreview: %b, shouldShowRemote: %b",
+        "showPreview: %b, shouldShowRemote: %b, isRemotelyHeld: %b",
         shouldShowPreview,
-        shouldShowRemote);
+        shouldShowRemote,
+        isRemotelyHeld);
 
     videoCallScreenDelegate.getLocalVideoSurfaceTexture().attachToTextureView(previewTextureView);
     videoCallScreenDelegate.getRemoteVideoSurfaceTexture().attachToTextureView(remoteTextureView);
 
-    this.isRemotelyHeld = isRemotelyHeld;
+    if (this.isRemotelyHeld != isRemotelyHeld) {
+      this.isRemotelyHeld = isRemotelyHeld;
+      updateRemoteOffView();
+    }
     if (this.shouldShowRemote != shouldShowRemote) {
       this.shouldShowRemote = shouldShowRemote;
       updateRemoteOffView();
@@ -1126,13 +1130,7 @@ public class VideoCallFragment extends Fragment
               ? R.string.videocall_remote_video_on
               : R.string.videocall_remotely_resumed);
       remoteVideoOff.postDelayed(
-          new Runnable() {
-            @Override
-            public void run() {
-              remoteVideoOff.setVisibility(View.GONE);
-            }
-          },
-          VIDEO_OFF_VIEW_FADE_OUT_DELAY_IN_MILLIS);
+          () -> remoteVideoOff.setVisibility(View.GONE), VIDEO_OFF_VIEW_FADE_OUT_DELAY_IN_MILLIS);
     } else {
       remoteVideoOff.setText(
           isRemotelyHeld ? R.string.videocall_remotely_held : R.string.videocall_remote_video_off);
