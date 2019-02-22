@@ -269,9 +269,13 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
   private ThemeColorManager themeColorManager;
   private VideoSurfaceTexture localVideoSurfaceTexture;
-  private VideoSurfaceTexture remoteVideoSurfaceTexture;
+  @Nullable private VideoSurfaceTexture remoteVideoSurfaceTexture;
 
   private SpeakEasyCallManager speakEasyCallManager;
+
+  private final Set<InCallUiLock> inCallUiLocks = new ArraySet<>();
+  private boolean addCallClicked = false;
+  private boolean automaticallyMutedByAddeCall = false;
 
   /** Inaccessible constructor. Must use getRunningInstance() to get this singleton. */
   @VisibleForTesting
@@ -284,11 +288,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       Trace.endSection();
     }
     return inCallPresenter;
-  }
-
-  @VisibleForTesting
-  public static synchronized void setInstanceForTesting(InCallPresenter inCallPresenter) {
-    InCallPresenter.inCallPresenter = inCallPresenter;
   }
 
   /**
@@ -319,6 +318,11 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       }
     }
     return false;
+  }
+
+  @VisibleForTesting
+  public static synchronized void setInstanceForTesting(InCallPresenter inCallPresenter) {
+    InCallPresenter.inCallPresenter = inCallPresenter;
   }
 
   public InCallState getInCallState() {
@@ -1226,7 +1230,9 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       proximitySensor.onInCallShowing(showing);
     }
 
-    if (!showing) {
+    if (showing) {
+      refreshMuteState();
+    } else {
       updateIsChangingConfigurations();
     }
 
@@ -2033,5 +2039,36 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     return true;
   }
 
-  private final Set<InCallUiLock> inCallUiLocks = new ArraySet<>();
+  public void addCallClicked() {
+    if (addCallClicked) {
+      // Since clicking add call button brings user to MainActivity and coming back refreshes mute
+      // state, add call button should only be clicked once during InCallActivity shows.
+      return;
+    }
+    addCallClicked = true;
+    if (!AudioModeProvider.getInstance().getAudioState().isMuted()) {
+      // Automatically mute the current call
+      TelecomAdapter.getInstance().mute(true);
+      automaticallyMutedByAddeCall = true;
+    }
+    TelecomAdapter.getInstance().addCall();
+  }
+
+  /** Refresh mute state after call UI resuming from add call screen. */
+  public void refreshMuteState() {
+    LogUtil.i(
+        "InCallPresenter.refreshMuteState",
+        "refreshMuteStateAfterAddCall: %b addCallClicked: %b",
+        automaticallyMutedByAddeCall,
+        addCallClicked);
+    if (!addCallClicked) {
+      return;
+    }
+    if (automaticallyMutedByAddeCall) {
+      // Restore the previous mute state
+      TelecomAdapter.getInstance().mute(false);
+      automaticallyMutedByAddeCall = false;
+    }
+    addCallClicked = false;
+  }
 }
