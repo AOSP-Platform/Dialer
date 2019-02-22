@@ -44,7 +44,7 @@ public class ImsVideoTech implements VideoTech {
       SessionModificationState.NO_REQUEST;
   private int previousVideoState = VideoProfile.STATE_AUDIO_ONLY;
   private boolean paused = false;
-  private String savedCameraId;
+  @Nullable private String savedCameraId;
 
   // Hold onto a flag of whether or not stopTransmission was called but resumeTransmission has not
   // been. This is needed because there is time between calling stopTransmission and
@@ -227,6 +227,7 @@ public class ImsVideoTech implements VideoTech {
     call.getVideoCall()
         .sendSessionModifyRequest(
             new VideoProfile(unpausedVideoState & ~VideoProfile.STATE_TX_ENABLED));
+    setSessionModificationState(SessionModificationState.WAITING_FOR_RESPONSE);
   }
 
   @Override

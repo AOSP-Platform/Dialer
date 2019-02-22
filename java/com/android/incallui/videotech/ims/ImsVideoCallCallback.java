@@ -114,36 +114,44 @@ public class ImsVideoCallCallback extends VideoCall.Callback {
         videoTech.setSessionModificationState(newSessionModificationState);
       }
 
-      // Wait for 4 seconds and then clean the session modification state. This allows the video UI
-      // to stay up so that the user can read the error message.
-      //
-      // If the other person accepted the upgrade request then this will keep the video UI up until
-      // the call's video state change. Without this we would switch to the voice call and then
-      // switch back to video UI.
-      handler.postDelayed(
-          () -> {
-            if (videoTech.getSessionModificationState() == newSessionModificationState) {
-              LogUtil.i("ImsVideoCallCallback.onSessionModifyResponseReceived", "clearing state");
-              videoTech.setSessionModificationState(SessionModificationState.NO_REQUEST);
-            } else {
-              LogUtil.i(
-                  "ImsVideoCallCallback.onSessionModifyResponseReceived",
-                  "session modification state has changed, not clearing state");
-            }
-          },
-          CLEAR_FAILED_REQUEST_TIMEOUT_MILLIS);
+      clearFailedResponseState(newSessionModificationState);
     } else if (videoTech.getSessionModificationState()
         == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
       requestedVideoState = VideoProfile.STATE_AUDIO_ONLY;
       videoTech.setSessionModificationState(SessionModificationState.NO_REQUEST);
     } else if (videoTech.getSessionModificationState()
         == SessionModificationState.WAITING_FOR_RESPONSE) {
-      videoTech.setSessionModificationState(getSessionModificationStateFromTelecomStatus(status));
+      final int newSessionModificationState = getSessionModificationStateFromTelecomStatus(status);
+      videoTech.setSessionModificationState(newSessionModificationState);
+      if (status != VideoProvider.SESSION_MODIFY_REQUEST_SUCCESS) {
+        clearFailedResponseState(newSessionModificationState);
+      }
     } else {
       LogUtil.i(
           "ImsVideoCallCallback.onSessionModifyResponseReceived",
           "call is not waiting for response, doing nothing");
     }
+  }
+
+  private void clearFailedResponseState(final int newSessionModificationState) {
+    // Wait for 4 seconds and then clean the session modification state. This allows the video UI
+    // to stay up so that the user can read the error message.
+    //
+    // If the other person accepted the upgrade request then this will keep the video UI up until
+    // the call's video state change. Without this we would switch to the voice call and then
+    // switch back to video UI.
+    handler.postDelayed(
+        () -> {
+          if (videoTech.getSessionModificationState() == newSessionModificationState) {
+            LogUtil.i("ImsVideoCallCallback.clearFailedResponseState", "clearing state");
+            videoTech.setSessionModificationState(SessionModificationState.NO_REQUEST);
+          } else {
+            LogUtil.i(
+                "ImsVideoCallCallback.clearFailedResponseState",
+                "session modification state has changed, not clearing state");
+          }
+        },
+        CLEAR_FAILED_REQUEST_TIMEOUT_MILLIS);
   }
 
   @SessionModificationState
