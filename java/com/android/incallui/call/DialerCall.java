@@ -124,6 +124,9 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
   public static final String CONFIG_EMERGENCY_CALLBACK_WINDOW_MILLIS =
       "emergency_callback_window_millis";
 
+  /** A constant used to represent the peer dimension unset. */
+  public static final int PEER_DIMENSION_UNKNOWN = -1;
+
   private static int idCounter = 0;
 
   /**
@@ -220,6 +223,17 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
    * subject.
    */
   private boolean isCallSubjectSupported;
+
+  /**
+   * To store the video width of peer side reported via {@link
+   * DialerCall#onPeerDimensionsChanged(int, int)}.
+   */
+  private int peerDimensionWidth = PEER_DIMENSION_UNKNOWN;
+  /**
+   * To store the video height of peer side reported via {@link
+   * DialerCall#onPeerDimensionsChanged(int, int)}.
+   */
+  private int peerDimensionHeight = PEER_DIMENSION_UNKNOWN;
 
   public RttTranscript getRttTranscript() {
     return rttTranscript;
@@ -1558,6 +1572,8 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
   @Override
   public void onPeerDimensionsChanged(int width, int height) {
+    peerDimensionWidth = width;
+    peerDimensionHeight = height;
     InCallVideoCallCallbackNotifier.getInstance().peerDimensionsChanged(this, width, height);
   }
 
@@ -1973,5 +1989,13 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
   /** Called when canned text responses have been loaded. */
   public interface CannedTextResponsesLoadedListener {
     void onCannedTextResponsesLoaded(DialerCall call);
+  }
+
+  public int getPeerDimensionWidth() {
+    return peerDimensionWidth;
+  }
+
+  public int getPeerDimensionHeight() {
+    return peerDimensionHeight;
   }
 }

@@ -92,12 +92,12 @@ public class VideoCallPresenter
   private Context context;
 
   /** The call the video surfaces are currently related to */
-  private DialerCall primaryCall;
+  @Nullable private DialerCall primaryCall;
   /**
    * The {@link VideoCall} used to inform the video telephony layer of changes to the video
    * surfaces.
    */
-  private VideoCall videoCall;
+  @Nullable private VideoCall videoCall;
   /** Determines if the current UI state represents a video call. */
   private int currentVideoState;
   /** DialerCall's current state */
@@ -323,6 +323,15 @@ public class VideoCallPresenter
     InCallPresenter.InCallState inCallState = InCallPresenter.getInstance().getInCallState();
     onStateChange(inCallState, inCallState, CallList.getInstance());
     isVideoCallScreenUiReady = true;
+
+    Point sourceVideoDimensions = getRemoteVideoSurfaceTexture().getSourceVideoDimensions();
+    if (sourceVideoDimensions != null && primaryCall != null) {
+      int width = primaryCall.getPeerDimensionWidth();
+      int height = primaryCall.getPeerDimensionHeight();
+      if (sourceVideoDimensions.x != width || sourceVideoDimensions.y != height) {
+        onUpdatePeerDimensions(primaryCall, width, height);
+      }
+    }
   }
 
   /** Called when the user interface is no longer ready to be used. */
@@ -908,6 +917,10 @@ public class VideoCallPresenter
     LogUtil.i("VideoCallPresenter.onUpdatePeerDimensions", "width: %d, height: %d", width, height);
     if (videoCallScreen == null) {
       LogUtil.e("VideoCallPresenter.onUpdatePeerDimensions", "videoCallScreen is null");
+      return;
+    }
+    if (DialerCall.PEER_DIMENSION_UNKNOWN == width || DialerCall.PEER_DIMENSION_UNKNOWN == height) {
+      LogUtil.e("VideoCallPresenter.onUpdatePeerDimensions", "invalid dimensions");
       return;
     }
     if (!call.equals(primaryCall)) {
