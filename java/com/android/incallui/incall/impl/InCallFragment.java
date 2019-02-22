@@ -88,9 +88,9 @@ public class InCallFragment extends Fragment
   private ContactGridManager contactGridManager;
   private InCallScreenDelegate inCallScreenDelegate;
   private InCallButtonUiDelegate inCallButtonUiDelegate;
-  private InCallButtonGridFragment inCallButtonGridFragment;
+  @Nullable private InCallButtonGridFragment inCallButtonGridFragment;
   @Nullable private ButtonChooser buttonChooser;
-  private SecondaryInfo savedSecondaryInfo;
+  @Nullable private SecondaryInfo savedSecondaryInfo;
   private int voiceNetworkType;
   private int phoneType;
   private boolean stateRestored;
@@ -206,7 +206,6 @@ public class InCallFragment extends Fragment
   @Override
   public void onResume() {
     super.onResume();
-    inCallButtonUiDelegate.refreshMuteState();
     inCallScreenDelegate.onInCallScreenResumed();
   }
 

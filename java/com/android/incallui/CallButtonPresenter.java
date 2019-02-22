@@ -19,6 +19,7 @@ package com.android.incallui;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Trace;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.UserManagerCompat;
 import android.telecom.CallAudioState;
@@ -63,17 +64,11 @@ public class CallButtonPresenter
         DialerCallListener,
         InCallButtonUiDelegate {
 
-  private static final String KEY_AUTOMATICALLY_MUTED_BY_ADD_CALL =
-      "incall_key_automatically_muted_by_add_call";
-  private static final String KEY_PREVIOUS_MUTE_STATE = "incall_key_previous_mute_state";
-
   private final Context context;
-  private InCallButtonUi inCallButtonUi;
-  private DialerCall call;
-  private boolean automaticallyMutedByAddCall = false;
-  private boolean previousMuteState = false;
+  @Nullable private InCallButtonUi inCallButtonUi;
+  @Nullable private DialerCall call;
   private boolean isInCallButtonUiReady;
-  private PhoneAccountHandle otherAccount;
+  @Nullable private PhoneAccountHandle otherAccount;
 
   public CallButtonPresenter(Context context) {
     this.context = context.getApplicationContext();
@@ -289,18 +284,7 @@ public class CallButtonPresenter
             DialerImpression.Type.IN_CALL_ADD_CALL_BUTTON_PRESSED,
             call.getUniqueCallId(),
             call.getTimeAddedMs());
-    if (automaticallyMutedByAddCall) {
-      // Since clicking add call button brings user to MainActivity and coming back refreshes mute
-      // state, add call button should only be clicked once during InCallActivity shows. Otherwise,
-      // we set previousMuteState wrong.
-      return;
-    }
-    // Automatically mute the current call
-    automaticallyMutedByAddCall = true;
-    previousMuteState = AudioModeProvider.getInstance().getAudioState().isMuted();
-    // Simulate a click on the mute button
-    muteClicked(true /* checked */, false /* clickedByUser */);
-    TelecomAdapter.getInstance().addCall();
+    InCallPresenter.getInstance().addCallClicked();
   }
 
   @Override
@@ -480,10 +464,7 @@ public class CallButtonPresenter
     // There can only be two calls so don't show the ability to merge when one of them
     // is a speak easy call.
     final boolean showMerge =
-        InCallPresenter.getInstance()
-                .getCallList()
-                .getAllCalls()
-                .stream()
+        InCallPresenter.getInstance().getCallList().getAllCalls().stream()
                 .noneMatch(c -> c != null && c.isSpeakEasyCall())
             && call.can(android.telecom.Call.Details.CAPABILITY_MERGE_CONFERENCE);
     final boolean showUpgradeToVideo = !isVideo && (hasVideoCallCapabilities(call));
@@ -553,31 +534,10 @@ public class CallButtonPresenter
   }
 
   @Override
-  public void refreshMuteState() {
-    // Restore the previous mute state
-    if (automaticallyMutedByAddCall
-        && AudioModeProvider.getInstance().getAudioState().isMuted() != previousMuteState) {
-      if (inCallButtonUi == null) {
-        return;
-      }
-      muteClicked(previousMuteState, false /* clickedByUser */);
-    }
-    automaticallyMutedByAddCall = false;
-  }
+  public void onSaveInstanceState(Bundle outState) {}
 
   @Override
-  public void onSaveInstanceState(Bundle outState) {
-    outState.putBoolean(KEY_AUTOMATICALLY_MUTED_BY_ADD_CALL, automaticallyMutedByAddCall);
-    outState.putBoolean(KEY_PREVIOUS_MUTE_STATE, previousMuteState);
-  }
-
-  @Override
-  public void onRestoreInstanceState(Bundle savedInstanceState) {
-    automaticallyMutedByAddCall =
-        savedInstanceState.getBoolean(
-            KEY_AUTOMATICALLY_MUTED_BY_ADD_CALL, automaticallyMutedByAddCall);
-    previousMuteState = savedInstanceState.getBoolean(KEY_PREVIOUS_MUTE_STATE, previousMuteState);
-  }
+  public void onRestoreInstanceState(Bundle savedInstanceState) {}
 
   @Override
   public void onCameraPermissionGranted() {
