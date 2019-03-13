@@ -402,6 +402,17 @@ public class CallCardPresenter
     updatePrimaryDisplayInfo();
   }
 
+  /** Handles a change to the caller identification. */
+  @Override
+  public void onDialerCallerIdentificationChanged() {
+    LogUtil.v("CallCardPresenter.onDialerCallerIdentificationChanged", "");
+
+    if (primary == null) {
+      return;
+    }
+    updatePrimaryDisplayInfo();
+  }
+
   /** Handles a change to the last forwarding number by refreshing the primary call info. */
   @Override
   public void onDialerCallLastForwardedNumberChange() {

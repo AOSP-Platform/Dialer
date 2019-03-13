@@ -250,6 +250,9 @@ public class AnswerScreenPresenter
     public void onDialerCallLastForwardedNumberChange() {}
 
     @Override
+    public void onDialerCallerIdentificationChanged() {}
+
+    @Override
     public void onDialerCallUpgradeToVideo() {}
 
     @Override

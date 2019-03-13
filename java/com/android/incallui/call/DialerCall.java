@@ -38,6 +38,7 @@ import android.telecom.Call;
 import android.telecom.Call.Details;
 import android.telecom.Call.RttCall;
 import android.telecom.CallAudioState;
+import android.telecom.CallIdentification;
 import android.telecom.Connection;
 import android.telecom.DisconnectCause;
 import android.telecom.GatewayInfo;
@@ -171,6 +172,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
   @Nullable private SpamStatus spamStatus;
   private boolean isBlocked;
+  private CallIdentification callIdentification;
 
   private boolean didShowCameraPermission;
   private boolean didDismissVideoChargesAlertDialog;
@@ -517,6 +519,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     return telecomCall.getDetails().getStatusHints();
   }
 
+  public CallIdentification getCallIdentification() {
+    return callIdentification;
+  }
+
   public int getCameraDir() {
     return cameraDirection;
   }
@@ -643,6 +649,12 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
       updateIsVoiceMailNumber();
       callCapableAccounts = telecomManager.getCallCapablePhoneAccounts();
       countryIso = GeoUtil.getCurrentCountryIso(context);
+    }
+    if (callIdentification == null && telecomCall.getDetails().getCallIdentification() != null) {
+      callIdentification = telecomCall.getDetails().getCallIdentification();
+      for (DialerCallListener listener : listeners) {
+        listener.onDialerCallerIdentificationChanged();
+      }
     }
     Trace.endSection();
   }

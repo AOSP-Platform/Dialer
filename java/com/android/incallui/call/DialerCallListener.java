@@ -27,6 +27,8 @@ public interface DialerCallListener {
 
   void onDialerCallLastForwardedNumberChange();
 
+  void onDialerCallerIdentificationChanged();
+
   void onDialerCallUpgradeToVideo();
 
   default void onDialerCallUpgradeToRtt(int rttRequestId) {}

@@ -144,6 +144,9 @@ public class AnswerProximitySensor
   public void onDialerCallLastForwardedNumberChange() {}
 
   @Override
+  public void onDialerCallerIdentificationChanged() {}
+
+  @Override
   public void onDialerCallUpgradeToVideo() {}
 
   @Override

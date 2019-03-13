@@ -1135,6 +1135,9 @@ public class StatusBarNotifier
     public void onDialerCallLastForwardedNumberChange() {}
 
     @Override
+    public void onDialerCallerIdentificationChanged() {}
+
+    @Override
     public void onDialerCallUpgradeToVideo() {}
 
     @Override

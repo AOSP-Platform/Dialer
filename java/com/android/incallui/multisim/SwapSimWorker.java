@@ -167,6 +167,9 @@ public class SwapSimWorker implements Worker<Void, Void>, DialerCallListener, Ca
   public void onDialerCallLastForwardedNumberChange() {}
 
   @Override
+  public void onDialerCallerIdentificationChanged() {}
+
+  @Override
   public void onDialerCallUpgradeToVideo() {}
 
   @Override

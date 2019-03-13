@@ -827,6 +827,9 @@ public class CallList implements DialerCallDelegate {
     public void onDialerCallLastForwardedNumberChange() {}
 
     @Override
+    public void onDialerCallerIdentificationChanged() {}
+
+    @Override
     public void onDialerCallUpgradeToRtt(int rttRequestId) {
       for (Listener listener : listeners) {
         listener.onUpgradeToRtt(call, rttRequestId);
