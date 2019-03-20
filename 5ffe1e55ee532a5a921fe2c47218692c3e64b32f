@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7575e16_1320e0f9",
+        "filename": "java/com/android/incallui/CallButtonPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2019-03-20T00:02:43Z",
+      "side": 1,
+      "message": "move everything here and in InCallActivity to  InCallPresenter.addCallClicked()",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 43
+      },
+      "revId": "5ffe1e55ee532a5a921fe2c47218692c3e64b32f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
