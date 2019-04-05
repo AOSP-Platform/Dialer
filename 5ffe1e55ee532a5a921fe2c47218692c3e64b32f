@@ -22,6 +22,30 @@
       "revId": "5ffe1e55ee532a5a921fe2c47218692c3e64b32f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a29f552_f8e0bd72",
+        "filename": "java/com/android/incallui/CallButtonPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-04-05T10:15:44Z",
+      "side": 1,
+      "message": "Thank you for your advice. I moved it into InCallPresenter.addCallClicked().",
+      "parentUuid": "a7575e16_1320e0f9",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 43
+      },
+      "revId": "5ffe1e55ee532a5a921fe2c47218692c3e64b32f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
