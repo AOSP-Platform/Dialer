@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7acb70_c06b34f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1096713
+      },
+      "writtenOn": "2019-07-08T21:16:33Z",
+      "side": 1,
+      "message": "It looks like this one ran through the translator?  At least it looks like many languages got fixed?",
+      "revId": "31cf3b008ab6bc8f6d45e4f71f16b4ea41ef594e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
