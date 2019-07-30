@@ -718,13 +718,13 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     // last item in the array.  The forwarding numbers arrive independently of when the
     // call is originally set up, so we need to notify the the UI of the change.
     if (callExtras.containsKey(Connection.EXTRA_LAST_FORWARDED_NUMBER)) {
-      ArrayList<String> lastForwardedNumbers =
-          callExtras.getStringArrayList(Connection.EXTRA_LAST_FORWARDED_NUMBER);
+      String[] lastForwardedNumbers =
+          callExtras.getStringArray(Connection.EXTRA_LAST_FORWARDED_NUMBER);
 
       if (lastForwardedNumbers != null) {
         String lastForwardedNumber = null;
-        if (!lastForwardedNumbers.isEmpty()) {
-          lastForwardedNumber = lastForwardedNumbers.get(lastForwardedNumbers.size() - 1);
+        if (lastForwardedNumbers.length > 0) {
+          lastForwardedNumber = lastForwardedNumbers[lastForwardedNumbers.length - 1];
         }
 
         if (!Objects.equals(lastForwardedNumber, this.lastForwardedNumber)) {
