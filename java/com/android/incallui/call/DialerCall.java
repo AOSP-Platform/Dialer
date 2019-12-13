@@ -1476,16 +1476,14 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
   /** Return the string label to represent the call provider */
   public String getCallProviderLabel() {
+    PhoneAccount account = getPhoneAccount();
+    if (account != null && !TextUtils.isEmpty(account.getLabel())) {
+      if (callCapableAccounts != null && callCapableAccounts.size() > 1) {
+        callProviderLabel = account.getLabel().toString();
+      }
+    }
     if (callProviderLabel == null) {
-      PhoneAccount account = getPhoneAccount();
-      if (account != null && !TextUtils.isEmpty(account.getLabel())) {
-        if (callCapableAccounts != null && callCapableAccounts.size() > 1) {
-          callProviderLabel = account.getLabel().toString();
-        }
-      }
-      if (callProviderLabel == null) {
-        callProviderLabel = "";
-      }
+      callProviderLabel = "";
     }
     return callProviderLabel;
   }
