@@ -25,7 +25,7 @@
   <string name="privacy_policy_label">Privacy policy</string>
 
   <!-- URL for privacy policy -->
-  <string name="privacy_policy_url" translatable="false">http://www.google.com/policies/privacy</string>
+  <string name="privacy_policy_url" translatable="false">https://policies.google.com/privacy</string>
 
   <!-- Label shown on the About Phone screen for the terms of service option [CHAR LIMIT=50]-->
   <string name="terms_of_service_label">Terms of service</string>
@@ -34,6 +34,6 @@
   <string name="terms_of_service_key" translatable="false">terms_of_service</string>
 
   <!-- URL for terms of service -->
-  <string name="terms_of_service_url" translatable="false">http://www.google.com/policies/terms</string>
+  <string name="terms_of_service_url" translatable="false">https://policies.google.com/terms</string>
 
 </resources>
