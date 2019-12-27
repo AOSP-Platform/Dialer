@@ -42,11 +42,9 @@ public class AudioModeProvider {
   }
 
   public void onAudioStateChanged(CallAudioState audioState) {
-    if (!this.audioState.equals(audioState)) {
-      this.audioState = audioState;
-      for (AudioModeListener listener : listeners) {
-        listener.onAudioStateChanged(audioState);
-      }
+    this.audioState = audioState;
+    for (AudioModeListener listener : listeners) {
+      listener.onAudioStateChanged(audioState);
     }
   }
 
