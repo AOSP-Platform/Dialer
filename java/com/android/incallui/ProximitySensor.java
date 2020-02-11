@@ -40,7 +40,8 @@ import com.android.incallui.call.DialerCall;
  * and disabled. Most of that state is fed into this class through public methods.
  */
 public class ProximitySensor
-    implements AccelerometerListener.OrientationListener, InCallStateListener, AudioModeListener {
+    implements AccelerometerListener.OrientationListener, InCallStateListener, AudioModeListener,
+            ProximityListener.ProximityChangedListener {
 
   private static final String TAG = ProximitySensor.class.getSimpleName();
 
@@ -48,8 +49,10 @@ public class ProximitySensor
   private final PowerManager.WakeLock proximityWakeLock;
   private final AudioModeProvider audioModeProvider;
   private final AccelerometerListener accelerometerListener;
+  private final ProximityListener proximityListener;
   private final ProximityDisplayListener displayListener;
   private int orientation = AccelerometerListener.ORIENTATION_UNKNOWN;
+  private int state = ProximityListener.PROXIMITY_UNKNOWN;
   private boolean uiShowing = false;
   private boolean isPhoneOffhook = false;
   private boolean dialpadVisible;
@@ -60,7 +63,8 @@ public class ProximitySensor
   public ProximitySensor(
       @NonNull Context context,
       @NonNull AudioModeProvider audioModeProvider,
-      @NonNull AccelerometerListener accelerometerListener) {
+      @NonNull AccelerometerListener accelerometerListener,
+      @NonNull ProximityListener proximityListener) {
     Trace.beginSection("ProximitySensor.Constructor");
     powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     if (powerManager.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)) {
@@ -72,6 +76,9 @@ public class ProximitySensor
     }
     this.accelerometerListener = accelerometerListener;
     this.accelerometerListener.setListener(this);
+
+    this.proximityListener = proximityListener;
+    this.proximityListener.setListener(this);
 
     displayListener =
         new ProximityDisplayListener(
@@ -87,6 +94,7 @@ public class ProximitySensor
     audioModeProvider.removeListener(this);
 
     accelerometerListener.enable(false);
+
     displayListener.unregister();
 
     turnOffProximitySensor(true);
@@ -96,6 +104,14 @@ public class ProximitySensor
   @Override
   public void orientationChanged(int orientation) {
     this.orientation = orientation;
+    updateProximitySensorMode();
+  }
+
+  /** Called to identify when the screen is off by proximity. */
+  @Override
+  public void proximityChanged(int state) {
+    LogUtil.i("ProximitySensor.proximityChanged", "state: %d", state);
+    this.state = state;
     updateProximitySensorMode();
   }
 
@@ -172,7 +188,7 @@ public class ProximitySensor
    * replaced with the ProximityDisplayListener.
    */
   public boolean isScreenReallyOff() {
-    return !powerManager.isScreenOn();
+    return state == ProximityListener.PROXIMITY_ON;
   }
 
   private void turnOnProximitySensor() {
@@ -180,6 +196,7 @@ public class ProximitySensor
       if (!proximityWakeLock.isHeld()) {
         LogUtil.i("ProximitySensor.turnOnProximitySensor", "acquiring wake lock");
         proximityWakeLock.acquire();
+        proximityListener.enable(true);
       } else {
         LogUtil.i("ProximitySensor.turnOnProximitySensor", "wake lock already acquired");
       }
@@ -192,6 +209,7 @@ public class ProximitySensor
         LogUtil.i("ProximitySensor.turnOffProximitySensor", "releasing wake lock");
         int flags = (screenOnImmediately ? 0 : PowerManager.RELEASE_FLAG_WAIT_FOR_NO_PROXIMITY);
         proximityWakeLock.release(flags);
+        proximityListener.enable(false);
       } else {
         LogUtil.i("ProximitySensor.turnOffProximitySensor", "wake lock already released");
       }
@@ -291,7 +309,6 @@ public class ProximitySensor
     public void onDisplayChanged(int displayId) {
       if (displayId == Display.DEFAULT_DISPLAY) {
         final Display display = displayManager.getDisplay(displayId);
-
         final boolean isDisplayOn = display.getState() != Display.STATE_OFF;
         // For call purposes, we assume that as long as the screen is not truly off, it is
         // considered on, even if it is in an unknown or low power idle state.
