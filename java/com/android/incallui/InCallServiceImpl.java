@@ -106,7 +106,8 @@ public class InCallServiceImpl extends InCallService {
             new ExternalCallNotifier(context, contactInfoCache),
             contactInfoCache,
             new ProximitySensor(
-                context, AudioModeProvider.getInstance(), new AccelerometerListener(context)),
+                context, AudioModeProvider.getInstance(), new AccelerometerListener(context),
+            new ProximityListener(context)),
             new FilteredNumberAsyncQueryHandler(context),
             speakEasyCallManager);
     InCallPresenter.getInstance().onServiceBind();
