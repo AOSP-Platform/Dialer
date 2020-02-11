@@ -1676,6 +1676,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
    */
   @Override
   public boolean dispatchTouchEvent(MotionEvent event) {
+    // Ignore any up event while the screen is off and instead replace with cancel
+    if (event.getAction() == MotionEvent.ACTION_UP
+            && InCallPresenter.getInstance().getProximitySensor().isScreenReallyOff()) {
+      event.setAction(MotionEvent.ACTION_CANCEL);
+      LogUtil.i("InCallActivity.dispatchTouchEvent", "proximity active: cancelling ACTION_UP");
+    }
     // Reject any gesture that started when the screen is in the fake off state.
     if (touchDownWhenPseudoScreenOff) {
       if (event.getAction() == MotionEvent.ACTION_UP) {
