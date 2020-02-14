@@ -593,6 +593,9 @@ public class CallButtonPresenter
   public void onEnrichedCallSessionUpdate() {}
 
   @Override
+  public void onSuplServiceMessage(String suplNotificationMessage) {}
+
+  @Override
   public Context getContext() {
     return context;
   }

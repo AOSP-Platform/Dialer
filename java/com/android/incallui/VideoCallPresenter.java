@@ -1165,6 +1165,9 @@ public class VideoCallPresenter
   @Override
   public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
 
+  @Override
+  public void onSuplServiceMessage(String suplNotificationMessage) {}
+
   private class LocalDelegate implements VideoSurfaceDelegate {
     @Override
     public void onSurfaceCreated(VideoSurfaceTexture videoCallSurface) {
