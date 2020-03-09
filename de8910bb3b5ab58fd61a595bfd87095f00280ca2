@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe775182_de9395c7",
+        "filename": "java/com/android/incallui/ProximityListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-03-09T18:20:17Z",
+      "side": 1,
+      "message": "nit: please consider updating 2019 -\u003e 2020?",
+      "revId": "de8910bb3b5ab58fd61a595bfd87095f00280ca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e07539_67ec5311",
+        "filename": "java/com/android/incallui/ProximityListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-03-09T18:20:17Z",
+      "side": 1,
+      "message": "nit: Each line of text in your code should be at most 100 characters long. \n\nhttps://source.android.com/setup/contribute/code-style#limit-line-length",
+      "revId": "de8910bb3b5ab58fd61a595bfd87095f00280ca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
