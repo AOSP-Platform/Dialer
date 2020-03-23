@@ -1,12 +1,14 @@
-<manifest
-  package="com.android.incallui.answer.impl.hint"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     package="com.android.incallui.answer.impl.hint">
 
   <application>
-    <receiver android:name=".PawSecretCodeListener">
+    <receiver android:name=".PawSecretCodeListener"
+         android:exported="true">
       <intent-filter>
-        <action android:name="android.provider.Telephony.SECRET_CODE" />
-        <data android:scheme="android_secret_code" />
+        <action android:name="android.provider.Telephony.SECRET_CODE"/>
+        <data android:scheme="android_secret_code"/>
       </intent-filter>
     </receiver>
   </application>

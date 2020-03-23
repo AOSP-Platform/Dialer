@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.android.dialer.interactions">
+     package="com.android.dialer.interactions">
 
   <application>
 
     <!-- Service to update a contact -->
-    <service
-      android:exported="false"
-      android:name="com.android.dialer.interactions.ContactUpdateService"/>
+    <service android:exported="false"
+         android:name="com.android.dialer.interactions.ContactUpdateService"/>
 
-    <receiver android:name="com.android.dialer.interactions.UndemoteOutgoingCallReceiver">
+    <receiver android:name="com.android.dialer.interactions.UndemoteOutgoingCallReceiver"
+         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
       </intent-filter>
@@ -17,4 +19,3 @@
   </application>
 
 </manifest>
-
