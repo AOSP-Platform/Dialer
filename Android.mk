@@ -104,7 +104,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	com.android.vcard \
 	dialer-animal-sniffer-annotations-target \
 	dialer-commons-io-target \
-	dialer-dagger2-target \
+	dagger2 \
 	dialer-disklrucache-target \
 	dialer-gifdecoder-target \
 	dialer-glide-target \
@@ -149,9 +149,9 @@ LOCAL_JAVA_LIBRARIES := \
 LOCAL_ANNOTATION_PROCESSORS := \
 	auto_value_plugin \
 	javapoet-prebuilt-jar \
-	dialer-dagger2 \
-	dialer-dagger2-compiler \
-	dialer-dagger2-producers \
+	dagger2 \
+	dagger2-compiler \
+	dagger2-producers \
 	dialer-glide-annotation \
 	dialer-glide-compiler \
 	dialer-guava \
@@ -191,9 +191,6 @@ EXCLUDE_EXTRA_PACKAGES :=
 include $(CLEAR_VARS)
 
 LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
-    dialer-dagger2-compiler:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-compiler/2.7/dagger-compiler-2.7.jar \
-    dialer-dagger2:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger/2.7/dagger-2.7.jar \
-    dialer-dagger2-producers:../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger-producers/2.7/dagger-producers-2.7.jar \
     dialer-glide-annotation:../../../prebuilts/maven_repo/bumptech/com/github/bumptech/glide/annotation/SNAPSHOT/annotation-SNAPSHOT.jar \
     dialer-glide-compiler:../../../prebuilts/maven_repo/bumptech/com/github/bumptech/glide/compiler/SNAPSHOT/compiler-SNAPSHOT.jar \
     dialer-grpc-all:../../../prebuilts/tools/common/m2/repository/io/grpc/grpc-all/1.0.3/grpc-all-1.0.3.jar \
@@ -225,16 +222,6 @@ LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE := dialer-error-prone-target
 LOCAL_SDK_VERSION := current
 LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar
-LOCAL_UNINSTALLABLE_MODULE := true
-
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE := dialer-dagger2-target
-LOCAL_SDK_VERSION := current
-LOCAL_SRC_FILES := ../../../prebuilts/tools/common/m2/repository/com/google/dagger/dagger/2.7/dagger-2.7.jar
 LOCAL_UNINSTALLABLE_MODULE := true
 
 include $(BUILD_PREBUILT)
@@ -468,14 +455,12 @@ LOCAL_SRC_FILES := \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
 	dialer-guava \
-	dialer-dagger2 \
+	dagger2 \
 	javapoet-prebuilt-jar \
 	auto_service_annotations \
 	auto_common \
 	dialer-javax-annotation-api \
 	dialer-javax-inject
-
-LOCAL_JAVA_LANGUAGE_VERSION := 1.8
 
 include $(BUILD_HOST_JAVA_LIBRARY)
 
