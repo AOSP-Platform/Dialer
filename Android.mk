@@ -176,6 +176,7 @@ LOCAL_PRIVILEGED_MODULE := true
 LOCAL_PRODUCT_MODULE := true
 LOCAL_USE_AAPT2 := true
 LOCAL_REQUIRED_MODULES := privapp_whitelist_com.android.dialer
+LOCAL_JAVA_LANGUAGE_VERSION := 1.8
 
 include $(BUILD_PACKAGE)
 
