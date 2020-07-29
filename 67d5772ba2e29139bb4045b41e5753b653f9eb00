@@ -39,6 +39,30 @@
       "revId": "67d5772ba2e29139bb4045b41e5753b653f9eb00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dc3f47_20863a59",
+        "filename": "java/com/android/dialer/database/FilteredNumberContract.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-29T22:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d814ec_1a0373e6",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "67d5772ba2e29139bb4045b41e5753b653f9eb00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
