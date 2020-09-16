@@ -37,6 +37,8 @@ import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.android.contacts.common.widget.SelectPhoneAccountDialogOptions;
 import com.android.contacts.common.widget.SelectPhoneAccountDialogOptionsUtil;
 import com.android.dialer.activecalls.ActiveCallInfo;
@@ -101,7 +103,6 @@ public class PreferredAccountWorkerImpl implements PreferredAccountWorker {
   }
 
   private Result doInBackground(String phoneNumber, List<PhoneAccountHandle> candidates) {
-
     Optional<String> dataId = getDataId(phoneNumber);
     if (dataId.isPresent()) {
       Optional<PhoneAccountHandle> preferred = getPreferredAccount(appContext, dataId.get());
