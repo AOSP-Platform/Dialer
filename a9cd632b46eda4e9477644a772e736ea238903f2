@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4dfa3d7_3a8ad6a5",
+        "filename": "java/com/android/contacts/common/widget/SelectPhoneAccountDialogOptionsUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-09-17T17:53:03Z",
+      "side": 1,
+      "message": "This is marked optional in the proto - will this cause an npe if not available?",
+      "range": {
+        "startLine": 36,
+        "startChar": 34,
+        "endLine": 36,
+        "endChar": 70
+      },
+      "revId": "a9cd632b46eda4e9477644a772e736ea238903f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
