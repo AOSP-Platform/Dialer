@@ -22,6 +22,30 @@
       "revId": "a9cd632b46eda4e9477644a772e736ea238903f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d97a036_61474e14",
+        "filename": "java/com/android/contacts/common/widget/SelectPhoneAccountDialogOptionsUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2020-09-17T20:10:17Z",
+      "side": 1,
+      "message": "We set this in Line 56 when building the entry so it should be available all the time. Added a try-catch block to handle this unexpected condition.",
+      "parentUuid": "b4dfa3d7_3a8ad6a5",
+      "range": {
+        "startLine": 36,
+        "startChar": 34,
+        "endLine": 36,
+        "endChar": 70
+      },
+      "revId": "a9cd632b46eda4e9477644a772e736ea238903f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
