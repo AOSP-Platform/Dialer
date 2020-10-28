@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "863f6e14_e0bc17c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2020-10-28T18:19:52Z",
+      "side": 1,
+      "message": "Checked,it is there:(mcc262-mnc2) \"Wi‑Fi call\"",
+      "revId": "f2a89112cc6b09d50c2769299bb7138758df5985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
