@@ -16,6 +16,23 @@
       "message": "Checked,it is there:(mcc262-mnc2) \"Wi‑Fi call\"",
       "revId": "f2a89112cc6b09d50c2769299bb7138758df5985",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf42a03b_16a29657",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-30T20:18:44Z",
+      "side": 1,
+      "message": "Fix in aapt2: https://android-review.googlesource.com/c/platform/frameworks/base/+/1481918",
+      "revId": "f2a89112cc6b09d50c2769299bb7138758df5985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
