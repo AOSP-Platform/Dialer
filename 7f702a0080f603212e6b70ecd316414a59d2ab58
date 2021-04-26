@@ -39,6 +39,30 @@
       },
       "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be515c02_b9e2a6e3",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1022843
+      },
+      "writtenOn": "2021-04-26T16:34:57Z",
+      "side": 1,
+      "message": "lp.isReachable is to check whether the target IP is possible accessed by LOCAL route, it doesn\u0027t really access Network, or depend on network. it only check LOCAL route info.\nThe \"8.8.8.8\" can be ANY public IPV4 format IP, because it is only used to match LOCAL route Info.\n\nI ever tested hasIpv4Address,  it has fault when network is IPV6 only + Ipv4 from AP CLAT solution.  In that case, Fwk use stacked Network, hasIpv4Address returned false, but isReachable(Ipv4) returned true.  isReachable is correct, so I used isReachable here.",
+      "parentUuid": "69ade4d3_d504c6f3",
+      "range": {
+        "startLine": 139,
+        "startChar": 62,
+        "endLine": 139,
+        "endChar": 71
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
