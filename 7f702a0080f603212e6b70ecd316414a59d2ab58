@@ -1,6 +1,69 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c58ce83_4fd8ecd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "Provide a better summary? Maybe something like \"Wait for IPv4 before sending VVM requests\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "033a6946_382c4513",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this has anything to do with qualcomm. Any network where IPv6 arrives first has this problem.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd291fdc_0c966134",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "Should be a bug line here.\n\nBug: 183967989",
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "25c92233_1ea8cb7d",
@@ -14,6 +77,52 @@
       "writtenOn": "2021-04-26T14:46:48Z",
       "side": 1,
       "message": "the error mentioned in the bug is thrown from MailTransport.java (code link below). It is not clear to me how is the change here relates to the logic in MailTransport. Can you help provide more details?\n\n\nhttps://cs.android.com/android/platform/superproject/+/master:packages/apps/Dialer/java/com/android/voicemail/impl/mail/MailTransport.java;l\u003d123?q\u003dMailTransport.java",
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67591e4b_b3609397",
+        "filename": "java/com/android/voicemail/impl/fetch/FetchVoicemailReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "Generally in AOSP code we don\u0027t mention who made changes. That information is available in git blame if desired.\n\nAlso everywhere else in the CL.",
+      "range": {
+        "startLine": 205,
+        "startChar": 14,
+        "endLine": 205,
+        "endChar": 36
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f65b2aad_0e9f382d",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "Pre-existing, but there\u0027s no need to call super in any of these methods, the base NetworkCallback methods don\u0027t do anything.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 47
+      },
       "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -55,6 +164,30 @@
       "side": 1,
       "message": "lp.isReachable is to check whether the target IP is possible accessed by LOCAL route, it doesn\u0027t really access Network, or depend on network. it only check LOCAL route info.\nThe \"8.8.8.8\" can be ANY public IPV4 format IP, because it is only used to match LOCAL route Info.\n\nI ever tested hasIpv4Address,  it has fault when network is IPV6 only + Ipv4 from AP CLAT solution.  In that case, Fwk use stacked Network, hasIpv4Address returned false, but isReachable(Ipv4) returned true.  isReachable is correct, so I used isReachable here.",
       "parentUuid": "69ade4d3_d504c6f3",
+      "range": {
+        "startLine": 139,
+        "startChar": 62,
+        "endLine": 139,
+        "endChar": 71
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e57c8c4_275c7b9c",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T17:03:36Z",
+      "side": 1,
+      "message": "Unfortunately hasIpv4 or isIpv4Provisioned won\u0027t actually return true for a network that is using 464xlat.\n\nisReachable(8.8.8.8) is actually a reasonable way to implement this; various other system components including the DNS resolver use the same method to determine if the network has IPv4 or not. As (I think) Wei is saying, it won\u0027t attempt any connectivity or send any packets, it will just look into the parts of LinkProperties that are hidden from the public API.\n\nYou could also look for an IPv4 address in the return value of getAllLinkAddresses() or look for an IPv4 default route in the return value of getAllRoutes(). Those might be better methods.",
+      "parentUuid": "be515c02_b9e2a6e3",
       "range": {
         "startLine": 139,
         "startChar": 62,
