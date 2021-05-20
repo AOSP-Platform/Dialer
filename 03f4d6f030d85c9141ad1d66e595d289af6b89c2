@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26356a7a_1a75e602",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2021-05-20T01:08:28Z",
+      "side": 1,
+      "message": "Note that this might break their existing workflow; some copybara recipes would bypass review, so it would be nice if we can ask them to run the export after landing.",
+      "revId": "03f4d6f030d85c9141ad1d66e595d289af6b89c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
