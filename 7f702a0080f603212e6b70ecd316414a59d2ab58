@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05c5f57e_da1f4d30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-01T19:57:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c58ce83_4fd8ecd1",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "033a6946_382c4513",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-11T17:03:36Z",
       "side": 1,
       "message": "I don\u0027t think this has anything to do with qualcomm. Any network where IPv6 arrives first has this problem.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9e03375_2fcce369",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-01T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "033a6946_382c4513",
       "range": {
         "startLine": 10,
         "startChar": 0,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ce56d9a_0506fbf7",
+        "filename": "java/com/android/voicemail/impl/fetch/FetchVoicemailReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-01T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591e4b_b3609397",
+      "range": {
+        "startLine": 205,
+        "startChar": 14,
+        "endLine": 205,
+        "endChar": 36
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f65b2aad_0e9f382d",
@@ -117,6 +189,30 @@
       "writtenOn": "2021-05-11T17:03:36Z",
       "side": 1,
       "message": "Pre-existing, but there\u0027s no need to call super in any of these methods, the base NetworkCallback methods don\u0027t do anything.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 47
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b5f45cd_1c923a07",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-01T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f65b2aad_0e9f382d",
       "range": {
         "startLine": 137,
         "startChar": 4,
@@ -188,6 +284,30 @@
       "side": 1,
       "message": "Unfortunately hasIpv4 or isIpv4Provisioned won\u0027t actually return true for a network that is using 464xlat.\n\nisReachable(8.8.8.8) is actually a reasonable way to implement this; various other system components including the DNS resolver use the same method to determine if the network has IPv4 or not. As (I think) Wei is saying, it won\u0027t attempt any connectivity or send any packets, it will just look into the parts of LinkProperties that are hidden from the public API.\n\nYou could also look for an IPv4 address in the return value of getAllLinkAddresses() or look for an IPv4 default route in the return value of getAllRoutes(). Those might be better methods.",
       "parentUuid": "be515c02_b9e2a6e3",
+      "range": {
+        "startLine": 139,
+        "startChar": 62,
+        "endLine": 139,
+        "endChar": 71
+      },
+      "revId": "7f702a0080f603212e6b70ecd316414a59d2ab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8f42170_f6e9a1f8",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-01T19:57:37Z",
+      "side": 1,
+      "message": "I\u0027ll consider here that the current solution has Google\u0027s agreement.",
+      "parentUuid": "1e57c8c4_275c7b9c",
       "range": {
         "startLine": 139,
         "startChar": 62,
