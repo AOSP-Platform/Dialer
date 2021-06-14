@@ -16,6 +16,23 @@
       "message": "I had to create a new patch for https://android-review.googlesource.com/c/platform/packages/apps/Dialer/+/1683686 since I don\u0027t have permission to edit that one.\n",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9022f082_a603a2e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-14T12:05:58Z",
+      "side": 1,
+      "message": "Hi Lorenzo, may you please review this new patch?",
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
