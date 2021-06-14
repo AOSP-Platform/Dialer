@@ -33,6 +33,23 @@
       "message": "Hi Lorenzo, may you please review this new patch?",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c134939_8c2ebfa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-14T15:54:00Z",
+      "side": 1,
+      "message": "Code LGTM, but the folks in the OWNERS file will need to approve as well.",
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
