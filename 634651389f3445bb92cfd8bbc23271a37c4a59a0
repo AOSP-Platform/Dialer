@@ -50,6 +50,23 @@
       "message": "Code LGTM, but the folks in the OWNERS file will need to approve as well.",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a0f294_4ed4845a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-15T14:23:34Z",
+      "side": 1,
+      "message": "Seems that some approval is still pending before I can submit the patch. May someone please approve?",
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
