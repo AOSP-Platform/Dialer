@@ -67,6 +67,23 @@
       "message": "Seems that some approval is still pending before I can submit the patch. May someone please approve?",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d08438e_08b2fb12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241855
+      },
+      "writtenOn": "2021-06-17T12:15:20Z",
+      "side": 1,
+      "message": "I\u0027ve added the owners as reviewers. May you please check this patch?",
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
