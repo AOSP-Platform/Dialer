@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e564aa2e_1b57bbcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-07-12T20:26:12Z",
+      "side": 1,
+      "message": "+2 for owners, however deferring to dialer team +1 for technical review.",
+      "revId": "350ed89a149c146342ed232b44c5f9b63d194a4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
