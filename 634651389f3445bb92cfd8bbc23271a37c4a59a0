@@ -84,6 +84,23 @@
       "message": "I\u0027ve added the owners as reviewers. May you please check this patch?",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d54c1a_a22ac735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-07-19T19:51:04Z",
+      "side": 1,
+      "message": "This should be reviewed by the Dialer team, as they should review AOSP Dialer code as well as integrate it into the Google Dialer.\n\nIs this a carrier specific setting? It looks like this would apply the change for all carriers.",
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
