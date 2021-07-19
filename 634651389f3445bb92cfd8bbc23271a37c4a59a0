@@ -101,6 +101,29 @@
       "message": "This should be reviewed by the Dialer team, as they should review AOSP Dialer code as well as integrate it into the Google Dialer.\n\nIs this a carrier specific setting? It looks like this would apply the change for all carriers.",
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8268ffee_704d090c",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2021-07-19T21:17:59Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with VVM code, but generally we would avoid blocking code in case \"waitForIpv4()\" is called on the main thread.\n\nIs it possible to run a polling task that returns a ListenableFuture?",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
