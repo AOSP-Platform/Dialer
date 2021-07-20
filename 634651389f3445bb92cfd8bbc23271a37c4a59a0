@@ -124,6 +124,30 @@
       },
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ed4f6b9_e715f8c2",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-20T00:30:38Z",
+      "side": 1,
+      "message": "Looks like this is called only from getNetwork, which AFAICS is already a blocking operation because it does \"return callback.getFuture().get();\" So this should be safe unless something somehow calls waitForIpv4 outside the context of getNetwork. Not sure why any code would ever do that, now or in the future; there does not seem to be a reason ever to do so.\n\nThat said - given that FutureNetworkRequestCallback is already asynchronous, then an alternative solution would be to change VvmNetworkRequestCallback so that it only completes the future when IPv4 arrives. This isn\u0027t great because:\n- onAvailable must not call super.onAvailable, because that completes the future. This might be confusing to readers of this code.\n- On older Android releases (can\u0027t remember when; anything before P, perhaps?) onLinkProperties will not necessarily be called when the network becomes available. So if this code needs to run on older Android versions, it will need to behave in different ways depending on the Android version it\u0027s running on.\n\nGiven the above, this CL as is seems fine to me. Maybe a comment could be added to say that waitForIpv4 must only ever be called in contexts where it\u0027s OK to block, for example, in code that is already blocking on the future?",
+      "parentUuid": "8268ffee_704d090c",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
