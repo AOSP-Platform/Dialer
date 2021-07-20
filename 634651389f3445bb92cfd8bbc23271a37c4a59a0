@@ -148,6 +148,30 @@
       },
       "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0c936d_8342b4ac",
+        "filename": "java/com/android/voicemail/impl/sync/VvmNetworkRequestCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1238610
+      },
+      "writtenOn": "2021-07-20T23:54:42Z",
+      "side": 1,
+      "message": "A comment SGTM.",
+      "parentUuid": "2ed4f6b9_e715f8c2",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "634651389f3445bb92cfd8bbc23271a37c4a59a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
