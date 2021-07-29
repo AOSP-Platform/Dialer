@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49cf5b52_0acc5a8a",
+        "filename": "java/com/android/incallui/rtt/protocol/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2021-07-29T21:04:03Z",
+      "side": 1,
+      "message": "nit: delete blank line.",
+      "revId": "e12004ffa7030dc9e43fc17c84a08b0acb33be03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
