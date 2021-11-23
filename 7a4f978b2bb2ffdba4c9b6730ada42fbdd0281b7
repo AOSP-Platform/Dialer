@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b7a1465_1b6ba11a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-11-23T18:33:55Z",
+      "side": 1,
+      "message": "Linyu, can I get another owners review vote?",
+      "revId": "7a4f978b2bb2ffdba4c9b6730ada42fbdd0281b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
