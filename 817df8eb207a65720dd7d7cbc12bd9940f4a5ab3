@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cc90ab9_3bfc3844",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1863710
+      },
+      "writtenOn": "2021-11-23T07:46:39Z",
+      "side": 1,
+      "message": "nit: Consider adding it after the dialer-* ones",
+      "revId": "817df8eb207a65720dd7d7cbc12bd9940f4a5ab3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
