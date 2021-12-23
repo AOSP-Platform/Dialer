@@ -16,6 +16,24 @@
       "message": "A lot of people are OOO for the holidays, is this fix time sensitive?",
       "revId": "bfc776aff2428570d6a33f99362b7f600d22b7b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e897928_ec7d2bf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-12-23T23:37:05Z",
+      "side": 1,
+      "message": "Lack of this line was messing up some behaviors for LE Audio devices.\nIt was a long hunt to get that tracked and fixed. It was nice to get a quick owner-review.\n\nHave a happy holiday season!",
+      "parentUuid": "db36d1fe_5d851af3",
+      "revId": "bfc776aff2428570d6a33f99362b7f600d22b7b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
