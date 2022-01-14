@@ -57,6 +57,30 @@
       },
       "revId": "bfc776aff2428570d6a33f99362b7f600d22b7b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f1c709d_0c269b58",
+        "filename": "java/com/android/incallui/audiomode/AudioModeProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2022-01-14T13:39:50Z",
+      "side": 1,
+      "message": "we are not using TYPE_BLE_SPEAKER and it was not intended for the phone call case. But I see here A2DP. Not sure, but I would not add it here.",
+      "parentUuid": "1ea217a4_cbb828f4",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "bfc776aff2428570d6a33f99362b7f600d22b7b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
