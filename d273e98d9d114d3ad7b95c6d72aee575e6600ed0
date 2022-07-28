@@ -46,6 +46,30 @@
       },
       "revId": "d273e98d9d114d3ad7b95c6d72aee575e6600ed0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3619cf56_832db9ab",
+        "filename": "java/com/android/dialer/app/calllog/CallLogGroupBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-07-28T09:50:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30228ed5_ebcd1aae",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "d273e98d9d114d3ad7b95c6d72aee575e6600ed0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
