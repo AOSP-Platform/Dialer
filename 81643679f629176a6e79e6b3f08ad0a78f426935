@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5b61766_90197d8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1968740
+      },
+      "writtenOn": "2022-09-26T03:57:46Z",
+      "side": 1,
+      "message": "https://cs.android.com/android/kernel/superproject/+/common-android-mainline:",
+      "revId": "81643679f629176a6e79e6b3f08ad0a78f426935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
