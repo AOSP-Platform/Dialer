@@ -13,7 +13,7 @@
      limitations under the License.
 -->
 
-<!-- This manifest file contains activites that are subclasses by
+<!-- This manifest file contains activities that are subclasses by
      Google Dialer. TODO: Need to stop subclassing activities and move this
      back into the main manifest file. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
