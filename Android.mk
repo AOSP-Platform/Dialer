@@ -12,6 +12,8 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
+ifdef DISABLED_ANDROID_MK
+
 # The base directory for Dialer sources.
 BASE_DIR := java/com/android
 
@@ -197,3 +199,4 @@ LOCAL_JAVA_LANGUAGE_VERSION := 1.8
 include $(BUILD_HOST_JAVA_LIBRARY)
 
 include $(CLEAR_VARS)
+endif
