@@ -33,6 +33,8 @@ public interface InCallButtonUiDelegate {
 
   void addCallClicked();
 
+  void onExplicitCallTransferClicked();
+
   void muteClicked(boolean checked, boolean clickedByUser);
 
   void mergeClicked();

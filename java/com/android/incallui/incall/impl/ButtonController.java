@@ -465,6 +465,24 @@ interface ButtonController {
     }
   }
 
+  class TransferCallButtonController extends SimpleNonCheckableButtonController {
+
+    public TransferCallButtonController(@NonNull InCallButtonUiDelegate delegate) {
+      super(
+          delegate,
+          InCallButtonIds.BUTTON_EXPLICIT_CALL_TRANSFER,
+          0,
+          R.string.incall_label_transfer_call,
+          R.drawable.ic_addcall_white); // Added icon for transfer button
+      Assert.isNotNull(delegate);
+    }
+
+    @Override
+    public void onClick(View view) {
+      delegate.onExplicitCallTransferClicked(); //Need to change this
+    }
+  }
+
   class SwapButtonController extends SimpleNonCheckableButtonController {
 
     public SwapButtonController(@NonNull InCallButtonUiDelegate delegate) {
