@@ -65,6 +65,7 @@ class ButtonChooserFactory {
     mapping.put(
         InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY, MappingInfo.builder(5).setSlotOrder(0).build());
     mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(10).build());
+    mapping.put(InCallButtonIds.BUTTON_EXPLICIT_CALL_TRANSFER, MappingInfo.builder(8).build());
 
     return new ButtonChooser(new MappedButtonConfig(mapping));
   }
