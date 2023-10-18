@@ -290,6 +290,16 @@ public class CallButtonPresenter
   }
 
   @Override
+  public void onExplicitCallTransferClicked() {
+    Logger.get(context)
+        .logCallImpression(
+            DialerImpression.Type.IN_CALL_ECT_BUTTON_PRESSED,
+            call.getUniqueCallId(),
+            call.getTimeAddedMs());
+    TelecomAdapter.getInstance().explicitTransferCall(call.getId());
+  }
+
+  @Override
   public void showDialpadClicked(boolean checked) {
     Logger.get(context)
         .logCallImpression(
@@ -476,6 +486,9 @@ public class CallButtonPresenter
             && call.can(android.telecom.Call.Details.CAPABILITY_MERGE_CONFERENCE);
     final boolean showUpgradeToVideo = !isVideo && (hasVideoCallCapabilities(call));
     final boolean showDowngradeToAudio = isVideo && isDowngradeToAudioSupported(call);
+
+    final boolean showEct = (InCallPresenter.getInstance().getCallList().getAllCalls().size() == 2)
+            && (call.getState() != DialerCallState.DIALING);
     final boolean showMute = call.can(android.telecom.Call.Details.CAPABILITY_MUTE);
 
     final boolean hasCameraPermission =
@@ -519,6 +532,8 @@ public class CallButtonPresenter
     }
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_DIALPAD, true);
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_MERGE, showMerge);
+    inCallButtonUi.showButton(InCallButtonIds.BUTTON_EXPLICIT_CALL_TRANSFER, showEct);
+    inCallButtonUi.enableButton(InCallButtonIds.BUTTON_EXPLICIT_CALL_TRANSFER, showEct);
 
     inCallButtonUi.updateButtonStates();
   }

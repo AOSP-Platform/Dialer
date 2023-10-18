@@ -33,7 +33,7 @@ import java.util.List;
 public class TelecomAdapter implements InCallServiceListener {
 
   private static final String ADD_CALL_MODE_KEY = "add_call_mode";
-
+  private static final String TAG = "TelecomAdapter";
   private static TelecomAdapter instance;
   private InCallService inCallService;
 
@@ -70,6 +70,15 @@ public class TelecomAdapter implements InCallServiceListener {
     return call == null ? null : call.getTelecomCall();
   }
 
+  /**
+   * Returns the background call
+   * @return call if background call else null
+   */
+  public android.telecom.Call getBackGroundCall() {
+    DialerCall call = CallList.getInstance().getBackgroundCall();
+    return call == null ? null : call.getTelecomCall();
+  }
+
   public void mute(boolean shouldMute) {
     if (inCallService != null) {
       inCallService.setMuted(shouldMute);
@@ -103,6 +112,26 @@ public class TelecomAdapter implements InCallServiceListener {
       }
     } else {
       LogUtil.e("TelecomAdapter.merge", "call not in call list " + callId);
+    }
+  }
+
+  public void explicitTransferCall(String callId) {
+    android.telecom.Call activeCall = getTelecomCallById(callId);
+    android.telecom.Call backgroundCall = getBackGroundCall();
+    // Check if no active calls
+    // Else If there is only one Active Call, then call transfer cannot be done
+    // Consultative Transfer Call case when both calls are not null
+    if (activeCall == null && backgroundCall == null) {
+        LogUtil.i(TAG, "explicitTransferCall : No active calls ");
+        return;
+    } else if ((activeCall != null && backgroundCall == null)
+        || (activeCall == null && backgroundCall != null)) {
+        LogUtil.i(TAG, "explicitTransferCall : Ect not possible due to only one active call.");
+        return;
+    } else if (activeCall != null && backgroundCall != null) {
+        LogUtil.i(TAG, "explicitTransferCall : activeCall = " + activeCall + "Background call = " + backgroundCall);
+        // Commented as required for CTS
+        activeCall.transfer(backgroundCall);
     }
   }
 

@@ -39,6 +39,7 @@ import java.lang.annotation.RetentionPolicy;
   InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY,
   InCallButtonIds.BUTTON_SWAP_SIM,
   InCallButtonIds.BUTTON_COUNT,
+  InCallButtonIds.BUTTON_EXPLICIT_CALL_TRANSFER,
   InCallButtonIds.BUTTON_UPGRADE_TO_RTT
 })
 public @interface InCallButtonIds {
@@ -58,6 +59,7 @@ public @interface InCallButtonIds {
   int BUTTON_MANAGE_VOICE_CONFERENCE = 12;
   int BUTTON_SWITCH_TO_SECONDARY = 13;
   int BUTTON_SWAP_SIM = 14;
-  int BUTTON_COUNT = 15;
-  int BUTTON_UPGRADE_TO_RTT = 16;
+  int BUTTON_EXPLICIT_CALL_TRANSFER = 15;
+  int BUTTON_COUNT = 16;
+  int BUTTON_UPGRADE_TO_RTT = 17;
 }

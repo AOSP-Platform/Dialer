@@ -235,6 +235,9 @@ public class CallPendingActivity extends FragmentActivity
           public void addCallClicked() {}
 
           @Override
+          public void onExplicitCallTransferClicked() {}
+
+          @Override
           public void muteClicked(boolean checked, boolean clickedByUser) {}
 
           @Override

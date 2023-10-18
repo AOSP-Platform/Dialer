@@ -32,6 +32,9 @@
      [CHAR LIMIT=12] -->
   <string name="incall_label_add_call">Add call</string>
 
+  <!-- Button shown during a 1A1H phone call to Transfer call.
+     [CHAR LIMIT=12] -->
+  <string name="incall_label_transfer_call">Transfer call</string>
   <!-- Button shown during a phone call to mute the microphone.
      [CHAR LIMIT=12] -->
   <string name="incall_label_mute">Mute</string>
