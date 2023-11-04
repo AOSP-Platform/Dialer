@@ -1,0 +1,243 @@
+// Local modifications:
+// * removed com.google.android.geo.API_KEY key. This should be added to
+//      the manifest files in java/com/android/incallui/calllocation/impl/
+//      and /java/com/android/incallui/maps/impl/
+// * b/62417801 modify translation string naming convention:
+//      $ find . -type d | grep 262 | rename 's/(values)\-([a-zA-Z\+\-]+)\-(mcc262-mnc01)/$1-$3-$2/'
+// * b/37077388 temporarily disable proguard with javac
+// * b/62875795 include manually generated GRPC service class:
+//      $ protoc --plugin=protoc-gen-grpc-java=prebuilts/tools/common/m2/repository/io/grpc/protoc-gen-grpc-java/1.0.3/protoc-gen-grpc-java-1.0.3-linux-x86_64.exe
+//#               --grpc-java_out=lite:"packages/apps/Dialer/java/com/android/voicemail/impl/"
+//#               --proto_path="packages/apps/Dialer/java/com/android/voicemail/impl/transcribe/grpc/" "packages/apps/Dialer/java/com/android/voicemail/impl/transcribe/grpc/voicemail_transcription.proto"
+
+// The base directory for Dialer sources.
+BASE_DIR = ["java/com/android"]
+
+// Exclude files incompatible with AOSP.
+EXCLUDE_FILES = [
+    BASE_DIR + "/incallui/calllocation/impl/AuthException.java",
+    BASE_DIR + "/incallui/calllocation/impl/CallLocationImpl.java",
+    BASE_DIR + "/incallui/calllocation/impl/CallLocationModule.java",
+    BASE_DIR + "/incallui/calllocation/impl/DownloadMapImageTask.java",
+    BASE_DIR + "/incallui/calllocation/impl/GoogleLocationSettingHelper.java",
+    BASE_DIR + "/incallui/calllocation/impl/HttpFetcher.java",
+    BASE_DIR + "/incallui/calllocation/impl/LocationFragment.java",
+    BASE_DIR + "/incallui/calllocation/impl/LocationHelper.java",
+    BASE_DIR + "/incallui/calllocation/impl/LocationPresenter.java",
+    BASE_DIR + "/incallui/calllocation/impl/LocationUrlBuilder.java",
+    BASE_DIR + "/incallui/calllocation/impl/ReverseGeocodeTask.java",
+    BASE_DIR + "/incallui/calllocation/impl/TrafficStatsTags.java",
+    BASE_DIR + "/incallui/maps/impl/MapsImpl.java",
+    BASE_DIR + "/incallui/maps/impl/MapsModule.java",
+    BASE_DIR + "/incallui/maps/impl/StaticMapFragment.java",
+]
+
+// Exclude testing only class, not used anywhere here
+EXCLUDE_FILES += [BASE_DIR + "/contacts/common/format/testing/SpannedTestUtils.java"]
+
+// Exclude rootcomponentgenerator
+EXCLUDE_FILES += [
+    "<'BASE_DIR'/**/*.java",
+    "unset>/dialer/rootcomponentgenerator/**/*.java",
+    "<'BASE_DIR'/**/*.java",
+    "unset>/dialer/inject/demo/**/*.java",
+]
+
+// Exclude build variants for now
+EXCLUDE_FILES += [
+    BASE_DIR + "/dialer/constants/googledialer/ConstantsImpl.java",
+    BASE_DIR + "/dialer/binary/google/GoogleStubDialerRootComponent.java",
+    BASE_DIR + "/dialer/binary/google/GoogleStubDialerApplication.java",
+]
+
+// * b/62875795
+// ANDROIDMK TRANSLATION ERROR: unsupported conditional
+// ifneq ($(wildcard packages/apps/Dialer/java/com/android/voicemail/impl/com/google/internal/communications/voicemailtranscription/v1/VoicemailTranscriptionServiceGrpc.java),)
+
+// ANDROIDMK TRANSLATION ERROR: unsupported line
+// $(error Please remove file packages/apps/Dialer/java/com/android/voicemail/impl/com/google/internal/communications/voicemailtranscription/v1/VoicemailTranscriptionServiceGrpc.java )
+
+// ANDROIDMK TRANSLATION ERROR: endif from unsupported conditional
+// endif
+
+EXCLUDE_RESOURCE_DIRECTORIES = ["java/com/android/incallui/maps/impl/res"]
+
+// All Dialers resources.
+RES_DIRS = ["<func:'all-subdir-named-dirs' unset>"]
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "RES_DIRS"
+// RES_DIRS := $(filter-out $(EXCLUDE_RESOURCE_DIRECTORIES),$(RES_DIRS))
+
+EXCLUDE_MANIFESTS = [
+    BASE_DIR + "/dialer/binary/aosp/testing/AndroidManifest.xml",
+    BASE_DIR + "/dialer/binary/google/AndroidManifest.xml",
+    BASE_DIR + "/incallui/calllocation/impl/AndroidManifest.xml",
+    BASE_DIR + "/incallui/maps/impl/AndroidManifest.xml",
+]
+
+// Dialer manifest files to merge.
+DIALER_MANIFEST_FILES = ["<func:'all-named-files-under' unset>"]
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "DIALER_MANIFEST_FILES"
+// DIALER_MANIFEST_FILES := $(filter-out $(EXCLUDE_MANIFESTS),$(DIALER_MANIFEST_FILES))
+
+// Merge all manifest files.
+
+// ANDROIDMK TRANSLATION ERROR: unsupported assignment to LOCAL_PROTOC_FLAGS
+// LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)
+
+// ANDROIDMK TRANSLATION ERROR: Only $(LOCAL_PATH)/.. values are allowed
+// LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(RES_DIRS))
+
+EXCLUDE_EXTRA_PACKAGES = [
+    "com.android.dialer.binary.aosp.testing",
+    "com.android.dialer.binary.google",
+    "com.android.incallui.calllocation.impl",
+    "com.android.incallui.maps.impl",
+]
+android_app {
+
+    additional_manifests: ["__builtin_func:addprefix <'LOCAL_PATH' unset>/  <'DIALER_MANIFEST_FILES' unset>"],
+
+    srcs: [
+        "<'BASE_DIR'/**/*.java",
+        "unset>/**/*.java",
+    ] + [
+        "<'BASE_DIR'/**/*.proto",
+        "unset>/**/*.proto",
+    ] + [
+        "<'BASE_DIR'/**/I*.aidl",
+        "unset>/**/I*.aidl",
+    ],
+    aidl: {
+        local_include_dirs: ["java/"],
+    },
+    srcs: ["__builtin_func:filter-out <'EXCLUDE_FILES' unset> <'LOCAL_SRC_FILES' unset>"],
+
+    // We specify each package explicitly to glob resource files.
+    // ANDROIDMK TRANSLATION ERROR: unsupported include
+    // include $(LOCAL_PATH)/packages.mk
+
+    aaptflags: ["__builtin_func:filter-out <'EXCLUDE_EXTRA_PACKAGES' unset> <'LOCAL_AAPT_FLAGS' unset>"],
+    aaptflags: ["__builtin_func:addprefix --extra-packages   <'LOCAL_AAPT_FLAGS' unset>"] + [
+        "--auto-add-overlay",
+        "--extra-packages",
+        "me.leolin.shortcutbadger",
+    ],
+
+    static_libs: [
+        "android-common",
+        "android-support-dynamic-animation",
+        "com.android.vcard",
+        "dialer-common-m2-target-deps",
+        "dialer-glide-target-deps",
+        "error_prone_annotations",
+        "jsr305",
+        "libbackup",
+        "libphonenumber",
+        "volley",
+        "zxing-core-1.7",
+    ],
+
+    android_static_libs: ["android-support-core-ui"] + ANDROID_SUPPORT_DESIGN_TARGETS + [
+        "android-support-transition",
+        "android-support-v13",
+        "android-support-v4",
+        "android-support-v7-appcompat",
+        "android-support-v7-cardview",
+        "android-support-v7-recyclerview",
+    ],
+
+    libs: [
+        "auto_value_annotations",
+        "org.apache.http.legacy",
+    ],
+
+    plugins: [
+        "auto_value_plugin",
+        "javapoet",
+        "dialer-common-m2-host-deps",
+        "dialer-dagger2-compiler-deps",
+        "dialer-glide-host-deps",
+        "dialer-rootcomponentprocessor",
+    ],
+
+    // Proguard includes
+    optimize: {
+        proguard_flags_files: [
+            "proguard.flags",
+            "<func:'all-named-files-under' unset>",
+        ],
+        no_aapt_flags: true,
+        enabled: true,
+
+        optimize: true,
+        enabled: true,
+    },
+
+    sdk_version: "system_current",
+
+    name: "Dialer",
+    certificate: "shared",
+    privileged: true,
+    product_specific: true,
+
+    required: ["privapp_whitelist_com.android.dialer"],
+    uses_libs: ["org.apache.http.legacy"],
+
+    android_license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    android_license_conditions: ["notice"],
+    android_license_files: ["LICENSE"],
+}
+
+// Cleanup local state
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "BASE_DIR"
+// BASE_DIR :=
+
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "EXCLUDE_FILES"
+// EXCLUDE_FILES :=
+
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "RES_DIRS"
+// RES_DIRS :=
+
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "DIALER_MANIFEST_FILES"
+// DIALER_MANIFEST_FILES :=
+
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "EXCLUDE_MANIFESTS"
+// EXCLUDE_MANIFESTS :=
+
+// ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "EXCLUDE_EXTRA_PACKAGES"
+// EXCLUDE_EXTRA_PACKAGES :=
+
+java_library_host {
+
+    name: "dialer-rootcomponentprocessor",
+    android_license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    android_license_conditions: ["notice"],
+    android_license_files: ["LICENSE"],
+
+    host: true,
+    // ANDROIDMK TRANSLATION ERROR: cannot assign a variable multiple times: "BASE_DIR"
+    // BASE_DIR := java/com/android
+
+    srcs: [
+        "<'BASE_DIR'/**/*.java",
+        "unset>/dialer/rootcomponentgenerator/**/*.java",
+        BASE_DIR + "/dialer/inject/DialerRootComponent.java",
+        BASE_DIR + "/dialer/inject/DialerVariant.java",
+        BASE_DIR + "/dialer/inject/HasRootComponent.java",
+        BASE_DIR + "/dialer/inject/IncludeInDialerRoot.java",
+        BASE_DIR + "/dialer/inject/InstallIn.java",
+        BASE_DIR + "/dialer/inject/RootComponentGeneratorMetadata.java",
+    ],
+
+    static_libs: [
+        "dialer-common-m2-host-deps",
+        "javapoet",
+        "auto_service_annotations",
+        "auto_common",
+        "error_prone_annotations",
+    ],
+
+    java_version: "1.8",
+
+}
+// ERROR:  Expecting the string `__builtin_func:filter-out <'EXCLUDE_EXTRA_PACKAGES' unset> <'LOCAL_AAPT_FLAGS' unset>` starting with '-'
