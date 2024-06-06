@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c4e7d9_9b02acba",
+        "filename": "AndroidManifest.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060300
+      },
+      "writtenOn": "2024-06-06T04:41:44Z",
+      "side": 1,
+      "message": "Just curious about the reason for this change, was it intended?",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 35
+      },
+      "revId": "2dcf3c03e833ac75cb3b2731a21b1aa08c6f1f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
