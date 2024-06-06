@@ -22,6 +22,30 @@
       },
       "revId": "2dcf3c03e833ac75cb3b2731a21b1aa08c6f1f98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f0a3f37_dc42345d",
+        "filename": "AndroidManifest.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1311067
+      },
+      "writtenOn": "2024-06-06T16:00:21Z",
+      "side": 1,
+      "message": "Yes this is a must. Without this change an error will be raised by `manifest_fixer`\n```\nFAILED: out/soong/.intermediates/packages/apps/Dialer/Dialer/android_common/7bd916565615329d50364be05485f3c9/manifest_fixer/AndroidManifest.xml\nout/host/linux-x86/bin/manifest_fixer --extract-native-libs\u003dtrue --uses-library org.apache.http.legacy --targetSdkVersion  VanillaIceCream --minSdkVersion  VanillaIceCream --replaceMaxSdkVersionPlaceholder  10000 --raise-min-sdk-version packages/apps/Dialer/AndroidManifest.xml out/soong/.intermediates/packages/apps/Dialer/Dialer/android_common/7bd916565615329d50364be05485f3c9/manifest_fixer/AndroidManifest.xml\nerror: existing attribute extractNativeLibs\u003d\"false\" conflicts with --extract-native-libs\u003d\"true\"\n```",
+      "parentUuid": "a0c4e7d9_9b02acba",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 35
+      },
+      "revId": "2dcf3c03e833ac75cb3b2731a21b1aa08c6f1f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
