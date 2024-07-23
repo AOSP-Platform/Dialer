@@ -245,6 +245,7 @@ RES_DIRS = [
 
 android_app {
     name: "Dialer",
+    use_resource_processor: false,
     srcs: [
         "java/com/android/**/*.java",
         "java/com/android/**/*.proto",
